@@ -1,6 +1,7 @@
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Alert, Button, Input } from 'antd';
 import React from 'react';
-import { Form, useActionData, useNavigation } from 'react-router-dom';
+import { Form, Link, useActionData, useNavigation } from 'react-router-dom';
 
 import routes from '../../config/routes';
 import { useNotificationContext } from '../../store/contexts';
@@ -60,6 +61,17 @@ function ForgotPassword() {
 						size="large"
 						type="email"
 					/>
+				</div>
+				<div className="text-left">
+					<Link to={routes.LOGIN_PAGE}>
+						<Button
+							icon={<ArrowLeftOutlined className="text-xs md:text-sm" />}
+							htmlType="button"
+							type="link"
+						>
+							<span className="text-primary-500 text-sm">Login</span>
+						</Button>
+					</Link>
 				</div>
 				<div className="mt-5">
 					<Button
