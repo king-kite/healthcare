@@ -18,7 +18,7 @@ import {
 
 // Auth
 import Home from './pages';
-// import ForgotPassword from './pages/account/forgot-password';
+import ForgotPassword from './pages/account/forgot-password';
 // import ForgotPasswordSuccess from './pages/account/forgot-password-success';
 import Login from './pages/account/login';
 
@@ -28,7 +28,7 @@ import Login from './pages/account/login';
 // import Settings from './pages/dashboard/settings';
 
 // APIs
-// import forgotPassword from './api/account/forgot-password';
+import forgotPassword from './controllers/account/forgot-password';
 import login from './controllers/account/login';
 // import updateUserInfo from './api/account/update-user-info';
 
@@ -57,11 +57,11 @@ const routes = [
 				path: pageRoutes.AUTH_BASE_PAGE,
 				element: <NotAuthenticated />,
 				children: [
-					// {
-					// 	action: forgotPassword,
-					// 	path: pageRoutes.FORGOT_PASSWORD_PAGE,
-					// 	element: <ForgotPassword />,
-					// },
+					{
+						action: forgotPassword,
+						path: pageRoutes.FORGOT_PASSWORD_PAGE,
+						element: <ForgotPassword />,
+					},
 					// {
 					// 	path: pageRoutes.FORGOT_PASSWORD_SUCCESS_PAGE,
 					// 	element: <ForgotPasswordSuccess />,

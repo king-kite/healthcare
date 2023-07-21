@@ -21,7 +21,7 @@ function AuthLayout() {
 					</div>
 				</div>
 				<div className="flex items-center justify-center p-6">
-					<div className="bg-white max-w-sm p-4 rounded-md shadow-lg w-full md:max-w-md">
+					<div className="bg-white max-w-sm p-6 rounded-md shadow-lg w-full md:max-w-md">
 						<Outlet />
 					</div>
 				</div>

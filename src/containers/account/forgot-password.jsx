@@ -1,12 +1,11 @@
-import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 import { Alert, Button, Input } from 'antd';
 import React from 'react';
-import { Form, Link, useActionData, useNavigation } from 'react-router-dom';
+import { Form, useActionData, useNavigation } from 'react-router-dom';
 
 import routes from '../../config/routes';
 import { useNotificationContext } from '../../store/contexts';
 
-function Login() {
+function ForgotPassword() {
 	const action = useActionData();
 	const { state } = useNavigation();
 
@@ -29,14 +28,21 @@ function Login() {
 	return (
 		<>
 			<h2 className="font-bold text-center text-primary-500 text-xl">
-				SIGN IN
+				FORGOT PASSWORD?
 			</h2>
 			{action?.error && (
 				<div>
 					<Alert message={action.error.message} showIcon type="error" />
 				</div>
 			)}
-			<Form className="w-full" method="post" action={routes.LOGIN_PAGE}>
+			<p className="font-medium leading-6 my-3 px-2 text-center text-secondary-500 text-sm">
+				Enter your email address to receive further password reset instructions.
+			</p>
+			<Form
+				className="w-full"
+				method="post"
+				action={routes.FORGOT_PASSWORD_PAGE}
+			>
 				<div className="my-5">
 					<label
 						className="block font-medium my-1 text-xs text-secondary-400 sm:text-sm"
@@ -55,37 +61,6 @@ function Login() {
 						type="email"
 					/>
 				</div>
-				<div className="my-5">
-					<label
-						className="block font-medium my-1 text-xs text-secondary-400 sm:text-sm"
-						htmlFor="password"
-					>
-						Password
-					</label>
-					<Input.Password
-						allowClear
-						className="border-primary-500 text-sm lg:text-base"
-						id="password"
-						disabled={loading}
-						iconRender={(visible) =>
-							!visible ? (
-								<EyeTwoTone className="cursor-pointer text-primary-500" />
-							) : (
-								<EyeInvisibleOutlined className="cursor-pointer text-primary-500" />
-							)
-						}
-						name="password"
-						placeholder="Enter your password"
-						size="large"
-					/>
-				</div>
-				<div className="text-right">
-					<Link to={routes.FORGOT_PASSWORD_PAGE}>
-						<Button htmlType="button" type="link">
-							<span className="text-primary-500 text-sm">Forgot Password?</span>
-						</Button>
-					</Link>
-				</div>
 				<div className="mt-5">
 					<Button
 						block
@@ -96,7 +71,7 @@ function Login() {
 						size="large"
 						type="primary"
 					>
-						<span className="px-4 text-sm">Sign In</span>
+						<span className="px-4 text-sm">Reset</span>
 					</Button>
 				</div>
 			</Form>
@@ -104,4 +79,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default ForgotPassword;
