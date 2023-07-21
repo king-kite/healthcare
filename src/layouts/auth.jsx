@@ -5,11 +5,11 @@ import routes from '../config/routes';
 
 function AuthLayout() {
 	return (
-		<div className="w-full">
-			<div className="h-full hidden min-h-screen w-full">
+		<div className="w-full lg:flex">
+			<div className="bg-auth-lg-background h-full hidden min-h-screen relative w-full lg:block">
 				<img
 					className="h-full w-full"
-					src="/images/auth-bg.jpg"
+					src="/images/vitalcare.png"
 					alt="Vitalcare"
 				/>
 			</div>
