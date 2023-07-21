@@ -29,7 +29,7 @@ import Login from './pages/account/login';
 
 // APIs
 // import forgotPassword from './api/account/forgot-password';
-// import login from './api/account/login';
+import login from './controllers/account/login';
 // import updateUserInfo from './api/account/update-user-info';
 
 const routes = [
@@ -67,7 +67,7 @@ const routes = [
 					// 	element: <ForgotPasswordSuccess />,
 					// },
 					{
-						// action: login,
+						action: login,
 						path: pageRoutes.LOGIN_PAGE,
 						element: <Login />,
 					},

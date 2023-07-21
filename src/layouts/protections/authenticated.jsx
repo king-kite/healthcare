@@ -9,12 +9,12 @@ function Authenticated() {
 
 	const { pathname } = useLocation();
 
-	if (isLoading)
-		return (
-			<div className="flex h-full items-center justify-center min-h-[80vh] w-full">
-				<Spin spinning={isLoading} size="large" />
-			</div>
-		);
+	// if (isLoading)
+	// 	return (
+	// 		<div className="flex h-full items-center justify-center min-h-[80vh] w-full">
+	// 			<Spin spinning={isLoading} size="large" />
+	// 		</div>
+	// 	);
 
 	// if (!isAuthenticated)
 	// 	return (
