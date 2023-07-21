@@ -23,8 +23,8 @@ export default async function forgotPassword({ request }) {
 			// check for response error
 			if (response.error) throw new Error(response.error.message);
 
-			// redirect to the password
-			return redirect(routes.FORGOT_PASSWORD_SUCCESS_PAGE);
+			// redirect to the login page
+			return redirect(routes.LOGIN_PAGE);
 		}
 
 		return {

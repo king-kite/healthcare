@@ -28,7 +28,7 @@ function Login() {
 
 	return (
 		<>
-			<h2 className="font-bold text-center text-primary-500 text-xl">
+			<h2 className="font-bold mb-3 text-center text-primary-500 text-xl">
 				SIGN IN
 			</h2>
 			{action?.error && (

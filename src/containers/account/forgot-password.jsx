@@ -27,7 +27,7 @@ function ForgotPassword() {
 
 	return (
 		<>
-			<h2 className="font-bold text-center text-primary-500 text-xl">
+			<h2 className="font-bold mb-3 text-center text-primary-500 text-xl">
 				FORGOT PASSWORD?
 			</h2>
 			{action?.error && (
