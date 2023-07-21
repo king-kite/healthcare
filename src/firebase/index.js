@@ -34,7 +34,7 @@ if (USE_FIREBASE_EMULATOR) {
 	const storagePort = import.meta.env.VITE_FIREBASE_STORAGE_EMULATOR_PORT;
 
 	connectAuthEmulator(auth, authUrl, { disableWarnings: true });
-	connectDatabaseEmulator(db, 'localhost', databasePort);
-	connectFirestoreEmulator(db, 'localhost', firestorePort);
-	connectStorageEmulator(db, 'localhost', storagePort);
+	connectDatabaseEmulator(db, 'localhost', +databasePort);
+	connectFirestoreEmulator(firestore, 'localhost', +firestorePort);
+	connectStorageEmulator(storage, 'localhost', +storagePort);
 }
