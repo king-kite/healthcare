@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-// #0d877a
+
 export default {
 	content: ['./src/**/*.{js,ts,jsx,tsx}'],
 	corePlugins: {
@@ -11,14 +11,14 @@ export default {
 		extend: {
 			colors: {
 				primary: {
-					50: '#e6fef5',
-					100: '#9cfcd9',
-					200: '#52fabc',
-					300: '#08f79f',
-					400: '#06c680',
-					500: '#059862',
-					600: '#036340',
-					700: '#023120',
+					50: '#e8fdfb',
+					100: '#b9f8f2',
+					200: '#74f1e5',
+					300: '#2eead8',
+					400: '#12baa9',
+					500: '#0d877a',
+					600: '#07463f',
+					700: '#021715',
 				},
 				secondary: {
 					50: '#d9d9d9',
