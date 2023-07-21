@@ -1,0 +1,2 @@
+export const NODE_ENV = import.meta.env.DEV ? 'development' : 'production';
+export const USE_FIREBASE_EMULATOR = import.meta.env.VITE_USE_FIREBASE_EMULATOR ? +import.meta.env.VITE_USE_FIREBASE_EMULATOR === 1 : false
