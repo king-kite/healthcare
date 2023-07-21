@@ -65,16 +65,15 @@ function NotAuthenticated() {
 		checkRoute();
 	}, [state, searchParams]);
 
-	// if (isLoading)
-	// 	return (
-	// 		<div className="flex h-full items-center justify-center min-h-[50vh] w-full">
-	// 			<Spin spinning={isLoading} size="large" />
-	// 		</div>
-	// 	);
+	if (isLoading)
+		return (
+			<div className="flex h-full items-center justify-center min-h-[50vh] w-full">
+				<Spin spinning={isLoading} size="large" />
+			</div>
+		);
 
 	// replace to remove the old state from the useLocation hook
-	// if (isAuthenticated)
-	// 	return <Navigate to={nextRoute} replace />;
+	if (isAuthenticated) return <Navigate to={nextRoute} replace />;
 
 	return <Outlet />;
 }

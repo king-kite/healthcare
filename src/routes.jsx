@@ -19,7 +19,6 @@ import {
 // Auth
 import Home from './pages';
 import ForgotPassword from './pages/account/forgot-password';
-// import ForgotPasswordSuccess from './pages/account/forgot-password-success';
 import Login from './pages/account/login';
 
 // Dashboard
@@ -62,10 +61,6 @@ const routes = [
 						path: pageRoutes.FORGOT_PASSWORD_PAGE,
 						element: <ForgotPassword />,
 					},
-					// {
-					// 	path: pageRoutes.FORGOT_PASSWORD_SUCCESS_PAGE,
-					// 	element: <ForgotPasswordSuccess />,
-					// },
 					{
 						action: login,
 						path: pageRoutes.LOGIN_PAGE,
