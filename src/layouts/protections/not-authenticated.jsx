@@ -72,10 +72,11 @@ function NotAuthenticated() {
 			</div>
 		);
 
-	if (!isAuthenticated) return <Outlet />;
-
 	// replace to remove the old state from the useLocation hook
-	return <Navigate to={nextRoute} replace />;
+	// if (isAuthenticated)
+	// 	return <Navigate to={nextRoute} replace />;
+
+	return <Outlet />;
 }
 
 export default NotAuthenticated;

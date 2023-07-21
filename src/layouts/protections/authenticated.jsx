@@ -16,13 +16,13 @@ function Authenticated() {
 			</div>
 		);
 
-	if (!isAuthenticated)
-		return (
-			<Navigate
-				to={routes.LOGIN_PAGE + '?next=' + pathname}
-				state={{ next: pathname }}
-			/>
-		);
+	// if (!isAuthenticated)
+	// 	return (
+	// 		<Navigate
+	// 			to={routes.LOGIN_PAGE + '?next=' + pathname}
+	// 			state={{ next: pathname }}
+	// 		/>
+	// 	);
 
 	return <Outlet />;
 }
