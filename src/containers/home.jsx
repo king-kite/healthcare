@@ -15,12 +15,26 @@ function Home() {
 							alt="Vitalcare"
 						/>
 					</div>
-					<div className="">
+					<div className="flex items-center">
 						<Link to={routes.LOGIN_PAGE}>
 							<Button size="large" type="primary">
 								<span className="px-2 text-sm md:text-base">Login</span>
 							</Button>
 						</Link>
+						<Link className="mx-3" to={routes.DASHBOARD_PAGE}>
+							<Button size="large" type="primary">
+								<span className="px-2 text-sm md:text-base">Dashboard</span>
+							</Button>
+						</Link>
+						<span>
+							<Button
+								className="border border-primary-500 border-solid"
+								size="large"
+								type="ghost"
+							>
+								<span className="px-2 text-sm md:text-base">Logout</span>
+							</Button>
+						</span>
 					</div>
 				</div>
 			</div>

@@ -8,13 +8,10 @@ import NotFound from './pages/not-found';
 
 // Layouts
 import AuthLayout from './layouts/auth';
-// import DashboardLayout from './layout/dashboard';
+import DashboardLayout from './layouts/dashboard';
 
 // Layout protection
-import {
-	// Authenticated,
-	NotAuthenticated,
-} from './layouts/protections';
+import { Authenticated, NotAuthenticated } from './layouts/protections';
 
 // Auth
 import Home from './pages';
@@ -22,14 +19,9 @@ import ForgotPassword from './pages/account/forgot-password';
 import Login from './pages/account/login';
 
 // Dashboard
-// import Dashboard from './pages/dashboard';
+import Dashboard from './pages/dashboard';
 // import RoomDetail from './pages/dashboard/rooms/detail';
 // import Settings from './pages/dashboard/settings';
-
-// APIs
-import forgotPassword from './controllers/account/forgot-password';
-import login from './controllers/account/login';
-// import updateUserInfo from './api/account/update-user-info';
 
 const routes = [
 	{
@@ -57,12 +49,12 @@ const routes = [
 				element: <NotAuthenticated />,
 				children: [
 					{
-						action: forgotPassword,
+						action: ForgotPassword.action,
 						path: pageRoutes.FORGOT_PASSWORD_PAGE,
 						element: <ForgotPassword />,
 					},
 					{
-						action: login,
+						action: Login.action,
 						path: pageRoutes.LOGIN_PAGE,
 						element: <Login />,
 					},
@@ -71,39 +63,38 @@ const routes = [
 		],
 		errorElement: <Error />,
 	},
-	// {
-	// 	path: pageRoutes.DASHBOARD_PAGE,
-	// 	element: (
-	// 		<>
-	// 			<Authenticated />
-	// 			<ScrollRestoration />
-	// 		</>
-	// 	),
-	// 	children: [
-	// 		{
-	// 			path: pageRoutes.DASHBOARD_PAGE,
-	// 			element: <DashboardLayout />,
-	// 			children: [
-	// 				{
-	// 					index: true,
-	// 					path: '',
-	// 					element: <Dashboard />,
-	// 				},
-	// 				{
-	// 					path: pageRoutes.ROOM_PAGE(':id'),
-	// 					element: <RoomDetail />,
-	// 				},
-	// 				{
-	// 					action: updateUserInfo,
-	// 					path: pageRoutes.SETTINGS_PAGE,
-	// 					element: <Settings />,
-	// 				},
-	// 			],
-	// 		},
-	// 	],
-	// 	errorElement: <Error />,
-	// },
-
+	{
+		path: pageRoutes.DASHBOARD_PAGE,
+		element: (
+			<>
+				<Authenticated />
+				<ScrollRestoration />
+			</>
+		),
+		children: [
+			{
+				path: pageRoutes.DASHBOARD_PAGE,
+				element: <DashboardLayout />,
+				children: [
+					{
+						index: true,
+						path: '',
+						element: <Dashboard />,
+					},
+					// {
+					// 	path: pageRoutes.ROOM_PAGE(':id'),
+					// 	element: <RoomDetail />,
+					// },
+					// {
+					// 	action: updateUserInfo,
+					// 	path: pageRoutes.SETTINGS_PAGE,
+					// 	element: <Settings />,
+					// },
+				],
+			},
+		],
+		errorElement: <Error />,
+	},
 	{
 		path: '*',
 		element: <NotFound />,
