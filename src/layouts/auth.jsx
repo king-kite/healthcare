@@ -23,7 +23,7 @@ function AuthLayout() {
 								alt="Vitalcare"
 							/>
 						</div>
-						<div className="">
+						<div>
 							<Link to={routes.HOME_PAGE}>
 								<Button size="large" type="primary">
 									<span className="px-2 text-sm md:text-base">Home</span>
