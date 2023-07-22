@@ -39,7 +39,7 @@ function Login() {
 			<Form className="w-full" method="post" action={routes.LOGIN_PAGE}>
 				<div className="my-5">
 					<label
-						className="block font-medium my-1 text-xs text-secondary-400 sm:text-sm"
+						className="block font-medium my-1 text-xs text-gray-700 sm:text-sm"
 						htmlFor="email"
 					>
 						Email
@@ -57,7 +57,7 @@ function Login() {
 				</div>
 				<div className="my-5">
 					<label
-						className="block font-medium my-1 text-xs text-secondary-400 sm:text-sm"
+						className="block font-medium my-1 text-xs text-gray-700 sm:text-sm"
 						htmlFor="password"
 					>
 						Password

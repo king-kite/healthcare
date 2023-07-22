@@ -25,8 +25,8 @@ function AuthLayout() {
 						</div>
 						<div className="">
 							<Link to={routes.HOME_PAGE}>
-								<Button size="middle" type="primary">
-									<span className="text-xs md:text-sm">Home</span>
+								<Button size="large" type="primary">
+									<span className="px-2 text-sm md:text-base">Home</span>
 								</Button>
 							</Link>
 						</div>

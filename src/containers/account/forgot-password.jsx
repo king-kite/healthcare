@@ -36,7 +36,7 @@ function ForgotPassword() {
 					<Alert message={action.error.message} showIcon type="error" />
 				</div>
 			)}
-			<p className="font-medium leading-6 my-3 px-2 text-center text-secondary-500 text-sm">
+			<p className="font-medium leading-6 my-3 px-2 text-center text-gray-800 text-sm">
 				Enter your email address to receive further password reset instructions.
 			</p>
 			<Form
@@ -46,7 +46,7 @@ function ForgotPassword() {
 			>
 				<div className="my-5">
 					<label
-						className="block font-medium my-1 text-xs text-secondary-400 sm:text-sm"
+						className="block font-medium my-1 text-xs text-gray-700 sm:text-sm"
 						htmlFor="email"
 					>
 						Email
