@@ -20,12 +20,6 @@ function Page() {
 					>
 						Go back home
 					</Link>
-					<Link
-						to={routes.CONTACT_PAGE}
-						className="text-sm no-underline hover:underline font-semibold text-gray-900"
-					>
-						Contact support <span aria-hidden="true">&rarr;</span>
-					</Link>
 				</div>
 			</div>
 		</main>

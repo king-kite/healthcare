@@ -27,7 +27,7 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 			{
 				icon: UserOutlined,
 				title: 'Profile',
-				href: '#',
+				href: routes.PROFILE_PAGE,
 				onClick: () => setVisible(false),
 			},
 			{

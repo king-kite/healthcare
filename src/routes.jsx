@@ -20,6 +20,7 @@ import Login from './pages/account/login';
 
 // Dashboard
 import Dashboard from './pages/dashboard';
+import Profile from './pages/dashboard/profile';
 // import RoomDetail from './pages/dashboard/rooms/detail';
 // import Settings from './pages/dashboard/settings';
 
@@ -81,10 +82,10 @@ const routes = [
 						path: '',
 						element: <Dashboard />,
 					},
-					// {
-					// 	path: pageRoutes.ROOM_PAGE(':id'),
-					// 	element: <RoomDetail />,
-					// },
+					{
+						path: pageRoutes.PROFILE_PAGE,
+						element: <Profile />,
+					},
 					// {
 					// 	action: updateUserInfo,
 					// 	path: pageRoutes.SETTINGS_PAGE,

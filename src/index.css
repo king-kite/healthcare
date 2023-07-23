@@ -66,7 +66,7 @@ button span {
 }
 
 .sidebar-logout:hover {
-	@apply border-red-500 text-red-500 !important;
+	@apply border-red-300 shadow-lg text-red-400 !important;
 }
 
 @media (min-height: 500px) {
