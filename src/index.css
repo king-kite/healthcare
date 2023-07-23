@@ -36,15 +36,20 @@ button span {
 	background: hsla(174, 82%, 29%, 0.2);
 }
 
+.container-banner {
+	@apply bg-primary-500 h-[45vh] w-full;
+}
+
 .profile-top-image {
 	background-image: url(/images/auth-bg.jpg);
 	/* background-position-y: -100px; */
 
-	@apply bg-cover bg-no-repeat h-[45vh] rounded-t-md w-full;
+	@apply bg-cover bg-no-repeat h-[45vh] w-full;
 }
 
-.profile-top-image .wrapper {
-	background-color: rgba(0, 0, 0, 0.2);
+.profile-top-image .wrapper,
+.container-banner .wrapper {
+	background-color: rgba(0, 0, 0, 0.3);
 
 	@apply h-full w-full;
 }
