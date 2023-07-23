@@ -2,6 +2,7 @@
 import {
 	CaretRightOutlined,
 	CloseOutlined,
+	GroupOutlined,
 	PieChartOutlined,
 	SettingOutlined,
 	UserOutlined,
@@ -22,22 +23,24 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 				icon: PieChartOutlined,
 				title: 'Overview',
 				href: routes.DASHBOARD_PAGE,
-				onClick: () => setVisible(false),
+			},
+			{
+				icon: GroupOutlined,
+				title: 'Patients',
+				href: routes.PATIENTS_PAGE,
 			},
 			{
 				icon: UserOutlined,
 				title: 'Profile',
 				href: routes.PROFILE_PAGE,
-				onClick: () => setVisible(false),
 			},
 			{
 				icon: SettingOutlined,
 				title: 'Settings',
 				href: routes.SETTINGS_PAGE,
-				onClick: () => setVisible(false),
 			},
 		],
-		[setVisible]
+		[]
 	);
 
 	return (
@@ -90,7 +93,11 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 				<div className="mt-6">
 					<div>
 						{links.map((props, index) => (
-							<SidebarLink key={index} {...props} />
+							<SidebarLink
+								key={index}
+								{...props}
+								onClick={() => setVisible(false)}
+							/>
 						))}
 					</div>
 

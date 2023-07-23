@@ -21,6 +21,7 @@ import Login from './pages/account/login';
 // Dashboard
 import Dashboard from './pages/dashboard';
 import Profile from './pages/dashboard/profile';
+import Patients from './pages/dashboard/patients';
 // import RoomDetail from './pages/dashboard/rooms/detail';
 // import Settings from './pages/dashboard/settings';
 
@@ -85,6 +86,10 @@ const routes = [
 					{
 						path: pageRoutes.PROFILE_PAGE,
 						element: <Profile />,
+					},
+					{
+						path: pageRoutes.PATIENTS_PAGE,
+						element: <Patients />,
 					},
 					// {
 					// 	action: updateUserInfo,
