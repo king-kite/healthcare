@@ -39,7 +39,7 @@ function DashboardLayout() {
 					visible={menu.visible}
 					ref={menu.ref}
 				/>
-				<div className="container h-full min-h-screen mx-auto p-4 w-full md:px-6 md:py-3 lg:max-w-none lg:ml-auto lg:mr-0 lg:px-12 lg:w-4/5">
+				<div className="h-full min-h-screen w-full lg:max-w-none lg:ml-auto lg:mr-0 lg:w-4/5">
 					<Outlet />
 				</div>
 			</div>

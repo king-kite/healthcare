@@ -36,6 +36,19 @@ button span {
 	background: hsla(174, 82%, 29%, 0.2);
 }
 
+.profile-top-image {
+	background-image: url(/images/auth-bg.jpg);
+	/* background-position-y: -100px; */
+
+	@apply bg-cover bg-no-repeat h-[45vh] rounded-t-md w-full;
+}
+
+.profile-top-image .wrapper {
+	background-color: rgba(0, 0, 0, 0.2);
+
+	@apply h-full w-full;
+}
+
 .sidebar-close-icon {
 	@apply bg-transparent cursor-pointer duration-300 flex h-10 items-center justify-center rounded-full text-primary-600 text-xl transform transition w-10 hover:bg-gray-200 hover:scale-110 lg:hidden;
 }
