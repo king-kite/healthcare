@@ -1,38 +1,38 @@
-import { Button } from 'antd';
 import { Link, useRouteError } from 'react-router-dom';
+
+import routes from '../config/routes';
 
 function Page() {
 	const error = useRouteError();
 
 	return (
-		<div className="container flex flex-col justify-between min-h-screen mx-auto p-4">
-			<div className="h-[21px] w-[120px] md:h-[48px] md:w-[282px]">
-				<img
-					className="h-full w-full md:hidden"
-					src="/images/mobile-login-switchwise.png"
-					alt="SwitchWise"
-				/>
-				<img
-					className="hidden h-full w-full md:block"
-					src="/images/desktop-login-switchwise.png"
-					alt="SwitchWise"
-				/>
-			</div>
-			<div className="flex flex-col items-center justify-center relative bottom-14 w-full">
-				<h1 className="font-black my-3 text-center text-primary-600 text-4xl tracking-wide sm:text-5xl md:text-6xl lg:text-7xl">
-					{error.statusText || 'Oops!'}
+		<main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+			<div className="text-center">
+				<p className="text-base font-semibold text-primary-600">
+					{error.statusText || 500}
+				</p>
+				<h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+					Oops!
 				</h1>
-				<p className="font-medium my-3 text-center text-secondary-500 text-sm md:text-base">
+				<p className="mt-6 text-base leading-7 text-gray-600">
 					{error.message || 'Sorry, an unexpected error occurred!'}
 				</p>
-				<Link to="/">
-					<Button>
-						<span>Go Back Home</span>
-					</Button>
-				</Link>
+				<div className="gap-6 mt-10 flex flex-col items-center justify-center sm:flex-row">
+					<Link
+						to={routes.HOME_PAGE}
+						className="rounded-md no-underline bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+					>
+						Go back home
+					</Link>
+					<Link
+						to={routes.CONTACT_PAGE}
+						className="text-sm no-underline hover:underline font-semibold text-gray-900"
+					>
+						Contact support <span aria-hidden="true">&rarr;</span>
+					</Link>
+				</div>
 			</div>
-			<div className="h-px w-px" />
-		</div>
+		</main>
 	);
 }
 
