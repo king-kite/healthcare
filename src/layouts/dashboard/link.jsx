@@ -1,16 +1,11 @@
 /* eslint-disable react/prop-types */
+import { CaretRightOutlined } from '@ant-design/icons';
 import React from 'react';
 import { Link, useMatch } from 'react-router-dom';
 
-const activeLinkClasses = 'bg-primary-500 text-gray-100 tracking-widest';
-const inactiveLinkClasses =
-	'duration-500 text-secondary-500 transform transition hover:bg-primary-500 hover:text-gray-100 hover:tracking-widest';
-
-const DefaultIcon = () => <></>;
-
-export function SimpleLink({
+function SidebarLink({
 	href = '#',
-	icon: Icon = DefaultIcon,
+	icon: Icon = CaretRightOutlined,
 	onClick,
 	title,
 }) {
@@ -19,16 +14,23 @@ export function SimpleLink({
 
 	return (
 		<Link
-			className={`${
-				isActive ? activeLinkClasses : inactiveLinkClasses
-			} cursor-pointer flex font-semibold items-center no-underline p-4 rounded-sm text-sm`}
+			className={`${isActive ? 'active' : 'inactive'} sidebar-link`}
 			to={href}
 			onClick={onClick}
 		>
-			<span className="mr-2">
-				<Icon />
+			<span className="flex items-center">
+				<span className="link-icon mr-2 text-xl text-gray-400">
+					<Icon />
+				</span>
+				<span className="font-semibold text-sm md:text-base">{title}</span>
 			</span>
-			<span className="">{title}</span>
+			{isActive && (
+				<span className="ml-2 relative text-[8px] top-[0.11rem]">
+					<CaretRightOutlined />
+				</span>
+			)}
 		</Link>
 	);
 }
+
+export default SidebarLink;

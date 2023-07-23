@@ -1,27 +1,33 @@
 /* eslint-disable react/prop-types */
 import {
+	CaretRightOutlined,
 	CloseOutlined,
-	LogoutOutlined,
+	PieChartOutlined,
 	SettingOutlined,
-	WindowsOutlined,
+	UserOutlined,
 } from '@ant-design/icons';
-import { Button } from 'antd';
 import React from 'react';
 
-import { SimpleLink } from './link';
+import SidebarLink from './link';
+import LogoutButton from './logout-button';
 import routes from '../../config/routes';
-import useLogout from '../../hooks/useLogout';
 
 const sidebarStyle =
-	'bg-white duration-1000 h-full ml-auto overflow-y-auto relative shadow-lg transform w-3/5 md:px-2 md:w-1/3 lg:bg-gray-100 lg:px-0 lg:py-4 lg:translate-x-0 lg:w-full';
+	'bg-white duration-1000 h-full ml-auto overflow-y-auto relative shadow-lg transform w-3/5 sm:w-1/2 md:w-1/3 lg:bg-gray-100 lg:px-0 lg:py-4 lg:translate-x-0 lg:w-full';
 
 const Sidebar = ({ setVisible, visible }, ref) => {
 	const links = React.useMemo(
 		() => [
 			{
-				icon: WindowsOutlined,
-				title: 'Home',
+				icon: PieChartOutlined,
+				title: 'Overview',
 				href: routes.DASHBOARD_PAGE,
+				onClick: () => setVisible(false),
+			},
+			{
+				icon: UserOutlined,
+				title: 'Profile',
+				href: '#',
 				onClick: () => setVisible(false),
 			},
 			{
@@ -33,8 +39,6 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 		],
 		[setVisible]
 	);
-
-	const { logout: handleLogout, loading: logoutLoading } = useLogout();
 
 	return (
 		<nav
@@ -51,59 +55,48 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 					visible ? 'translate-x-0' : 'translate-x-full'
 				} ${sidebarStyle}`}
 			>
-				<div className="flex items-center justify-between px-4 py-5 lg:hidden">
-					<span className="h-[50px] inline-block w-[70px]">
-						<img
-							className="h-full w-full"
-							src="/images/logo.png"
-							alt="Vitalcare"
-						/>
-					</span>
-					<span
-						className="bg-transparent cursor-pointer duration-300 flex h-10 items-center justify-center rounded-full text-primary-600 text-xl transform transition w-10 hover:bg-gray-200 hover:scale-110"
-						onClick={() => setVisible(false)}
-					>
-						<CloseOutlined />
-					</span>
-				</div>
-				<div className="hidden p-4 pt-0 md:block">
-					<div className="h-[40px] w-[40px]">
-						<img
-							className="h-full w-full"
-							src="/images/logo.png"
-							alt="Vitalcare"
-						/>
-					</div>
-					<div className="h-[30px] w-[150px]">
+				<div className="flex items-center justify-between px-4 py-5">
+					<span className="h-[30px] inline-block w-[150px]">
 						<img
 							className="h-full w-full"
 							src="/images/vitalcare-logo.png"
 							alt="Vitalcare"
 						/>
-					</div>
+					</span>
+					<span
+						className="sidebar-close-icon"
+						onClick={() => setVisible(false)}
+					>
+						<CloseOutlined />
+					</span>
 				</div>
-				<div className="mt-3">
+				<div className="bg-gray-200 cursor-pointer flex items-center justify-between my-4 px-4 pl-3 py-2 rounded-br-3xl hover:bg-gray-300">
+					<span className="flex items-center">
+						<span className="mr-2 text-lg">
+							<span className="bg-primary-500 h-10 inline-flex items-center justify-center rounded-full text-gray-50 w-10">
+								<span className="left-[0.05rem] relative top-[0.075rem]">
+									J
+								</span>
+							</span>
+						</span>
+						<span className="font-semibold text-gray-700 text-sm md:text-base">
+							John Doe
+						</span>
+					</span>
+					<span className="ml-2 relative text-[8px] text-primary-500 top-[0.11rem]">
+						<CaretRightOutlined />
+					</span>
+				</div>
+				<div className="mt-6">
 					<div>
 						{links.map((props, index) => (
-							<SimpleLink key={index} {...props} />
+							<SidebarLink key={index} {...props} />
 						))}
 					</div>
-					<div className="sidebar-logout w-full">
-						<Button
-							disabled={logoutLoading}
-							loading={logoutLoading}
-							onClick={handleLogout}
-							icon={
-								<span className="text-red-500 text-sm">
-									<LogoutOutlined />
-								</span>
-							}
-							size="large"
-							type="ghost"
-						>
-							<span className="text-red-500 text-sm">Logout</span>
-						</Button>
-					</div>
+
+					{/* Logout Button */}
+					<LogoutButton setVisible={setVisible} />
+					{/* Logout Button */}
 				</div>
 			</div>
 		</nav>
