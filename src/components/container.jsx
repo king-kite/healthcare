@@ -10,7 +10,7 @@ function Container({ children, title }) {
 					</div>
 				</div>
 			</div>
-			<div className="container mx-auto p-4">{children}</div>
+			<div className="container mx-auto p-4 md:px-5 lg:px-6">{children}</div>
 		</>
 	);
 }

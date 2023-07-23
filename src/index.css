@@ -14,6 +14,8 @@ body,
 input {
 	font-family: 'Montserrat', Verdana, Inter, system-ui, Avenir, Helvetica, Arial,
 		sans-serif !important;
+	scrollbar-color: #cbd5e0 #f1f1f1;
+	scrollbar-width: thin;
 }
 h1,
 h2,
@@ -85,6 +87,30 @@ button span {
 
 .sidebar-logout:hover {
 	@apply border-red-300 shadow-lg text-red-400 !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+	height: 10px;
+	width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: #edf2f7;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #cbd5e0;
+	border: 3px sold #edf2f7;
+	border-radius: 100vh;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #a0aec0;
 }
 
 @media (min-height: 500px) {
