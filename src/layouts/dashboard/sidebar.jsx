@@ -1,6 +1,4 @@
-/* eslint-disable react/prop-types */
 import {
-	CaretRightOutlined,
 	CloseOutlined,
 	GroupOutlined,
 	PieChartOutlined,
@@ -71,23 +69,6 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 						onClick={() => setVisible(false)}
 					>
 						<CloseOutlined />
-					</span>
-				</div>
-				<div className="bg-gray-200 cursor-pointer flex items-center justify-between my-4 px-4 pl-3 py-2 rounded-br-3xl hover:bg-gray-300">
-					<span className="flex items-center">
-						<span className="mr-2 text-lg">
-							<span className="bg-primary-500 h-10 inline-flex items-center justify-center rounded-full text-gray-50 w-10">
-								<span className="left-[0.05rem] relative top-[0.075rem]">
-									J
-								</span>
-							</span>
-						</span>
-						<span className="font-semibold text-gray-700 text-sm md:text-base">
-							John Doe
-						</span>
-					</span>
-					<span className="ml-2 relative text-[8px] text-primary-500 top-[0.11rem]">
-						<CaretRightOutlined />
 					</span>
 				</div>
 				<div className="mt-6">

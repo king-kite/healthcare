@@ -11,7 +11,7 @@
 
 const Topbar = () => {
 	return (
-		<section className="bg-white container flex items-center justify-end mx-auto relative shadow-lg p-2 lg:p-4 w-full">
+		<section className="hidden bg-white container items-center justify-end mx-auto relative shadow-lg p-2 lg:flex lg:p-4 w-full">
 			<div className="flex items-center justify-end w-full sm:w-2/3">
 				<div className="flex items-center">
 					<span className="font-semibold text-gray-700 text-sm md:text-base">
