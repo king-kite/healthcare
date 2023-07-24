@@ -100,7 +100,7 @@ function Patients() {
 					>
 						Search
 					</label>
-					<Input
+					<Input.Search
 						allowClear
 						className="text-sm lg:text-base"
 						id="search"

@@ -22,8 +22,7 @@ import Login from './pages/account/login';
 import Dashboard from './pages/dashboard';
 import Profile from './pages/dashboard/profile';
 import Patients from './pages/dashboard/patients';
-// import RoomDetail from './pages/dashboard/rooms/detail';
-// import Settings from './pages/dashboard/settings';
+import PatientCreate from './pages/dashboard/patients/create';
 
 const routes = [
 	{
@@ -91,11 +90,10 @@ const routes = [
 						path: pageRoutes.PATIENTS_PAGE,
 						element: <Patients />,
 					},
-					// {
-					// 	action: updateUserInfo,
-					// 	path: pageRoutes.SETTINGS_PAGE,
-					// 	element: <Settings />,
-					// },
+					{
+						path: pageRoutes.PATIENT_CREATE_PAGE,
+						element: <PatientCreate />,
+					},
 				],
 			},
 		],
