@@ -1,12 +1,14 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Input, Table } from 'antd';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Container from '../../../components/container';
 import {
 	TableAvatarTitleOtherCell as PatientCell,
 	TableHeadCell,
 } from '../../../components/table/cells';
+import routes from '../../../config/routes';
 
 function Patients() {
 	const columns = React.useMemo(
@@ -110,17 +112,19 @@ function Patients() {
 					/>
 				</div>
 				<div className="sm:col-span-1">
-					<Button
-						block
-						icon={
-							<span className="mr-2 text-sm md:text-base">
-								<PlusOutlined />
-							</span>
-						}
-						size="large"
-					>
-						<span className="text-sm md:text-base">New Patient</span>
-					</Button>
+					<Link className="block w-full" to={routes.PATIENT_CREATE_PAGE}>
+						<Button
+							block
+							icon={
+								<span className="mr-2 text-sm md:text-base">
+									<PlusOutlined />
+								</span>
+							}
+							size="large"
+						>
+							<span className="text-sm md:text-base">New Patient</span>
+						</Button>
+					</Link>
 				</div>
 			</div>
 			<Table

@@ -7,7 +7,10 @@ export const LOGIN_PAGE = AUTH_BASE_PAGE + '/login';
 
 // Dashboard
 export const DASHBOARD_PAGE = '/dashboard';
+
 export const PATIENTS_PAGE = '/dashboard/patients';
+export const PATIENT_CREATE_PAGE = '/dashboard/patients/create';
+
 export const PROFILE_PAGE = '/dashboard/profile';
 export const SETTINGS_PAGE = '/dashboard/settings';
 
@@ -21,7 +24,10 @@ const routes = {
 
 	// Dashboard
 	DASHBOARD_PAGE,
+
 	PATIENTS_PAGE,
+	PATIENT_CREATE_PAGE,
+
 	PROFILE_PAGE,
 	SETTINGS_PAGE,
 };
