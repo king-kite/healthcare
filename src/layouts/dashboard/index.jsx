@@ -10,8 +10,8 @@ function DashboardLayout() {
 
 	return (
 		<div className="bg-gray-50 w-full">
-			<div className="bg-white p-4 shadow-lg lg:hidden">
-				<div className="container-dashboard flex items-center justify-between mx-auto">
+			<div className="bg-white container-dashboard p-4 shadow-lg lg:hidden">
+				<div className="flex items-center justify-between">
 					{/* Logo */}
 					<div>
 						<div className="h-[30px] w-[150px]">
