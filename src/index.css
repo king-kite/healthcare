@@ -55,6 +55,9 @@ button span {
 
 	@apply h-full w-full;
 }
+.container-dashboard {
+	@apply px-4 md:px-6 lg:px-8;
+}
 
 .sidebar-close-icon {
 	@apply bg-transparent cursor-pointer duration-300 flex h-10 items-center justify-center rounded-full text-primary-600 text-xl transform transition w-10 hover:bg-gray-200 hover:scale-110 lg:hidden;

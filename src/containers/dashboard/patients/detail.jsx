@@ -1,9 +1,8 @@
 import { UserAddOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
-
 function Detail() {
-  const data = [
+	const data = [
 		{
 			title: 'First name',
 			value: 'Richard',
@@ -30,11 +29,11 @@ function Detail() {
 		},
 	];
 
-  return (
-    <>
+	return (
+		<>
 			<div className="profile-top-image">
 				<div className="wrapper">
-					<div className="container h-full mx-auto relative w-full">
+					<div className="container-dashboard h-full mx-auto relative w-full">
 						<span className="absolute bottom-[-3rem] left-4">
 							<span className="bg-primary-500 border-4 border-gray-100 border-solid h-24 inline-flex items-center justify-center rounded-full text-gray-50 w-24">
 								<span className="left-[0.05rem] relative text-xl top-[0.075rem]">
@@ -45,7 +44,7 @@ function Detail() {
 					</div>
 				</div>
 			</div>
-			<div className="container mx-auto p-4 w-full">
+			<div className="container-dashboard w-full">
 				<div className="my-8 px-2">
 					<h1 className="font-bold mb-2 mt-5 text-gray-700 text-lg">
 						Richard Cooper
@@ -95,7 +94,7 @@ function Detail() {
 				</div>
 			</div>
 		</>
-  )
+	);
 }
 
-export default Detail
+export default Detail;
