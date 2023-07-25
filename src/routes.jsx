@@ -22,7 +22,9 @@ import Login from './pages/account/login';
 import Dashboard from './pages/dashboard';
 import Profile from './pages/dashboard/profile';
 import Patients from './pages/dashboard/patients';
+import PatientDetail from './pages/dashboard/patients/[id]';
 import PatientCreate from './pages/dashboard/patients/create';
+import PatientEdit from './pages/dashboard/patients/[id]/edit';
 
 const routes = [
 	{
@@ -93,6 +95,14 @@ const routes = [
 					{
 						path: pageRoutes.PATIENT_CREATE_PAGE,
 						element: <PatientCreate />,
+					},
+					{
+						path: pageRoutes.PATIENT_PAGE(':id'),
+						element: <PatientDetail />,
+					},
+					{
+						path: pageRoutes.PATIENT_EDIT_PAGE(':id'),
+						element: <PatientEdit />
 					},
 				],
 			},

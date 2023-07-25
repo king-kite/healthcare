@@ -1,5 +1,10 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, Input, Table } from 'antd';
+import {
+	ArrowRightOutlined,
+	PlusOutlined,
+	EditOutlined,
+	DeleteOutlined,
+} from '@ant-design/icons';
+import { Button, Input, Table, Tooltip } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -17,7 +22,7 @@ function Patients() {
 				className: 'font-normal text-gray-700 text-sm',
 				title: <TableHeadCell title="Patient" />,
 				dataIndex: 'patient',
-				width: '30%',
+				width: '40%',
 			},
 			{
 				className: 'font-normal text-gray-700 text-sm',
@@ -33,6 +38,11 @@ function Patients() {
 				className: 'font-normal text-gray-700 text-sm',
 				title: <TableHeadCell title="Date of Birth" />,
 				dataIndex: 'dob',
+			},
+			{
+				className: 'font-normal text-gray-700 text-sm',
+				title: <TableHeadCell title="Actions" />,
+				dataIndex: 'actions',
 			},
 		],
 		[]
@@ -82,6 +92,41 @@ function Patients() {
 				/>
 			),
 			key: index,
+			actions: (
+				<div className="flex items-center">
+					<span className="px-2">
+						<Tooltip title="View">
+							<Link to={routes.PATIENT_PAGE(index)}>
+								<Button type="primary" shape="circle">
+									<span className="text-gray-100 text-sm md:text-base">
+										<ArrowRightOutlined />
+									</span>
+								</Button>
+							</Link>
+						</Tooltip>
+					</span>
+					<span className="px-2">
+						<Tooltip title="Edit">
+							<Link to={routes.PATIENT_EDIT_PAGE(index)}>
+								<Button className="bg-blue-500" type="dashed" shape="circle">
+									<span className="text-gray-100 text-sm md:text-base">
+										<EditOutlined />
+									</span>
+								</Button>
+							</Link>
+						</Tooltip>
+					</span>
+					<span className="px-2">
+						<Tooltip title="Delete">
+							<Button className="bg-red-500" type="dashed" shape="circle">
+								<span className="text-gray-100 text-sm md:text-base">
+									<DeleteOutlined />
+								</span>
+							</Button>
+						</Tooltip>
+					</span>
+				</div>
+			),
 		}));
 		return keyedData;
 	}, []);
