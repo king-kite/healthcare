@@ -13,7 +13,7 @@ function SidebarLink({
 	const value = useMatch(href);
 
 	const isActive = React.useMemo(() => value !== null, [value]);
-	const starts = React.useMemo(() => pathname !== "/" && href !== "/" && pathname !== href & pathname.startsWith(href), [href, pathname])
+	const starts = React.useMemo(() => pathname !== "/dashboard" && href !== "/dashboard" && pathname !== href & pathname.startsWith(href), [href, pathname])
 
 	return (
 		<Link

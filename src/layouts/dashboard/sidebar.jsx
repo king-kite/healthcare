@@ -3,6 +3,7 @@ import {
 	GroupOutlined,
 	PieChartOutlined,
 	SettingOutlined,
+	SolutionOutlined,
 	UserOutlined,
 } from '@ant-design/icons';
 import React from 'react';
@@ -26,6 +27,11 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 				icon: GroupOutlined,
 				title: 'Patients',
 				href: routes.PATIENTS_PAGE,
+			},
+			{
+				icon: SolutionOutlined,
+				title: 'Tests',
+				href: routes.TESTS_PAGE,
 			},
 			{
 				icon: UserOutlined,
