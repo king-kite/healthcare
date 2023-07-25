@@ -33,17 +33,21 @@ function PatientForm() {
 	const [imgLoading, setImgLoading] = React.useState(false);
 
 	const handleChange = React.useCallback((info) => {
-		if (info.file.status === 'uploading') {
-			setImgLoading(true);
-			return;
-		}
-		if (info.file.status === 'done') {
-			// Get this url from response in real world.
-			getBase64(info.file.originFileObj, (url) => {
-				setImgLoading(false);
-				setImageUrl(url);
-			});
-		}
+		console.log({ info });
+		// if (info.file.status === 'uploading') {
+		// 	setImgLoading(true);
+		// 	return;
+		// }
+		// if (info.file.status === 'error') {
+		// 	setImgLoading(false);
+		// }
+		// if (info.file.status === 'done') {
+		// 	// Get this url from response in real world.
+		// 	getBase64(info.file.originFileObj, (url) => {
+		// 		setImgLoading(false);
+		// 		setImageUrl(url);
+		// 	});
+		// }
 	}, []);
 
 	const uploadButton = (
@@ -65,6 +69,7 @@ function PatientForm() {
 					</label>
 					<div>
 						<Upload
+							accept="image/"
 							name="image"
 							listType="picture-card"
 							className="avatar-uploader"
@@ -72,6 +77,10 @@ function PatientForm() {
 							action={() => new Promise((resolve) => resolve(''))}
 							beforeUpload={beforeUpload}
 							onChange={handleChange}
+							customRequest={(customRequestData) => {
+								console.log('The custom request function was called');
+								console.log(customRequestData);
+							}}
 						>
 							{imageUrl ? (
 								<img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
@@ -226,27 +235,24 @@ function PatientForm() {
 					>
 						Date of Birth
 					</label>
-					<Input
-						allowClear
-						className="text-sm lg:text-base"
+					<DatePicker
+						className="text-sm w-full lg:text-base"
 						id="dob"
 						name="dob"
-						// disabled={loading}
-						placeholder="Enter patient's date of birth"
 						size="large"
-						type="date"
 					/>
-					<DatePicker size="large" />
 				</div>
 			</div>
-			<div className="mt-6 flex items-center justify-end gap-x-6">
+			<div className="mt-6 flex items-center gap-x-6">
 				<Button size="large" type="default" typeof="button">
-					<span className="px-2 text-gray-700 text-sm md:text-base">
+					<span className="px-2 text-gray-700 text-sm md:px-2 md:text-base">
 						Cancel
 					</span>
 				</Button>
 				<Button size="large" type="primary" typeof="submit">
-					<span className="px-2 text-gray-700 text-sm md:text-base">Save</span>
+					<span className="px-2 text-gray-100 text-sm md:px-4 md:text-base">
+						Save
+					</span>
 				</Button>
 			</div>
 		</Form>
