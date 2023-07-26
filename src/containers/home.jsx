@@ -1,9 +1,15 @@
-import { Button } from 'antd';
+import { Button, Spin } from 'antd';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import routes from '../config/routes';
+import useLogout from '../hooks/useLogout';
 
 function Home() {
+	const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
+
+	const { logout, loading: logoutLoading } = useLogout();
+
 	return (
 		<div className="bg-gray-50 min-h-screen w-full">
 			<div className="bg-white p-4 shadow-lg">
@@ -16,25 +22,35 @@ function Home() {
 						/>
 					</div>
 					<div className="flex items-center">
-						<Link to={routes.LOGIN_PAGE}>
-							<Button size="large" type="primary">
-								<span className="px-2 text-sm md:text-base">Login</span>
-							</Button>
-						</Link>
-						<Link className="mx-3" to={routes.DASHBOARD_PAGE}>
-							<Button size="large" type="primary">
-								<span className="px-2 text-sm md:text-base">Dashboard</span>
-							</Button>
-						</Link>
-						<span>
-							<Button
-								className="border border-primary-500 border-solid"
-								size="large"
-								type="ghost"
-							>
-								<span className="px-2 text-sm md:text-base">Logout</span>
-							</Button>
-						</span>
+						{isLoading ? (
+							<Spin spinning />
+						) : isAuthenticated ? (
+							<>
+								<Link className="mx-3" to={routes.DASHBOARD_PAGE}>
+									<Button size="large" type="primary">
+										<span className="px-2 text-sm md:text-base">Dashboard</span>
+									</Button>
+								</Link>
+								<span>
+									<Button
+										className="border border-primary-500 border-solid cursor-pointer"
+										size="large"
+										type="ghost"
+										loading={logoutLoading}
+										disabled={logoutLoading}
+										onClick={logout}
+									>
+										<span className="px-2 text-sm md:text-base">Logout</span>
+									</Button>
+								</span>
+							</>
+						) : (
+							<Link to={routes.LOGIN_PAGE}>
+								<Button size="large" type="primary">
+									<span className="px-2 text-sm md:text-base">Login</span>
+								</Button>
+							</Link>
+						)}
 					</div>
 				</div>
 			</div>
@@ -57,8 +73,16 @@ function Home() {
 						track of your health.
 					</p>
 					<div className="flex justify-center lg:justify-start">
-						<Link to={routes.LOGIN_PAGE}>
-							<Button size="large" type="primary">
+						<Link
+							to={
+								isLoading
+									? undefined
+									: isAuthenticated
+									? routes.DASHBOARD_PAGE
+									: routes.LOGIN_PAGE
+							}
+						>
+							<Button disabled={isLoading} size="large" type="primary">
 								<span className="px-2 text-sm md:text-base">Get Started</span>
 							</Button>
 						</Link>
