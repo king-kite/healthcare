@@ -2,7 +2,6 @@ import {
 	CloseOutlined,
 	GroupOutlined,
 	PieChartOutlined,
-	SettingOutlined,
 	SolutionOutlined,
 	UserOutlined,
 } from '@ant-design/icons';
@@ -38,11 +37,6 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 				title: 'Profile',
 				href: routes.PROFILE_PAGE,
 			},
-			{
-				icon: SettingOutlined,
-				title: 'Settings',
-				href: routes.SETTINGS_PAGE,
-			},
 		],
 		[]
 	);
@@ -62,7 +56,7 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 					visible ? 'translate-x-0' : 'translate-x-full'
 				} ${sidebarStyle}`}
 			>
-				<div className="flex items-center justify-between px-4 py-5">
+				<div className="flex items-center justify-between px-4 py-5 lg:flex lg:justify-center">
 					<span className="h-[30px] inline-block w-[150px]">
 						<img
 							className="h-full w-full"
@@ -71,11 +65,21 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 						/>
 					</span>
 					<span
-						className="sidebar-close-icon"
+						className="sidebar-close-icon lg:hidden"
 						onClick={() => setVisible(false)}
 					>
 						<CloseOutlined />
 					</span>
+				</div>
+				<div className="flex flex-col items-center w-full">
+					<span className="bg-primary-500 border-4 border-solid border-white h-16 inline-flex items-center justify-center rounded-full text-gray-50 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
+						<span className="left-[0.05rem] relative top-[0.075rem] text-lg md:text-xl lg:text-2xl">
+							J
+						</span>
+					</span>
+					<p className="capitalize font-semibold my-2 text-gray-800 text-center text-sm lg:text-base">
+						Richard Cooper
+					</p>
 				</div>
 				<div className="mt-6">
 					<div>

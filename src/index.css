@@ -115,12 +115,12 @@ button span {
 ::-webkit-scrollbar-thumb:hover {
 	background: #a0aec0;
 }
-
+/* 
 @media (min-height: 500px) {
 	.sidebar-logout {
 		@apply absolute bottom-10;
 	}
-}
+} */
 
 /*.ant-switch-checked.active-device {
   @apply bg-gray-100;

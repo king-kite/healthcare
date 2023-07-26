@@ -11,8 +11,15 @@
 
 const Topbar = () => {
 	return (
-		<section className="hidden bg-white container items-center justify-end mx-auto relative shadow-lg p-2 lg:flex lg:p-4 w-full">
-			<div className="flex items-center justify-end w-full sm:w-2/3">
+		<section className="hidden bg-white container items-center justify-between mx-auto relative shadow-lg p-2 lg:flex lg:p-4 w-full">
+			<span className="h-[40px] inline-block w-[250px]">
+				<img
+					className="h-full w-full"
+					src="/images/vitalcare-logo.png"
+					alt="Vitalcare"
+				/>
+			</span>
+			<div className="flex items-center justify-end w-full">
 				<div className="flex items-center">
 					<span className="font-semibold text-gray-700 text-sm md:text-base">
 						John Doe

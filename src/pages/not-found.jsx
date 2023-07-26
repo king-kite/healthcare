@@ -18,13 +18,13 @@ function Page() {
 				<div className="gap-6 mt-10 flex flex-col items-center justify-between sm:flex-row">
 					<span
 						onClick={() => navigate(-1)}
-						className="rounded-md no-underline bg-primary-600 mx-2 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+						className="cursor-pointer hover:bg-primary-500 rounded-md no-underline bg-primary-600 mx-2 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
 					>
 						Go back
 					</span>
 					<Link
 						to={routes.HOME_PAGE}
-						className="rounded-md no-underline bg-primary-600 mx-2 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+						className="cursor-pointer hover:bg-primary-500 rounded-md no-underline bg-primary-600 mx-2 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
 					>
 						Go home
 					</Link>

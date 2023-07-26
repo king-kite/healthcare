@@ -16,6 +16,7 @@ export const PATIENT_EDIT_PAGE = (id) => PATIENT_PAGE(id) + '/edit';
 
 // Tests
 export const TESTS_PAGE = '/dashboard/tests';
+export const TEST_PAGE = (id) => TESTS_PAGE + `/${id}`;
 
 export const PROFILE_PAGE = '/dashboard/profile';
 export const SETTINGS_PAGE = '/dashboard/settings';
@@ -39,6 +40,7 @@ const routes = {
 
 	// Tests
 	TESTS_PAGE,
+	TEST_PAGE,
 
 	PROFILE_PAGE,
 	SETTINGS_PAGE,

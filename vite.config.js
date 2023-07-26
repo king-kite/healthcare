@@ -8,6 +8,6 @@ export default defineConfig({
   publicDir: '../public',
   root: './src',
   server: {
-    port: 3000,
+    port: process.env.PORT || 3000,
   },
 });

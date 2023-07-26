@@ -21,10 +21,16 @@ import Login from './pages/account/login';
 // Dashboard
 import Dashboard from './pages/dashboard';
 import Profile from './pages/dashboard/profile';
+
+// Patients
 import Patients from './pages/dashboard/patients';
 import PatientDetail from './pages/dashboard/patients/[id]';
 import PatientCreate from './pages/dashboard/patients/create';
 import PatientEdit from './pages/dashboard/patients/[id]/edit';
+
+// Tests and Diagnosis
+import Tests from './pages/dashboard/tests';
+import TestDetail from './pages/dashboard/tests/[id]';
 
 const routes = [
 	{
@@ -88,6 +94,8 @@ const routes = [
 						path: pageRoutes.PROFILE_PAGE,
 						element: <Profile />,
 					},
+
+					// Patients
 					{
 						path: pageRoutes.PATIENTS_PAGE,
 						element: <Patients />,
@@ -104,6 +112,16 @@ const routes = [
 						path: pageRoutes.PATIENT_EDIT_PAGE(':id'),
 						element: <PatientEdit />
 					},
+
+					// Tests and Diagnosis
+					{
+						path: pageRoutes.TESTS_PAGE,
+						element: <Tests />
+					},
+					{
+						path: pageRoutes.TEST_PAGE(':id'),
+						element: <TestDetail />
+					}
 				],
 			},
 		],
