@@ -81,7 +81,7 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 						Richard Cooper
 					</p>
 				</div>
-				<div className="mt-6">
+				<div className="mt-1 mb-3">
 					<div>
 						{links.map((props, index) => (
 							<SidebarLink

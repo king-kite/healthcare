@@ -85,7 +85,7 @@ button span {
 }
 
 .sidebar-logout {
-	@apply text-red-500;
+	@apply overflow-hidden text-red-500;
 }
 
 .sidebar-logout:hover {
@@ -115,12 +115,12 @@ button span {
 ::-webkit-scrollbar-thumb:hover {
 	background: #a0aec0;
 }
-/* 
-@media (min-height: 500px) {
+
+@media (min-height: 550px) {
 	.sidebar-logout {
 		@apply absolute bottom-10;
 	}
-} */
+}
 
 /*.ant-switch-checked.active-device {
   @apply bg-gray-100;

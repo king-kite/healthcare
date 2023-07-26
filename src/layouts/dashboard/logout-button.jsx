@@ -22,15 +22,17 @@ function LogoutButton({ setVisible }) {
 			disabled={loading}
 			loading={loading}
 			icon={
-				<span className="mr-2 text-xl">
+				<span className="text-xl">
 					<LogoutOutlined />
 				</span>
 			}
 			onClick={handleLogout}
 			size="large"
-			type="default"
+			type="ghost"
 		>
-			<span className="font-semibold text-sm md:text-base">Logout</span>
+			<span className="flex font-semibold text-left text-sm w-full md:text-base">
+				Logout
+			</span>
 		</Button>
 	);
 }
