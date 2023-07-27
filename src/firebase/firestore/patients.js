@@ -10,28 +10,28 @@ import {
 	query,
 	updateDoc,
 	where,
-} from 'firebase/firestore';
+} from "firebase/firestore";
 
-import { auth, firestore } from '.';
-import { handleError } from './utils';
-import { handleYupError } from '../validators';
-import patientSchema from '../validators/patient';
+import { auth, firestore } from "..";
+import { handleError } from "../utils";
+import { handleYupError } from "../../validators";
+import patientSchema from "../../validators/patient";
 
-const ref = 'patients';
-const testRef = 'tests';
+const ref = "patients";
+const testRef = "tests";
 
 // Get the patients data from the firestore
 export async function getPatients({ onSuccess, onSettled, onError }) {
 	try {
 		// Not Logged In, throw error
 		if (!auth.currentUser)
-			throw new Error('Authentication credentials were not provided!');
+			throw new Error("Authentication credentials were not provided!");
 
 		// Get the patients data from the firestore collection
 		// and order by first_name in ascending order
 		const patientsRef = collection(firestore, ref);
 		const patients = await getDocs(
-			query(patientsRef, orderBy('first_name', 'asc'))
+			query(patientsRef, orderBy("first_name", "asc"))
 		);
 
 		// Get the data from each doc in the patients array
@@ -43,6 +43,7 @@ export async function getPatients({ onSuccess, onSettled, onError }) {
 				first_name: info.first_name,
 				last_name: info.last_name,
 				email: info.email,
+				image: info.image,
 				dob: info.dob.toDate(),
 				gender: info.gender,
 				phone: info.phone,
@@ -67,10 +68,10 @@ export async function getPatient({ id, onSuccess, onSettled, onError }) {
 	try {
 		// Not Logged In, throw error
 		if (!auth.currentUser)
-			throw new Error('Authentication credentials were not provided!');
+			throw new Error("Authentication credentials were not provided!");
 
 		// Check id is valid
-		if (!id) throw new Error('An ID was not provided!');
+		if (!id) throw new Error("An ID was not provided!");
 
 		// Get the patient data from the firestore
 		const patientRef = doc(firestore, ref, id);
@@ -83,6 +84,7 @@ export async function getPatient({ id, onSuccess, onSettled, onError }) {
 			first_name: patient.first_name,
 			last_name: patient.last_name,
 			email: patient.email,
+			image: patient.image,
 			dob: patient.dob.toDate(),
 			gender: patient.gender,
 			phone: patient.phone,
@@ -106,10 +108,10 @@ export async function addPatient({ data, onSuccess, onSettled, onError }) {
 	try {
 		// Not Logged In, throw error
 		if (!auth.currentUser)
-			throw new Error('Authentication credentials were not provided!');
+			throw new Error("Authentication credentials were not provided!");
 
 		// Check data is provided
-		if (!data) throw new Error('Patient data is required!');
+		if (!data) throw new Error("Patient data is required!");
 
 		// Validate the data using the schema
 		const payload = await patientSchema.validate(data);
@@ -119,6 +121,8 @@ export async function addPatient({ data, onSuccess, onSettled, onError }) {
 			first_name: payload.first_name,
 			last_name: payload.last_name,
 			email: payload.email,
+			image: payload.image,
+			image_ref: payload.image_ref,
 			phone: payload.phone,
 			gender: payload.gender,
 			dob: Timestamp.fromDate(new Date(payload.dob)),
@@ -154,13 +158,13 @@ export async function editPatient({ id, data, onSuccess, onSettled, onError }) {
 	try {
 		// Not Logged In, throw error
 		if (!auth.currentUser)
-			throw new Error('Authentication credentials were not provided!');
+			throw new Error("Authentication credentials were not provided!");
 
 		// Check id is valid
-		if (!id) throw new Error('An ID was not provided!');
+		if (!id) throw new Error("An ID was not provided!");
 
 		// Check data is provided
-		if (!data) throw new Error('Patient data is required!');
+		if (!data) throw new Error("Patient data is required!");
 
 		// Validate the data using the schema
 		const payload = await patientSchema.validate(data);
@@ -170,6 +174,7 @@ export async function editPatient({ id, data, onSuccess, onSettled, onError }) {
 			first_name: payload.first_name,
 			last_name: payload.last_name,
 			email: payload.email,
+			image: payload.image,
 			phone: payload.phone,
 			gender: payload.gender,
 			dob: Timestamp.fromDate(new Date(payload.dob)),
@@ -204,10 +209,10 @@ export async function deletePatient({ id, onSuccess, onSettled, onError }) {
 	try {
 		// Not Logged In, throw error
 		if (!auth.currentUser)
-			throw new Error('Authentication credentials were not provided!');
+			throw new Error("Authentication credentials were not provided!");
 
 		// Check id is valid
-		if (!id) throw new Error('An ID was not provided!');
+		if (!id) throw new Error("An ID was not provided!");
 
 		// Delete the patient
 		await deleteDoc(doc(firestore, ref, id));
@@ -216,7 +221,7 @@ export async function deletePatient({ id, onSuccess, onSettled, onError }) {
 		// Get the tests data from the firestore collection
 		// where the test id is the same
 		const testsRef = collection(firestore, testRef);
-		const tests = await getDocs(query(testsRef, where('test_id', '==', id)));
+		const tests = await getDocs(query(testsRef, where("test_id", "==", id)));
 
 		// store the promises of the deleteDoc query and await them
 		const promises = [];
@@ -226,7 +231,7 @@ export async function deletePatient({ id, onSuccess, onSettled, onError }) {
 		await Promise.all(promises);
 
 		const result = {
-			message: 'Patient with the specified ID was deleted successfully!',
+			message: "Patient with the specified ID was deleted successfully!",
 		};
 
 		if (onSuccess) onSuccess(result);
