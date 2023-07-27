@@ -21,7 +21,7 @@ export function upload({
 				"state_changed",
 				() => {},
 				(error) => {
-					throw error;
+					reject(error);
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {

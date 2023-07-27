@@ -1,9 +1,9 @@
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Alert, Button, DatePicker, Input, Select, Upload } from "antd";
-import React from "react";
-import { Form, useNavigation } from "react-router-dom";
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Alert, Button, DatePicker, Input, Select, Upload } from 'antd';
+import React from 'react';
+import { Form, useNavigation } from 'react-router-dom';
 
-import { useUpload } from "../../firebase/storage/hooks";
+import { useUpload } from '../../firebase/storage/hooks';
 
 function PatientForm() {
 	const { state } = useNavigation();
@@ -11,7 +11,7 @@ function PatientForm() {
 	const [error, setError] = React.useState(null);
 
 	const loading = React.useMemo(
-		() => state === "loading" || state === "submitting",
+		() => state === 'loading' || state === 'submitting',
 		[state]
 	);
 
@@ -68,7 +68,7 @@ function PatientForm() {
 									<img
 										src={uploadData.url}
 										alt="avatar"
-										style={{ width: "100%" }}
+										style={{ width: '100%' }}
 									/>
 								) : (
 									<div>
@@ -175,32 +175,32 @@ function PatientForm() {
 						</label>
 						<Select
 							showSearch
-							style={{ width: "100%" }}
+							style={{ width: '100%' }}
 							id="gender"
 							name="gender"
 							size="large"
 							placeholder="Select Gender"
 							optionFilterProp="children"
 							filterOption={(input, option) =>
-								(option?.label ?? "").includes(input)
+								(option?.label ?? '').includes(input)
 							}
 							filterSort={(optionA, optionB) =>
-								(optionA?.label ?? "")
+								(optionA?.label ?? '')
 									.toLowerCase()
-									.localeCompare((optionB?.label ?? "").toLowerCase())
+									.localeCompare((optionB?.label ?? '').toLowerCase())
 							}
 							options={[
 								{
-									value: "",
-									label: "Not Identified",
+									value: '',
+									label: 'Not Identified',
 								},
 								{
-									value: "Male",
-									label: "Male",
+									value: 'Male',
+									label: 'Male',
 								},
 								{
-									value: "Female",
-									label: "Female",
+									value: 'Female',
+									label: 'Female',
 								},
 							]}
 						/>
