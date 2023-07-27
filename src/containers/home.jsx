@@ -1,9 +1,9 @@
-import { Button, Spin } from 'antd';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Button, Spin } from "antd";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-import routes from '../config/routes';
-import useLogout from '../hooks/useLogout';
+import routes from "../config/routes";
+import useLogout from "../hooks/useLogout";
 
 function Home() {
 	const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
@@ -54,8 +54,8 @@ function Home() {
 					</div>
 				</div>
 			</div>
-			<div className="container mx-auto p-4 lg:flex lg:flex-row-reverse lg:items-center">
-				<div className="bg-auth-lg-background my-2 rounded w-full">
+			<div className="container mx-auto p-4 lg:flex lg:flex-row-reverse lg:items-center lg:justify-between">
+				<div className="bg-auth-lg-background my-2 rounded w-full lg:max-w-xl">
 					<div className="h-[250px] relative w-full sm:h-[300px] lg:h-[400px]">
 						<img
 							className="h-full rounded w-full"
@@ -64,11 +64,11 @@ function Home() {
 						/>
 					</div>
 				</div>
-				<div className="my-3">
+				<div className="my-3 lg:max-w-xl">
 					<h1 className="font-semibold my-3 text-center text-primary-500 lg:font-bold lg:text-left lg:text-5xl">
 						Keep track of your health easily.
 					</h1>
-					<p className="font-medium my-3 p-2 text-center text-gray-800 text-base lg:px-0 lg:text-left lg:text-lg">
+					<p className="font-medium my-3 p-2 text-center text-gray-800 text-base lg:max-w-sm lg:px-0 lg:text-left lg:text-lg">
 						Self service you can do anywhere. Simplify the steps needed to keep
 						track of your health.
 					</p>

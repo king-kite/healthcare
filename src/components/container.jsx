@@ -1,4 +1,6 @@
-function Container({ children, title }) {
+import { Alert } from "antd";
+
+function Container({ children, alert, title }) {
 	return (
 		<>
 			<div className="container-banner">
@@ -10,7 +12,21 @@ function Container({ children, title }) {
 					</div>
 				</div>
 			</div>
-			<div className="container-dashboard py-4">{children}</div>
+			<div className="container-dashboard py-4">
+				{alert && (
+					<div className="my-3">
+						<Alert
+							message={alert.title}
+							description={alert.message}
+							showIcon
+							type={alert.type}
+							closable
+							onClose={alert.close}
+						/>
+					</div>
+				)}
+				{children}
+			</div>
 		</>
 	);
 }

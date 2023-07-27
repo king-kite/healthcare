@@ -1,19 +1,23 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import {
-	ArrowRightOutlined,
+	ExclamationCircleOutlined,
 	PlusOutlined,
-	EditOutlined,
-	DeleteOutlined,
+	UndoOutlined,
 } from '@ant-design/icons';
-import { Button, Tooltip } from 'antd';
+import { Button, Result, Skeleton } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Container from '../../../components/container';
 import { TableAvatarTitleSubCell as PatientCell } from '../../../components/table/cells';
-import ReactTable from '../../../components/table';
+import Table from '../../../components/table';
 import routes from '../../../config/routes';
+import { useGetPatients } from '../../../firebase/firestore/hooks';
 
 function Patients() {
+	const { data, errorMessage, clearError, isLoading, isFetching, refetch } =
+		useGetPatients();
+
 	const columns = React.useMemo(
 		() => [
 			{
@@ -44,102 +48,87 @@ function Patients() {
 		[]
 	);
 
-	const data = React.useMemo(() => {
-		const data = [
-			{
-				first_name: 'John',
-				last_name: 'Doe',
-				email: 'johndoe@gmail.com',
-				phone: '08103874632',
-				gender: 'Male',
-				dob: '2000-01-01',
-			},
-			{
-				first_name: 'Jane',
-				last_name: 'Doe',
-				email: 'janedoe@gmail.com',
-				phone: '123456789',
-				gender: 'Female',
-				dob: '2000-01-01',
-			},
-			{
-				first_name: 'Richard',
-				last_name: 'Cooper',
-				email: 'richardcooper@gmail.com',
-				phone: '08103874632',
-				gender: 'Male',
-				dob: '2000-01-01',
-			},
-			{
-				first_name: 'Mary',
-				last_name: 'Jane',
-				email: 'maryjane@gmail.com',
-				phone: '123456789',
-				gender: 'Female',
-				dob: '2000-01-01',
-			},
-		];
-		const keyedData = data.map((item, index) => ({
-			...item,
-			key: index,
-			full_name: item.first_name + ' ' + item.last_name,
-			actions: (
-				<div className="flex items-center">
-					<span className="px-2">
-						<Tooltip title="View">
-							<Link to={routes.PATIENT_PAGE(index)}>
-								<Button type="primary" shape="circle">
-									<span className="text-gray-100 text-sm md:text-base">
-										<ArrowRightOutlined />
-									</span>
-								</Button>
-							</Link>
-						</Tooltip>
-					</span>
-					<span className="px-2">
-						<Tooltip title="Edit">
-							<Link to={routes.PATIENT_EDIT_PAGE(index)}>
-								<Button className="bg-blue-500" type="dashed" shape="circle">
-									<span className="text-gray-100 text-sm md:text-base">
-										<EditOutlined />
-									</span>
-								</Button>
-							</Link>
-						</Tooltip>
-					</span>
-					<span className="px-2">
-						<Tooltip title="Delete">
-							<Button className="bg-red-500" type="dashed" shape="circle">
-								<span className="text-gray-100 text-sm md:text-base">
-									<DeleteOutlined />
-								</span>
-							</Button>
-						</Tooltip>
-					</span>
-				</div>
-			),
-		}));
-		return keyedData;
-	}, []);
-
 	return (
-		<Container title="Patients">
-			<div className="w-full sm:w-1/2 md:w-1/3">
-				<Link className="block w-full" to={routes.PATIENT_CREATE_PAGE}>
+		<Container
+			alert={
+				errorMessage
+					? {
+							type: 'error',
+							title: 'Error: Failed to Load.',
+							message: errorMessage,
+							close: clearError,
+					  }
+					: undefined
+			}
+			title="Patients"
+		>
+			<div className="sm:flex sm:items-center">
+				<div className="my-2 w-full sm:my-0 sm:w-1/2 md:w-1/3 lg:w-1/4">
+					<Link className="block w-full" to={routes.PATIENT_CREATE_PAGE}>
+						<Button
+							block
+							icon={
+								<span className="mr-2 text-gray-700 text-sm md:text-base">
+									<PlusOutlined />
+								</span>
+							}
+							size="large"
+						>
+							<span className="text-sm text-gray-700 md:text-base">
+								New Patient
+							</span>
+						</Button>
+					</Link>
+				</div>
+				<div className="my-2 w-full sm:my-0 sm:w-1/2 md:ml-4 md:w-1/3 lg:w-1/4">
 					<Button
 						block
+						disabled={isFetching}
+						loading={isFetching}
+						onClick={refetch}
 						icon={
-							<span className="mr-2 text-sm md:text-base">
-								<PlusOutlined />
+							<span className="mr-2 text-gray-700 text-sm md:text-base">
+								<UndoOutlined />
 							</span>
 						}
 						size="large"
 					>
-						<span className="text-sm md:text-base">New Patient</span>
+						<span className="text-sm text-gray-700 md:text-base">Refresh</span>
 					</Button>
-				</Link>
+				</div>
 			</div>
-			<ReactTable columns={columns} data={data} />
+
+			<div className="my-2 py-4">
+				{isLoading ? (
+					<Skeleton active />
+				) : data && data.length > 0 ? (
+					<Table columns={columns} data={data} />
+				) : (
+					<Result
+						icon={
+							<span className="text-primary-500 text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
+								<ExclamationCircleOutlined />
+							</span>
+						}
+						title="There are no registered patients."
+						extra={
+							<Link className="w-full" to={routes.PATIENT_CREATE_PAGE}>
+								<Button
+									icon={
+										<span className="mr-2 text-sm md:text-base">
+											<PlusOutlined />
+										</span>
+									}
+									size="large"
+									type="primary"
+								>
+									<span className="text-sm md:text-base">Register one now</span>
+								</Button>
+							</Link>
+						}
+					/>
+				)}
+			</div>
 		</Container>
 	);
 }
