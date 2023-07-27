@@ -1,5 +1,4 @@
 import {
-	createUserWithEmailAndPassword,
 	sendPasswordResetEmail,
 	signInWithEmailAndPassword,
 	signOut,
@@ -53,40 +52,6 @@ export async function updateProfileInfo({ email, ...payload }) {
 				},
 			};
 		}
-	} catch (error) {
-		return {
-			error: handleError(error),
-		};
-	}
-}
-
-// TODO: Remove this function. Not being used.
-// register use with email and password
-export async function emailPasswordSignUp({ email, password }) {
-	try {
-		const credentials = await createUserWithEmailAndPassword(
-			auth,
-			email,
-			password
-		);
-
-		if (credentials?.user) {
-			return {
-				data: {
-					dsiplayName: credentials.user.displayName,
-					email: credentials.user.email,
-					id: credentials.user.uid,
-					image: credentials.user.photoURL,
-					phone: credentials.user.phoneNumber,
-				},
-			};
-		}
-
-		return {
-			error: {
-				message: 'A server error occurred. Unable to sign up!',
-			},
-		};
 	} catch (error) {
 		return {
 			error: handleError(error),
