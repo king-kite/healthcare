@@ -20,7 +20,7 @@ function Container({ children, alert, title }) {
 							description={alert.message}
 							showIcon
 							type={alert.type}
-							closable
+							closable={alert.close ? true : false}
 							onClose={alert.close}
 						/>
 					</div>

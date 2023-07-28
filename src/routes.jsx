@@ -101,6 +101,7 @@ const routes = [
 						element: <Patients />,
 					},
 					{
+						action: PatientCreate.action,
 						path: pageRoutes.PATIENT_CREATE_PAGE,
 						element: <PatientCreate />,
 					},

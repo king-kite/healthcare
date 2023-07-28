@@ -1,19 +1,28 @@
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { Alert, Button, DatePicker, Input, Select, Upload } from 'antd';
-import React from 'react';
-import { Form, useNavigation } from 'react-router-dom';
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { Alert, Button, Upload } from "antd";
+import React from "react";
+import { Form, useActionData, useNavigation } from "react-router-dom";
 
-import { useUpload } from '../../firebase/storage/hooks';
+import { DatePicker, Input, Select } from "../../components/controls";
+import { useUpload } from "../../firebase/storage/hooks";
 
-function PatientForm() {
+function PatientsForm({ action: actionUrl, data = {}, method = "post" }) {
+	const action = useActionData();
 	const { state } = useNavigation();
 
 	const [error, setError] = React.useState(null);
 
 	const loading = React.useMemo(
-		() => state === 'loading' || state === 'submitting',
+		() => state === "loading" || state === "submitting",
 		[state]
 	);
+
+	React.useEffect(() => {
+		if (action?.error) {
+			setError(action.error.message);
+			window.scrollTo(0, 0); // scroll to the top to view the message
+		}
+	}, [action]);
 
 	const {
 		data: uploadData,
@@ -46,7 +55,7 @@ function PatientForm() {
 					/>
 				</div>
 			)}
-			<Form method="post">
+			<Form method={method} action={actionUrl}>
 				<div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 					<div className="sm:col-span-full">
 						<label
@@ -64,11 +73,11 @@ function PatientForm() {
 								showUploadList={false}
 								customRequest={handleImageUpload}
 							>
-								{uploadData?.url ? (
+								{uploadData?.url || data.image ? (
 									<img
-										src={uploadData.url}
+										src={uploadData?.url || data.image}
 										alt="avatar"
-										style={{ width: '100%' }}
+										style={{ width: "100%" }}
 									/>
 								) : (
 									<div>
@@ -79,7 +88,11 @@ function PatientForm() {
 							</Upload>
 						</div>
 						<div>
-							<input type="hidden" name="image" value={uploadData?.url} />
+							<input
+								type="hidden"
+								name="image"
+								value={uploadData?.url || data.image}
+							/>
 							<input
 								type="hidden"
 								name="image_ref"
@@ -88,165 +101,128 @@ function PatientForm() {
 						</div>
 					</div>
 					<div className="sm:col-span-3">
-						<label
-							className="block font-medium my-1 text-sm text-gray-700 md:text-base"
-							htmlFor="first_name"
-						>
-							First name
-						</label>
 						<Input
-							allowClear
-							className="text-sm lg:text-base"
+							defaultValue={data.first_name || undefined}
 							id="first_name"
+							label="First name"
 							name="first_name"
-							// disabled={loading}
+							error={
+								error && action?.error?.path === "first_name"
+									? error
+									: undefined
+							}
+							disabled={loading}
 							placeholder="Enter patient's first name e.g. Richard"
-							size="large"
-							type="text"
 						/>
 					</div>
 
 					<div className="sm:col-span-3">
-						<label
-							className="block font-medium my-1 text-sm text-gray-700 md:text-base"
-							htmlFor="last_name"
-						>
-							Last name
-						</label>
 						<Input
-							allowClear
-							className="text-sm lg:text-base"
+							label="Last name"
+							defaultValue={data.last_name || undefined}
+							error={
+								error && action?.error?.path === "last_name" ? error : undefined
+							}
 							id="last_name"
 							name="last_name"
-							// disabled={loading}
+							disabled={loading}
 							placeholder="Enter patient's last name e.g. Cooper"
-							size="large"
-							type="text"
 						/>
 					</div>
 
 					<div className="sm:col-span-4">
-						<label
-							className="block font-medium my-1 text-sm text-gray-700 md:text-base"
-							htmlFor="email"
-						>
-							Email Address
-						</label>
 						<Input
-							allowClear
-							className="text-sm lg:text-base"
+							label="Email Address"
+							error={
+								error && action?.error?.path === "email" ? error : undefined
+							}
+							defaultValue={data.email || undefined}
 							id="email"
 							name="email"
-							// disabled={loading}
+							disabled={loading}
 							placeholder="Enter patient's email address e.g. richardcooper@gmail.com"
-							size="large"
-							type="email"
 						/>
 					</div>
 
 					<div className="col-span-full">
-						<label
-							className="block font-medium my-1 text-sm text-gray-700 md:text-base"
-							htmlFor="address"
-						>
-							Address
-						</label>
 						<Input.TextArea
-							allowClear
-							className="text-sm lg:text-base"
+							defaultValue={data.address || undefined}
+							error={
+								error && action?.error?.path === "address" ? error : undefined
+							}
 							id="address"
-							autoSize={{
-								minRows: 2,
-								maxRows: 4,
-							}}
+							label="Address"
 							name="address"
-							// disabled={loading}
+							disabled={loading}
 							placeholder="Enter patient's home address"
-							size="large"
 						/>
 					</div>
 
 					<div className="sm:col-span-2">
-						<label
-							className="block font-medium my-1 text-sm text-gray-700 md:text-base"
-							htmlFor="gender"
-						>
-							Gender
-						</label>
 						<Select
-							showSearch
-							style={{ width: '100%' }}
 							id="gender"
+							label="Gender"
 							name="gender"
-							size="large"
 							placeholder="Select Gender"
-							optionFilterProp="children"
-							filterOption={(input, option) =>
-								(option?.label ?? '').includes(input)
-							}
-							filterSort={(optionA, optionB) =>
-								(optionA?.label ?? '')
-									.toLowerCase()
-									.localeCompare((optionB?.label ?? '').toLowerCase())
+							error={
+								error && action?.error?.path === "gender" ? error : undefined
 							}
 							options={[
 								{
-									value: '',
-									label: 'Not Identified',
+									value: "M",
+									label: "Male",
 								},
 								{
-									value: 'Male',
-									label: 'Male',
-								},
-								{
-									value: 'Female',
-									label: 'Female',
+									value: "F",
+									label: "Female",
 								},
 							]}
 						/>
 					</div>
 
 					<div className="sm:col-span-2">
-						<label
-							className="block font-medium my-1 text-sm text-gray-700 md:text-base"
-							htmlFor="phone"
-						>
-							Phone number
-						</label>
 						<Input
-							allowClear
-							className="text-sm lg:text-base"
+							label="Phone number"
+							defaultValue={data.phone || undefined}
+							error={
+								error && action?.error?.path === "phone" ? error : undefined
+							}
 							id="phone"
 							name="phone"
-							// disabled={loading}
-							placeholder="Enter patient's phone number e.g. +234-810-384-7362"
-							size="large"
-							type="text"
+							disabled={loading}
+							placeholder="Enter patient's phone number e.g. +234-012-3456-789"
 						/>
 					</div>
 
 					<div className="sm:col-span-2">
-						<label
-							className="block font-medium my-1 text-sm text-gray-700 md:text-base"
-							htmlFor="dob"
-						>
-							Date of Birth
-						</label>
 						<DatePicker
-							className="text-sm w-full lg:text-base"
+							label="Date of Birth"
+							error={error && action?.error?.path === "dob" ? error : undefined}
 							id="dob"
 							name="dob"
-							size="large"
+							defaultValue={data.dob || undefined}
 						/>
 					</div>
 				</div>
 				<div className="mt-6 flex items-center gap-x-6">
-					<Button size="large" type="default" typeof="button">
+					<Button
+						disabled={loading}
+						size="large"
+						htmlType="button"
+						type="default"
+					>
 						<span className="px-2 text-gray-700 text-sm md:px-2 md:text-base">
 							Cancel
 						</span>
 					</Button>
-					<Button size="large" type="primary" typeof="submit">
+					<Button
+						disabled={loading}
+						loading={loading}
+						name="submit"
+						htmlType="submit"
+						size="large"
+						type="primary"
+					>
 						<span className="px-2 text-gray-100 text-sm md:px-4 md:text-base">
 							Save
 						</span>
@@ -257,4 +233,4 @@ function PatientForm() {
 	);
 }
 
-export default PatientForm;
+export default PatientsForm;
