@@ -21,7 +21,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
 }
 
-function Table({ className, columns = [], data = [] }) {
+function Table({ className, columns = [], data }) {
 	// Use the state and functions returned from useTable to build your UI
 	const {
 		getTableProps,
