@@ -1,28 +1,21 @@
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Alert, Button, Upload } from "antd";
-import React from "react";
-import { Form, useActionData, useNavigation } from "react-router-dom";
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Alert, Button, Upload } from 'antd';
+import React from 'react';
 
-import { DatePicker, Input, Select } from "../../components/controls";
-import { useUpload } from "../../firebase/storage/hooks";
+import { DatePicker, Input, Select } from '../../components/controls';
+import { useUpload } from '../../firebase/storage/hooks';
 
-function PatientsForm({ action: actionUrl, data = {}, method = "post" }) {
-	const action = useActionData();
-	const { state } = useNavigation();
+function PatientsForm({ data = {}, errors, loading, onSubmit }) {
+	const [error, setError] = React.useState();
 
-	const [error, setError] = React.useState(null);
-
-	const loading = React.useMemo(
-		() => state === "loading" || state === "submitting",
-		[state]
-	);
+	const formRef = React.useRef();
 
 	React.useEffect(() => {
-		if (action?.error) {
-			setError(action.error.message);
+		if (errors) {
+			setError(errors.message);
 			window.scrollTo(0, 0); // scroll to the top to view the message
-		}
-	}, [action]);
+		} else setError(undefined);
+	}, [errors]);
 
 	const {
 		data: uploadData,
@@ -55,7 +48,25 @@ function PatientsForm({ action: actionUrl, data = {}, method = "post" }) {
 					/>
 				</div>
 			)}
-			<Form method={method} action={actionUrl}>
+			<form
+				ref={formRef}
+				onSubmit={(e) => {
+					e.preventDefault();
+					if (formRef.current && onSubmit) {
+						onSubmit({
+							first_name: formRef.current.first_name.value || null,
+							last_name: formRef.current.last_name.value || null,
+							email: formRef.current.email.value || null,
+							address: formRef.current.address.value || null,
+							image: formRef.current.image.value || null,
+							image_ref: formRef.current.image_ref.value || null,
+							gender: formRef.current.gender.value || null,
+							phone: formRef.current.phone.value || null,
+							dob: formRef.current.dob.value || null,
+						});
+					}
+				}}
+			>
 				<div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 					<div className="sm:col-span-full">
 						<label
@@ -77,7 +88,7 @@ function PatientsForm({ action: actionUrl, data = {}, method = "post" }) {
 									<img
 										src={uploadData?.url || data.image}
 										alt="avatar"
-										style={{ width: "100%" }}
+										style={{ width: '100%' }}
 									/>
 								) : (
 									<div>
@@ -106,11 +117,7 @@ function PatientsForm({ action: actionUrl, data = {}, method = "post" }) {
 							id="first_name"
 							label="First name"
 							name="first_name"
-							error={
-								error && action?.error?.path === "first_name"
-									? error
-									: undefined
-							}
+							error={error && errors?.path === 'first_name' ? error : undefined}
 							disabled={loading}
 							placeholder="Enter patient's first name e.g. Richard"
 						/>
@@ -120,9 +127,7 @@ function PatientsForm({ action: actionUrl, data = {}, method = "post" }) {
 						<Input
 							label="Last name"
 							defaultValue={data.last_name || undefined}
-							error={
-								error && action?.error?.path === "last_name" ? error : undefined
-							}
+							error={error && errors?.path === 'last_name' ? error : undefined}
 							id="last_name"
 							name="last_name"
 							disabled={loading}
@@ -133,9 +138,7 @@ function PatientsForm({ action: actionUrl, data = {}, method = "post" }) {
 					<div className="sm:col-span-4">
 						<Input
 							label="Email Address"
-							error={
-								error && action?.error?.path === "email" ? error : undefined
-							}
+							error={error && errors?.path === 'email' ? error : undefined}
 							defaultValue={data.email || undefined}
 							id="email"
 							name="email"
@@ -147,9 +150,7 @@ function PatientsForm({ action: actionUrl, data = {}, method = "post" }) {
 					<div className="col-span-full">
 						<Input.TextArea
 							defaultValue={data.address || undefined}
-							error={
-								error && action?.error?.path === "address" ? error : undefined
-							}
+							error={error && errors?.path === 'address' ? error : undefined}
 							id="address"
 							label="Address"
 							name="address"
@@ -164,17 +165,15 @@ function PatientsForm({ action: actionUrl, data = {}, method = "post" }) {
 							label="Gender"
 							name="gender"
 							placeholder="Select Gender"
-							error={
-								error && action?.error?.path === "gender" ? error : undefined
-							}
+							error={error && errors?.path === 'gender' ? error : undefined}
 							options={[
 								{
-									value: "M",
-									label: "Male",
+									value: 'M',
+									label: 'Male',
 								},
 								{
-									value: "F",
-									label: "Female",
+									value: 'F',
+									label: 'Female',
 								},
 							]}
 						/>
@@ -184,9 +183,7 @@ function PatientsForm({ action: actionUrl, data = {}, method = "post" }) {
 						<Input
 							label="Phone number"
 							defaultValue={data.phone || undefined}
-							error={
-								error && action?.error?.path === "phone" ? error : undefined
-							}
+							error={error && errors?.path === 'phone' ? error : undefined}
 							id="phone"
 							name="phone"
 							disabled={loading}
@@ -197,7 +194,7 @@ function PatientsForm({ action: actionUrl, data = {}, method = "post" }) {
 					<div className="sm:col-span-2">
 						<DatePicker
 							label="Date of Birth"
-							error={error && action?.error?.path === "dob" ? error : undefined}
+							error={error && errors?.path === 'dob' ? error : undefined}
 							id="dob"
 							name="dob"
 							defaultValue={data.dob || undefined}
@@ -228,7 +225,7 @@ function PatientsForm({ action: actionUrl, data = {}, method = "post" }) {
 						</span>
 					</Button>
 				</div>
-			</Form>
+			</form>
 		</>
 	);
 }

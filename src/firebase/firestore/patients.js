@@ -137,12 +137,11 @@ export function addPatient({ data }) {
 			// Save the patient document
 			addDoc(collection(firestore, ref), patient)
 				.then((doc) => {
-					const result = {
-						...payload,
+					resolve({
 						id: doc.id,
-					};
-
-					resolve(result);
+						...payload,
+						dob: new Date(payload.dob).toDateString(),
+					});
 				})
 				.catch((err) => {
 					const error = handleError(err);

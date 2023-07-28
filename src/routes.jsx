@@ -101,7 +101,6 @@ const routes = [
 						element: <Patients />,
 					},
 					{
-						action: PatientCreate.action,
 						path: pageRoutes.PATIENT_CREATE_PAGE,
 						element: <PatientCreate />,
 					},
@@ -111,18 +110,18 @@ const routes = [
 					},
 					{
 						path: pageRoutes.PATIENT_EDIT_PAGE(':id'),
-						element: <PatientEdit />
+						element: <PatientEdit />,
 					},
 
 					// Tests and Diagnosis
 					{
 						path: pageRoutes.TESTS_PAGE,
-						element: <Tests />
+						element: <Tests />,
 					},
 					{
 						path: pageRoutes.TEST_PAGE(':id'),
-						element: <TestDetail />
-					}
+						element: <TestDetail />,
+					},
 				],
 			},
 		],

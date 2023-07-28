@@ -1,8 +1,21 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Container from '../../../components/container';
 import Form from '../../../components/patients/form';
 import routes from '../../../config/routes';
+import { useCreatePatientMutation } from '../../../store/features/api/patients';
 
 function CreatePatient() {
+	const [addPatient, { data, error, isLoading, status }] =
+		useCreatePatientMutation();
+
+	const navigate = useNavigate();
+
+	React.useEffect(() => {
+		if (status === 'fulfilled' && data) navigate(routes.PATIENT_PAGE(data.id));
+	}, [status, data, navigate]);
+
 	return (
 		<Container title="Add New Patient">
 			<div className="border-b border-gray-900/10 pb-7">
@@ -14,7 +27,11 @@ function CreatePatient() {
 					messages.
 				</p>
 			</div>
-			<Form action={routes.PATIENT_CREATE_PAGE} method="post" />
+			<Form
+				errors={error}
+				loading={isLoading || status === 'pending'}
+				onSubmit={addPatient}
+			/>
 		</Container>
 	);
 }

@@ -1,7 +1,7 @@
-import { DatePicker } from "antd";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import React from "react";
+import { DatePicker } from 'antd';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import React from 'react';
 
 dayjs.extend(customParseFormat);
 
@@ -11,6 +11,7 @@ function ControlDatePicker({
 	id,
 	onChange,
 	defaultValue,
+	name,
 	value,
 	...props
 }) {
@@ -19,13 +20,13 @@ function ControlDatePicker({
 	const controlDefaultValue = React.useMemo(() => {
 		if (!defaultValue) return undefined;
 
-		if (typeof defaultValue === "string") {
+		if (typeof defaultValue === 'string') {
 			const date = new Date(defaultValue);
 			const dateValue = `${date.getFullYear()}-${
 				date.getMonth() + 1
 			}-${date.getDate()}`;
 			setValue(dateValue);
-			return dayjs(dateValue, "YYYY-MM-DD");
+			return dayjs(dateValue, 'YYYY-MM-DD');
 		}
 		const dateValue = `${defaultValue().year()}-${
 			defaultValue().month() + 1
@@ -37,13 +38,13 @@ function ControlDatePicker({
 	const controlValue = React.useMemo(() => {
 		if (!value) return undefined;
 
-		if (typeof value === "string") {
+		if (typeof value === 'string') {
 			const date = new Date(value);
 			const dateValue = `${date.getFullYear()}-${
 				date.getMonth() + 1
 			}-${date.getDate()}`;
 			setValue(dateValue);
-			return dayjs(dateValue, "YYYY-MM-DD");
+			return dayjs(dateValue, 'YYYY-MM-DD');
 		}
 		const dateValue = `${value().year()}-${
 			value().month() + 1
@@ -64,7 +65,7 @@ function ControlDatePicker({
 			)}
 			<DatePicker
 				className="text-sm w-full lg:text-base"
-				status={error ? "error" : undefined}
+				status={error ? 'error' : undefined}
 				size="large"
 				onChange={(date, dateString) => {
 					if (onChange) onChange(date, dateString);

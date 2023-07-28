@@ -16,16 +16,17 @@ function DeletePatient({ children, patientId: id, ...props }) {
 	}, [deletePatient, id]);
 
 	React.useEffect(() => {
-		console.log(error, status);
 		if (error && status === 'rejected')
 			api.error({
 				message: `Sorry, counld not delete patient!`,
 				description: error.message,
 			});
-		else if (status === 'fulfilled')
+		else if (status === 'fulfilled') {
+			setOpen(false);
 			api.success({
 				message: 'Patient deleted successfully.',
 			});
+		}
 	}, [api, status, error]);
 
 	return (
@@ -35,6 +36,7 @@ function DeletePatient({ children, patientId: id, ...props }) {
 			open={open}
 			onConfirm={handleDelete}
 			okButtonProps={{ loading: isLoading }}
+			cancelButtonProps={{ disabled: isLoading }}
 			onCancel={() => setOpen(false)}
 			okType="danger"
 		>
