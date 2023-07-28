@@ -5,58 +5,26 @@ import {
 	UndoOutlined,
 } from '@ant-design/icons';
 import { Button, Result, Skeleton } from 'antd';
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Container from '../../../components/container';
-import { TableAvatarTitleSubCell as PatientCell } from '../../../components/table/cells';
-import Table from '../../../components/table';
+import Table from '../../../components/patients/table';
 import routes from '../../../config/routes';
-import { useGetPatients } from '../../../firebase/firestore/hooks';
+import { useFetchPatientsQuery } from '../../../store/features/api/patients';
 
 function Patients() {
-	const { data, errorMessage, clearError, isLoading, isFetching, refetch } =
-		useGetPatients();
-
-	const columns = React.useMemo(
-		() => [
-			{
-				Cell: PatientCell,
-				Header: 'Patient',
-				accessor: 'patient',
-				avatarAccessor: 'avatar',
-				subAccessor: 'email',
-				titleAccessor: 'full_name',
-			},
-			{
-				Header: 'Phone number',
-				accessor: 'phone',
-			},
-			{
-				Header: 'Gender',
-				accessor: 'gender',
-			},
-			{
-				Header: 'Date of Birth',
-				accessor: 'dob',
-			},
-			{
-				Header: 'Actions',
-				accessor: 'actions',
-			},
-		],
-		[]
-	);
+	const { data, error, refetch, isFetching, isLoading } =
+		useFetchPatientsQuery();
 
 	return (
 		<Container
 			alert={
-				errorMessage
+				error?.message
 					? {
 							type: 'error',
 							title: 'Error: Failed to Load.',
-							message: errorMessage,
-							close: clearError,
+							message: error.message,
+							// close: clearError,
 					  }
 					: undefined
 			}
@@ -102,7 +70,7 @@ function Patients() {
 				{isLoading ? (
 					<Skeleton active />
 				) : data && data.length > 0 ? (
-					<Table columns={columns} data={data} />
+					<Table data={data} />
 				) : (
 					<Result
 						icon={

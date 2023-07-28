@@ -1,5 +1,6 @@
 import Container from '../../../components/container';
 import Form from '../../../components/patients/form';
+import routes from '../../../config/routes';
 
 function CreatePatient() {
 	return (
@@ -13,7 +14,7 @@ function CreatePatient() {
 					messages.
 				</p>
 			</div>
-			<Form />
+			<Form action={routes.PATIENT_CREATE_PAGE} method="post" />
 		</Container>
 	);
 }
