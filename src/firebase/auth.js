@@ -146,25 +146,24 @@ export function logout() {
 }
 
 // Update/Change user password
-export async function changePassword({ password }) {
-	try {
-		if (auth.currentUser) {
-			await updatePassword(auth.currentUser, password);
-			return {
-				data: {
-					message: 'Password updated successfully!',
-				},
-			};
-		} else {
-			return {
-				error: {
-					message: 'Authentication credentials were not provided!',
-				},
-			};
+export function changePassword({ password }) {
+	return new Promise((resolve, reject) => {
+		try {
+			if (!auth.currentUser)
+				throw new Error('Authentication credentials were not provided!');
+			updatePassword(auth.currentUser, password)
+				.then(() => {
+					resolve({
+						message: 'Password updated successfully!',
+					});
+				})
+				.catch((err) => {
+					const error = handleError(err);
+					reject(error);
+				});
+		} catch (err) {
+			const error = handleError(err);
+			reject(error);
 		}
-	} catch (error) {
-		return {
-			error: handleError(error),
-		};
-	}
+	});
 }

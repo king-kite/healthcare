@@ -1,13 +1,14 @@
 import { EditOutlined, SecurityScanOutlined } from '@ant-design/icons';
-import { Button, Modal } from 'antd';
+import { Alert, Button, Modal } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { UpdateForm } from '../../../components/profile';
+import { ChangePassword, UpdateForm } from '../../../components/profile';
 import { login } from '../../../store/features/auth';
 
 function Profile() {
 	const [open, setOpen] = React.useState(false);
+	const [formType, setFormType] = React.useState();
 
 	const dispatch = useDispatch();
 	const auth = useSelector((state) => state.auth.data);
@@ -26,9 +27,15 @@ function Profile() {
 		[auth]
 	);
 
-	const handleSuccess = React.useCallback(
+	const handlePasswordSuccess = React.useCallback(() => {
+		setOpen(false);
+		setFormType(null);
+	}, []);
+
+	const handleProfileSuccess = React.useCallback(
 		(data) => {
 			setOpen(false);
+			setFormType(null);
 			dispatch(login({ data }));
 		},
 		[dispatch]
@@ -71,7 +78,10 @@ function Profile() {
 										<EditOutlined />
 									</span>
 								}
-								onClick={() => setOpen(true)}
+								onClick={() => {
+									setFormType('profile');
+									setOpen(true);
+								}}
 								type="primary"
 							>
 								<span className="text-gray-100 text-sm md:text-base">
@@ -87,6 +97,10 @@ function Profile() {
 										<SecurityScanOutlined />
 									</span>
 								}
+								onClick={() => {
+									setFormType('password');
+									setOpen(true);
+								}}
 								type="default"
 							>
 								<span className="text-gray-700 text-sm md:text-base">
@@ -124,14 +138,26 @@ function Profile() {
 			</div>
 
 			<Modal open={open} onCancel={() => setOpen(false)} footer={<></>}>
-				<UpdateForm
-					data={{
-						full_name: auth.displayName,
-						email: auth.email,
-						image: auth.image,
-					}}
-					onSuccess={handleSuccess}
-				/>
+				{formType === 'profile' ? (
+					<UpdateForm
+						data={{
+							full_name: auth.displayName,
+							email: auth.email,
+							image: auth.image,
+						}}
+						onSuccess={handleProfileSuccess}
+					/>
+				) : formType === 'password' ? (
+					<ChangePassword onSuccess={handlePasswordSuccess} />
+				) : (
+					<Alert
+						message="Unable to show form at the moment"
+						closable
+						onClose={handlePasswordSuccess}
+						showIcon
+						type="warning"
+					/>
+				)}
 			</Modal>
 		</>
 	);

@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Input } from 'antd';
 
 function ControlInput({ error, label, id, ...props }) {
 	return (
@@ -6,7 +6,7 @@ function ControlInput({ error, label, id, ...props }) {
 			{label && (
 				<label
 					className={`${
-						error ? "text-red-500" : "text-gray-700"
+						error ? 'text-red-500' : 'text-gray-700'
 					} block font-medium my-1 text-sm md:text-base`}
 					htmlFor={id}
 				>
@@ -16,7 +16,7 @@ function ControlInput({ error, label, id, ...props }) {
 			<Input
 				allowClear
 				className="text-sm lg:text-base"
-				status={error ? "error" : undefined}
+				status={error ? 'error' : undefined}
 				size="large"
 				type="text"
 				id={id}
@@ -40,7 +40,7 @@ const TextArea = ({ error, label, id, ...props }) => {
 			<Input.TextArea
 				allowClear
 				className="text-sm lg:text-base"
-				status={error ? "error" : undefined}
+				status={error ? 'error' : undefined}
 				id={id}
 				autoSize={{
 					minRows: 2,
@@ -53,5 +53,6 @@ const TextArea = ({ error, label, id, ...props }) => {
 	);
 };
 
+ControlInput.Password = Input.Password;
 ControlInput.TextArea = TextArea;
 export default ControlInput;

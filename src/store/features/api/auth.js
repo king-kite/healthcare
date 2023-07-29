@@ -1,8 +1,19 @@
 import baseApi from '.';
-import { updateProfileInfo } from '../../../firebase/auth';
+import { changePassword, updateProfileInfo } from '../../../firebase/auth';
 
 const authApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
+		updatePassword: builder.mutation({
+			async queryFn(payload) {
+				try {
+					const data = await changePassword({ password: payload });
+					return { data };
+				} catch (error) {
+					return { error };
+				}
+			},
+			invalidatesTags: ['Auth'],
+		}),
 		updateProfile: builder.mutation({
 			async queryFn(payload) {
 				try {
@@ -18,5 +29,5 @@ const authApi = baseApi.injectEndpoints({
 	overrideExisting: false,
 });
 
-export const { useUpdateProfileMutation } = authApi;
+export const { useUpdatePasswordMutation, useUpdateProfileMutation } = authApi;
 export default authApi;
