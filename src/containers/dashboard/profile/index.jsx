@@ -1,18 +1,15 @@
 import { EditOutlined, SecurityScanOutlined } from '@ant-design/icons';
 import { Button, Modal } from 'antd';
 import React from 'react';
-import {
-	// useDispatch,
-	useSelector,
-} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { UpdateForm } from '../../../components/profile';
-// import { setData } from '../../../store/features/auth';
+import { login } from '../../../store/features/auth';
 
 function Profile() {
 	const [open, setOpen] = React.useState(false);
 
-	// const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const auth = useSelector((state) => state.auth.data);
 
 	const data = React.useMemo(
@@ -25,12 +22,16 @@ function Profile() {
 				title: 'Email Address',
 				value: auth?.email || '------',
 			},
-			{
-				title: 'Phone Number',
-				value: auth?.phone || '------',
-			},
 		],
 		[auth]
+	);
+
+	const handleSuccess = React.useCallback(
+		(data) => {
+			setOpen(false);
+			dispatch(login({ data }));
+		},
+		[dispatch]
 	);
 
 	return (
@@ -121,23 +122,17 @@ function Profile() {
 					</div>
 				</div>
 			</div>
-			{open && (
-				<Modal open onCancel={() => setOpen(false)} footer={<></>}>
-					<UpdateForm
-						data={{
-							full_name: auth.displayName,
-							email: auth.email,
-							image: auth.image,
-							phone: auth.phone,
-						}}
-						onSuccess={(data) => {
-							// dispatch(setData({ data }));
-							console.log(data);
-							setOpen(false);
-						}}
-					/>
-				</Modal>
-			)}
+
+			<Modal open={open} onCancel={() => setOpen(false)} footer={<></>}>
+				<UpdateForm
+					data={{
+						full_name: auth.displayName,
+						email: auth.email,
+						image: auth.image,
+					}}
+					onSuccess={handleSuccess}
+				/>
+			</Modal>
 		</>
 	);
 }

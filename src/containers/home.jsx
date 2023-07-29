@@ -1,12 +1,13 @@
-import { Button, Spin } from "antd";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Button, Spin } from 'antd';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import routes from "../config/routes";
-import useLogout from "../hooks/useLogout";
+import routes from '../config/routes';
+import useLogout from '../hooks/useLogout';
 
 function Home() {
-	const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
+	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+	const isLoading = useSelector((state) => state.auth.isLoading);
 
 	const { logout, loading: logoutLoading } = useLogout();
 
