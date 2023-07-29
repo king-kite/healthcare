@@ -20,9 +20,9 @@ function ForgotPassword() {
 	React.useEffect(() => {
 		if (action?.data)
 			api.success({
-				message: 'Signed In',
+				message: 'Password Reset',
 				description:
-					'Your authentication credentials were accepted and you are now signed in.',
+					'An email has been sent to your email address. Please follow the instructions to continue.',
 			});
 	}, [action, api]);
 
