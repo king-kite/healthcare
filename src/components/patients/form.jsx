@@ -85,8 +85,13 @@ function PatientsForm({ data = {}, errors, loading, onSubmit }) {
 								showUploadList={false}
 								customRequest={handleImageUpload}
 							>
-								{uploadData?.url || data.image ? (
+								{imgLoading ? (
+									<div>
+										<LoadingOutlined />
+									</div>
+								) : uploadData?.url || data.image ? (
 									<img
+										className="h-full w-full rounded-md"
 										src={uploadData?.url || data.image}
 										alt="avatar"
 										style={{ width: '100%' }}

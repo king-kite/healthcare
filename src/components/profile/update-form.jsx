@@ -14,8 +14,18 @@ function UpdateForm({ data, onSuccess }) {
 
 	const [
 		updateProfile,
-		{ data: successData, error: errors, reset, isLoading: loading, status },
+		{
+			data: successData,
+			error: errors,
+			reset,
+			isLoading: loading,
+			isError,
+			isSuccess,
+		},
 	] = useUpdateProfileMutation();
+
+	const resetRef = React.useRef(reset);
+	resetRef.current = reset;
 
 	const { api } = useNotificationContext();
 
@@ -38,25 +48,26 @@ function UpdateForm({ data, onSuccess }) {
 
 	React.useEffect(() => {
 		() => {
-			reset();
+			if (resetRef.current) resetRef.current();
 		};
-	}, [reset]);
+	}, []);
 
 	React.useEffect(() => {
-		if (status === 'fulfilled') {
+		if (isSuccess) {
 			api.success({
 				message: 'Profile Updated.',
 				description: 'Your profile was updated successfully.',
 			});
 			if (successData && onSuccess) onSuccess(successData);
+			if (resetRef.current) resetRef.current();
 		}
-	}, [api, status, onSuccess, successData]);
+	}, [api, isSuccess, onSuccess, successData]);
 
 	React.useEffect(() => {
-		if (status === 'rejected' && errors) {
+		if (isError && errors) {
 			setError(errors);
 		}
-	}, [status, errors]);
+	}, [isError, errors]);
 
 	return (
 		<>
@@ -82,7 +93,6 @@ function UpdateForm({ data, onSuccess }) {
 					if (formRef.current) {
 						updateProfile({
 							full_name: formRef.current.full_name.value,
-							phone: formRef.current.phone.value,
 							image: formRef.current.image.value || data.image || null,
 							email: formRef.current.email.value,
 						});
@@ -105,8 +115,13 @@ function UpdateForm({ data, onSuccess }) {
 							showUploadList={false}
 							customRequest={handleImageUpload}
 						>
-							{uploadData?.url || data.image ? (
+							{imgLoading ? (
+								<div>
+									<LoadingOutlined />
+								</div>
+							) : uploadData?.url || data.image ? (
 								<img
+									className="h-full w-full rounded-md"
 									src={uploadData?.url || data.image}
 									alt="avatar"
 									style={{ width: '100%' }}
@@ -147,17 +162,6 @@ function UpdateForm({ data, onSuccess }) {
 						name="email"
 						disabled={loading}
 						placeholder="Enter email address e.g. test@gmail.com"
-					/>
-				</div>
-				<div className="my-5">
-					<Input
-						label="Phone Number"
-						defaultValue={data.phone || undefined}
-						error={error && errors?.path === 'phone' ? error : undefined}
-						id="phone"
-						name="phone"
-						disabled={loading}
-						placeholder="Enter Full Name e.g. Richard Cooper"
 					/>
 				</div>
 				<div className="mt-5">

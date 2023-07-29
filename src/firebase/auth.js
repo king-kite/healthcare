@@ -3,7 +3,6 @@ import {
 	signInWithEmailAndPassword,
 	signOut,
 	updateEmail,
-	updatePhoneNumber,
 	updatePassword,
 	updateProfile,
 } from 'firebase/auth';
@@ -51,7 +50,6 @@ export function updateProfileInfo({ data }) {
 			if (payload.image) profile.photoURL = payload.image;
 			updateProfile(auth.currentUser, profile)
 				.then(() => updateEmail(auth.currentUser, payload.email))
-				.then(() => updatePhoneNumber(auth.currentUser, payload.phone))
 				.then(() => {
 					resolve({
 						...payload,
