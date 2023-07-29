@@ -3,12 +3,15 @@ import {
 	signInWithEmailAndPassword,
 	signOut,
 	updateEmail,
+	updatePhoneNumber,
 	updatePassword,
 	updateProfile,
 } from 'firebase/auth';
 
 import { auth } from '.';
 import { handleError } from './utils';
+import { handleYupError } from '../validators';
+import updateProfileSchema from '../validators/auth';
 
 // get logged in user info
 export async function getProfile() {
@@ -32,31 +35,44 @@ export async function getProfile() {
 }
 
 // update user profile info and email as well
-export async function updateProfileInfo({ email, ...payload }) {
-	// payload = { displayName: '', photoURL: '' }
-	try {
-		if (auth.currentUser) {
-			const data = await updateProfile(auth.currentUser, payload);
-			updateEmail(auth.currentUser, email);
+export function updateProfileInfo({ data }) {
+	return new Promise((resolve, reject) => {
+		// payload = { displayName: '', photoURL: '' }
+		try {
+			if (!auth.currentUser)
+				throw new Error('Authentication credentials were not provided!');
 
-			return {
-				data: {
-					email,
-					...data,
-				},
-			};
-		} else {
-			return {
-				error: {
-					message: 'Authentication credentials were not provided!',
-				},
-			};
+			const valid = updateProfileSchema.validateSync(data, {
+				abortEarly: false,
+			});
+
+			const payload = valid;
+			const profile = { displayName: payload.full_name };
+			if (payload.image) profile.photoURL = payload.image;
+			updateProfile(auth.currentUser, profile)
+				.then(() => updateEmail(auth.currentUser, payload.email))
+				.then(() => updatePhoneNumber(auth.currentUser, payload.phone))
+				.then(() => {
+					resolve({
+						...payload,
+						displayName: payload.full_name,
+					});
+				})
+				.catch((err) => {
+					const error = handleError(err);
+					reject(error);
+				});
+		} catch (err) {
+			const yupError = handleYupError(err);
+			if (yupError) {
+				reject(yupError);
+			} else {
+				// Firebase Error
+				const error = handleError(err);
+				reject(error);
+			}
 		}
-	} catch (error) {
-		return {
-			error: handleError(error),
-		};
-	}
+	});
 }
 
 // Sign in with email and password

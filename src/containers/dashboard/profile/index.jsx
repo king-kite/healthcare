@@ -1,33 +1,37 @@
-import { UserAddOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { EditOutlined, SecurityScanOutlined } from '@ant-design/icons';
+import { Button, Modal } from 'antd';
+import React from 'react';
+import {
+	// useDispatch,
+	useSelector,
+} from 'react-redux';
+
+import { UpdateForm } from '../../../components/profile';
+// import { setData } from '../../../store/features/auth';
 
 function Profile() {
-	const data = [
-		{
-			title: 'First name',
-			value: 'Richard',
-		},
-		{
-			title: 'Last name',
-			value: 'Cooper',
-		},
-		{
-			title: 'Email address',
-			value: 'richardcooper@gmail.com',
-		},
-		{
-			title: 'Gender',
-			value: 'Male',
-		},
-		{
-			title: 'Phone number',
-			value: '09123456790',
-		},
-		{
-			title: 'Date of Birth',
-			value: '2013-01-01',
-		},
-	];
+	const [open, setOpen] = React.useState(false);
+
+	// const dispatch = useDispatch();
+	const auth = useSelector((state) => state.auth.data);
+
+	const data = React.useMemo(
+		() => [
+			{
+				title: 'Full Name',
+				value: auth?.displayName || '------',
+			},
+			{
+				title: 'Email Address',
+				value: auth?.email || '------',
+			},
+			{
+				title: 'Phone Number',
+				value: auth?.phone || '------',
+			},
+		],
+		[auth]
+	);
 
 	return (
 		<>
@@ -35,33 +39,57 @@ function Profile() {
 				<div className="wrapper">
 					<div className="container-dashboard h-full relative w-full">
 						<span className="absolute bottom-[-3rem] left-4">
-							<span className="bg-primary-500 border-4 border-gray-100 border-solid h-24 inline-flex items-center justify-center rounded-full text-gray-50 w-24">
-								<span className="left-[0.05rem] relative text-xl top-[0.075rem]">
-									JK
-								</span>
+							<span className="bg-primary-500 border-4 border-gray-100 border-solid h-24 inline-flex items-center justify-center relative rounded-full text-gray-50 w-24">
+								{auth?.image ? (
+									<img
+										className="h-full rounded-full w-full"
+										src={auth.image}
+										alt={auth?.displayName[0] || auth.email[0]}
+									/>
+								) : (
+									<span className="left-[0.05rem] relative text-xl top-[0.075rem]">
+										{auth?.displayName[0] || auth.email[0]}
+									</span>
+								)}
 							</span>
 						</span>
 					</div>
 				</div>
 			</div>
-			<div className="container-dashboard w-full">
-				<div className="my-8 px-2">
+			<div className="container-dashboard py-4 w-full">
+				<div className="my-8 py-2">
 					<h1 className="font-bold mb-2 mt-5 text-gray-700 text-lg">
-						Richard Cooper
+						{auth?.displayName || auth?.email}
 					</h1>
-					<div className="my-4">
-						<div>
+					<div className="sm:flex sm:items-center">
+						<div className="my-4 sm:mr-2 sm:my-0">
+							<Button
+								className="cursor-pointer hover:text-primary-500"
+								icon={
+									<span className="mr-2 text-gray-100 text-sm md:text-base">
+										<EditOutlined />
+									</span>
+								}
+								onClick={() => setOpen(true)}
+								type="primary"
+							>
+								<span className="text-gray-100 text-sm md:text-base">
+									Update
+								</span>
+							</Button>
+						</div>
+						<div className="my-4 sm:ml-2 sm:my-0">
 							<Button
 								className="cursor-pointer hover:text-primary-500"
 								icon={
 									<span className="mr-2 text-gray-700 text-sm md:text-base">
-										<UserAddOutlined />
+										<SecurityScanOutlined />
 									</span>
 								}
 								type="default"
 							>
 								<span className="text-gray-700 text-sm md:text-base">
-									Update
+									Change Password
 								</span>
 							</Button>
 						</div>
@@ -77,9 +105,9 @@ function Profile() {
 							</p>
 						</div>
 						<div className="mt-6 border-t border-gray-100">
-							<dl className="divide-y divide-gray-100 lg:grid lg:grid-cols-2">
+							<dl className="divide-y divide-gray-100">
 								{data.map((detail, index) => (
-									<div key={index} className="px-4 py-6">
+									<div key={index} className="p-4">
 										<dt className="text-sm font-medium leading-6 text-gray-900 md:text-base md:font-semibold">
 											{detail.title}
 										</dt>
@@ -93,6 +121,23 @@ function Profile() {
 					</div>
 				</div>
 			</div>
+			{open && (
+				<Modal open onCancel={() => setOpen(false)} footer={<></>}>
+					<UpdateForm
+						data={{
+							full_name: auth.displayName,
+							email: auth.email,
+							image: auth.image,
+							phone: auth.phone,
+						}}
+						onSuccess={(data) => {
+							// dispatch(setData({ data }));
+							console.log(data);
+							setOpen(false);
+						}}
+					/>
+				</Modal>
+			)}
 		</>
 	);
 }
