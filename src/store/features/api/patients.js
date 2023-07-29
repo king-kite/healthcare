@@ -10,7 +10,7 @@ const postsApi = baseApi.injectEndpoints({
 		fetchPatients: builder.query({
 			async queryFn() {
 				try {
-					const { data } = await getPatients();
+					const data = await getPatients();
 					return { data };
 				} catch (error) {
 					return { error };
