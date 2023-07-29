@@ -18,9 +18,6 @@ export default async function login({ request }) {
 				password: data.password,
 			});
 
-			// Check if there is an error in the response and throw it
-			if (response.error) throw new Error(response.error.message);
-
 			// Remove the password
 			delete data.password;
 

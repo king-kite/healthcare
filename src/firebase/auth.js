@@ -60,61 +60,75 @@ export async function updateProfileInfo({ email, ...payload }) {
 }
 
 // Sign in with email and password
-export async function emailPasswordLogin({ email, password }) {
-	try {
-		const credentials = await signInWithEmailAndPassword(auth, email, password);
-
-		if (credentials?.user) {
-			return {
-				data: {
-					displayName: credentials.user.displayName,
-					email: credentials.user.email,
-					id: credentials.user.uid,
-					image: credentials.user.photoURL,
-					phone: credentials.user.phoneNumber,
-				},
-			};
+export function emailPasswordLogin({ email, password }) {
+	return new Promise((resolve, reject) => {
+		try {
+			signInWithEmailAndPassword(auth, email, password)
+				.then((credentials) => {
+					if (credentials?.user) {
+						resolve({
+							displayName: credentials.user.displayName,
+							email: credentials.user.email,
+							id: credentials.user.uid,
+							image: credentials.user.photoURL,
+							phone: credentials.user.phoneNumber,
+						});
+					} else {
+						reject({
+							message: 'Unable to login with provided credentials',
+						});
+					}
+				})
+				.catch((err) => {
+					const error = handleError(err);
+					reject(error);
+				});
+		} catch (err) {
+			const error = handleError(err);
+			reject(error);
 		}
-
-		return {
-			error: {
-				message: 'Unable to login with provided credentials',
-			},
-		};
-	} catch (error) {
-		return {
-			error: handleError(error),
-		};
-	}
+	});
 }
 
 // Send password reset link
-export async function resetPassword({ email }) {
-	try {
-		await sendPasswordResetEmail(auth, email);
-		return {
-			data: {
-				message:
-					'A password reset email was sent to your email address. Follow the instructions ot continue.',
-			},
-		};
-	} catch (error) {
-		return {
-			error: handleError(error),
-		};
-	}
+export function resetPassword({ email }) {
+	return new Promise((resolve, reject) => {
+		try {
+			sendPasswordResetEmail(auth, email)
+				.then(() => {
+					resolve({
+						message:
+							'A password reset email was sent to your email address. Follow the instructions ot continue.',
+					});
+				})
+				.catch((err) => {
+					const error = handleError(err);
+					reject(error);
+				});
+		} catch (err) {
+			const error = handleError(error);
+			reject(error);
+		}
+	});
 }
 
 // Logout user
-export async function logout() {
-	try {
-		await signOut(auth);
-		return { data: { message: 'Signed out successfully!' } };
-	} catch (error) {
-		return {
-			error: handleError(error),
-		};
-	}
+export function logout() {
+	return new Promise((resolve, reject) => {
+		try {
+			signOut(auth)
+				.then(() => {
+					resolve({ message: 'Signed out successfully!' });
+				})
+				.catch((err) => {
+					const error = handleError(err);
+					reject(error);
+				});
+		} catch (err) {
+			const error = handleError(err);
+			reject(error);
+		}
+	});
 }
 
 // Update/Change user password
