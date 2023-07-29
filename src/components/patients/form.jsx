@@ -50,6 +50,7 @@ function PatientsForm({ data = {}, errors, loading, onSubmit }) {
 			)}
 			<form
 				ref={formRef}
+				className="mb-3 pb-3"
 				onSubmit={(e) => {
 					e.preventDefault();
 					if (formRef.current && onSubmit) {
