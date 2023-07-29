@@ -187,14 +187,14 @@ export function editPatient({ id, data }) {
 				first_name: payload.first_name,
 				last_name: payload.last_name,
 				email: payload.email,
-				image: payload.image,
-				image_ref: payload.image_ref || undefined,
 				phone: payload.phone,
 				address: payload.address,
 				gender: payload.gender,
 				dob: Timestamp.fromDate(new Date(payload.dob)),
 				updated_at: Timestamp.fromDate(new Date()),
 			};
+			if (payload.image_ref) patient.image_ref = payload.image_ref;
+			if (payload.image) patient.image = payload.image;
 
 			// Save the patient
 			updateDoc(doc(firestore, ref, id), patient)

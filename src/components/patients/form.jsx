@@ -163,6 +163,7 @@ function PatientsForm({ data = {}, errors, loading, onSubmit }) {
 						<Select
 							defaultValue={data.gender || undefined}
 							id="gender"
+							disabled={loading}
 							label="Gender"
 							name="gender"
 							placeholder="Select Gender"
@@ -194,6 +195,7 @@ function PatientsForm({ data = {}, errors, loading, onSubmit }) {
 
 					<div className="sm:col-span-2">
 						<DatePicker
+							disabled={loading}
 							label="Date of Birth"
 							error={error && errors?.path === 'dob' ? error : undefined}
 							id="dob"

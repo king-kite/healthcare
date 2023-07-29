@@ -65,8 +65,8 @@ const postsApi = baseApi.injectEndpoints({
 					return { error };
 				}
 			},
+			invalidatesTags: ['Patient'],
 		}),
-		invalidatesTags: ['Patient'],
 	}),
 	overrideExisting: false,
 });

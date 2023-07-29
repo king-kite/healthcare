@@ -2,7 +2,9 @@ import { Select } from 'antd';
 import React from 'react';
 
 function ControlSelect({ label, error, name, id, onSelect, ...props }) {
-	const [value, setValue] = React.useState(props.value || undefined);
+	const [value, setValue] = React.useState(
+		props.value || props.defaultValue || undefined
+	);
 
 	return (
 		<>
