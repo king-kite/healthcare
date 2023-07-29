@@ -4,7 +4,7 @@ export const baseApi = createApi({
 	baseQuery: fakeBaseQuery(),
 	keepUnusedDataFor: 3600,
 	reducerPath: 'baseApi',
-	tagTypes: ['Patient'],
+	tagTypes: ['Auth', 'Patient'],
 	endpoints: () => ({}),
 });
 

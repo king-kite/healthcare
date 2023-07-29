@@ -7,7 +7,7 @@ import {
 	getPatients,
 } from '../../../firebase/firestore/patients';
 
-const postsApi = baseApi.injectEndpoints({
+const patientsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getPatient: builder.query({
 			async queryFn(id) {
@@ -77,5 +77,5 @@ export const {
 	useEditPatientMutation,
 	useGetPatientQuery,
 	useGetPatientsQuery,
-} = postsApi;
-export default postsApi;
+} = patientsApi;
+export default patientsApi;
