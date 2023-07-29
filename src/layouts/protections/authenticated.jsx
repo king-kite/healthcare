@@ -5,7 +5,8 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import routes from '../../config/routes';
 
 function Authenticated() {
-	const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
+	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+	const isLoading = useSelector((state) => state.auth.isLoading);
 
 	const { pathname } = useLocation();
 

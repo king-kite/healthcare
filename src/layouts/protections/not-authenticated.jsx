@@ -14,7 +14,8 @@ function NotAuthenticated() {
 	// store the value of the goto route after authenticating
 	const [nextRoute, setNextRoute] = React.useState(routes.HOME_PAGE);
 
-	const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
+	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+	const isLoading = useSelector((state) => state.auth.isLoading);
 
 	// Get the state from the location and the searchParams
 	const { state } = useLocation(); // get the next property in the state object
