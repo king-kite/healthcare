@@ -161,6 +161,7 @@ function PatientsForm({ data = {}, errors, loading, onSubmit }) {
 
 					<div className="sm:col-span-2">
 						<Select
+							defaultValue={data.gender || undefined}
 							id="gender"
 							label="Gender"
 							name="gender"

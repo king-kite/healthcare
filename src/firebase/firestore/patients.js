@@ -21,7 +21,9 @@ const ref = 'patients';
 const testRef = 'tests';
 
 function getDateString(date) {
-	return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+	let month = date.getMonth() + 1;
+	month = month > 9 ? month : month.toString().padStart(2, '0');
+	return `${date.getFullYear()}-${month}-${date.getDate()}`;
 }
 
 // Get the serialized patient data from the document
@@ -38,6 +40,7 @@ function serializePatient(doc) {
 		dob: info.dob ? getDateString(info.dob.toDate()) : undefined,
 		gender: info.gender,
 		phone: info.phone,
+		address: info.address,
 		created_at: info.created_at
 			? getDateString(info.created_at.toDate())
 			: undefined,
@@ -76,32 +79,33 @@ export function getPatients() {
 }
 
 // Get single patient data from the firestore
-export async function getPatient({ id, onSuccess, onSettled, onError }) {
-	try {
-		// Not Logged In, throw error
-		if (!auth.currentUser)
-			throw new Error('Authentication credentials were not provided!');
+export function getPatient({ id }) {
+	return new Promise((resolve, reject) => {
+		try {
+			// Not Logged In, throw error
+			if (!auth.currentUser)
+				throw new Error('Authentication credentials were not provided!');
 
-		// Check id is valid
-		if (!id) throw new Error('An ID was not provided!');
+			// Check id is valid
+			if (!id) throw new Error('An ID was not provided!');
 
-		// Get the patient data from the firestore
-		const patientRef = doc(firestore, ref, id);
-		const document = await getDoc(patientRef);
-
-		// Get the data from the document
-		const data = serializePatient(document);
-
-		if (onSuccess) onSuccess(data);
-
-		return { data };
-	} catch (err) {
-		const error = handleError(err);
-		if (onError) onError(error);
-		return { error };
-	} finally {
-		if (onSettled) onSettled();
-	}
+			// Get the patient data from the firestore
+			const patientRef = doc(firestore, ref, id);
+			getDoc(patientRef)
+				.then((document) => {
+					// Get the data from the document
+					const data = serializePatient(document);
+					resolve(data);
+				})
+				.catch((err) => {
+					const error = handleError(err);
+					reject(error);
+				});
+		} catch (err) {
+			const error = handleError(err);
+			reject(error);
+		}
+	});
 }
 
 // Add patient data to the firestore
@@ -162,56 +166,61 @@ export function addPatient({ data }) {
 }
 
 // Edit patient data on the firestore
-export async function editPatient({ id, data, onSuccess, onSettled, onError }) {
-	try {
-		// Not Logged In, throw error
-		if (!auth.currentUser)
-			throw new Error('Authentication credentials were not provided!');
+export function editPatient({ id, data }) {
+	return new Promise((resolve, reject) => {
+		try {
+			// Not Logged In, throw error
+			if (!auth.currentUser)
+				throw new Error('Authentication credentials were not provided!');
 
-		// Check id is valid
-		if (!id) throw new Error('An ID was not provided!');
+			// Check id is valid
+			if (!id) throw new Error('An ID was not provided!');
 
-		// Check data is provided
-		if (!data) throw new Error('Patient data is required!');
+			// Check data is provided
+			if (!data) throw new Error('Patient data is required!');
 
-		// Validate the data using the schema
-		const payload = await patientSchema.validate(data);
+			// Validate the data using the schema
+			const payload = patientSchema.validateSync(data);
 
-		// Structure the data to be saved
-		const patient = {
-			first_name: payload.first_name,
-			last_name: payload.last_name,
-			email: payload.email,
-			image: payload.image,
-			image_ref: payload.image_ref || undefined,
-			phone: payload.phone,
-			address: payload.address,
-			gender: payload.gender,
-			dob: Timestamp.fromDate(new Date(payload.dob)),
-			updated_at: Timestamp.fromDate(new Date()),
-		};
+			// Structure the data to be saved
+			const patient = {
+				first_name: payload.first_name,
+				last_name: payload.last_name,
+				email: payload.email,
+				image: payload.image,
+				image_ref: payload.image_ref || undefined,
+				phone: payload.phone,
+				address: payload.address,
+				gender: payload.gender,
+				dob: Timestamp.fromDate(new Date(payload.dob)),
+				updated_at: Timestamp.fromDate(new Date()),
+			};
 
-		// Save the patient
-		await updateDoc(doc(firestore, ref, id), patient);
-
-		if (onSuccess) onSuccess(data);
-
-		return { data };
-	} catch (err) {
-		// check yup error
-		const yupError = handleYupError(err);
-		if (yupError) {
-			if (onError) onError(yupError);
-			return { error: yupError };
-		} else {
-			// Firebase Error
-			const error = handleError(err);
-			if (onError) onError(error);
-			return { error };
+			// Save the patient
+			updateDoc(doc(firestore, ref, id), patient)
+				.then(() => {
+					resolve({
+						id,
+						...payload,
+						dob: new Date(payload.dob).toDateString(),
+					});
+				})
+				.catch((err) => {
+					const error = handleError(err);
+					reject(error);
+				});
+		} catch (err) {
+			// check yup error
+			const yupError = handleYupError(err);
+			if (yupError) {
+				reject(yupError);
+			} else {
+				// Firebase Error
+				const error = handleError(err);
+				reject(error);
+			}
 		}
-	} finally {
-		if (onSettled) onSettled();
-	}
+	});
 }
 
 // Delete patient data from the firestore

@@ -5,6 +5,12 @@ import React from 'react';
 
 dayjs.extend(customParseFormat);
 
+function getDateString(date) {
+	let month = date.getMonth() + 1;
+	month = month > 9 ? month : month.toString().padStart(2, '0');
+	return `${date.getFullYear()}-${month}-${date.getDate()}`;
+}
+
 function ControlDatePicker({
 	label,
 	error,
@@ -22,15 +28,13 @@ function ControlDatePicker({
 
 		if (typeof defaultValue === 'string') {
 			const date = new Date(defaultValue);
-			const dateValue = `${date.getFullYear()}-${
-				date.getMonth() + 1
-			}-${date.getDate()}`;
+			const dateValue = getDateString(date);
 			setValue(dateValue);
 			return dayjs(dateValue, 'YYYY-MM-DD');
 		}
-		const dateValue = `${defaultValue().year()}-${
-			defaultValue().month() + 1
-		}-${defaultValue().date()}`;
+		let month = defaultValue().month() + 1;
+		month = month > 9 ? month : month.toString().padStart(2, '0');
+		const dateValue = `${defaultValue().year()}-${month}-${defaultValue().date()}`;
 		setValue(dateValue);
 		return defaultValue;
 	}, [defaultValue]);
@@ -40,15 +44,13 @@ function ControlDatePicker({
 
 		if (typeof value === 'string') {
 			const date = new Date(value);
-			const dateValue = `${date.getFullYear()}-${
-				date.getMonth() + 1
-			}-${date.getDate()}`;
+			const dateValue = getDateString(date);
 			setValue(dateValue);
 			return dayjs(dateValue, 'YYYY-MM-DD');
 		}
-		const dateValue = `${value().year()}-${
-			value().month() + 1
-		}-${value().date()}`;
+		let month = value().month() + 1;
+		month = month > 9 ? month : month.toString().padStart(2, '0');
+		const dateValue = `${value().year()}-${month}-${value().date()}`;
 		setValue(dateValue);
 		return value;
 	}, [value]);

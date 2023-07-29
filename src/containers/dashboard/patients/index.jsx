@@ -10,11 +10,10 @@ import { Link } from 'react-router-dom';
 import Container from '../../../components/container';
 import Table from '../../../components/patients/table';
 import routes from '../../../config/routes';
-import { useFetchPatientsQuery } from '../../../store/features/api/patients';
+import { useGetPatientsQuery } from '../../../store/features/api/patients';
 
 function Patients() {
-	const { data, error, refetch, isFetching, isLoading } =
-		useFetchPatientsQuery();
+	const { data, error, refetch, isFetching, isLoading } = useGetPatientsQuery();
 
 	return (
 		<Container

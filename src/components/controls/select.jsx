@@ -1,5 +1,5 @@
-import { Select } from "antd";
-import React from "react";
+import { Select } from 'antd';
+import React from 'react';
 
 function ControlSelect({ label, error, name, id, onSelect, ...props }) {
 	const [value, setValue] = React.useState(props.value || undefined);
@@ -16,9 +16,8 @@ function ControlSelect({ label, error, name, id, onSelect, ...props }) {
 			)}
 			<Select
 				label={label}
-				showSearch
-				status={error ? "error" : undefined}
-				style={{ width: "100%" }}
+				status={error ? 'error' : undefined}
+				style={{ width: '100%' }}
 				size="large"
 				{...props}
 				onSelect={(value, option) => {

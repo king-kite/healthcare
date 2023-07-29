@@ -2,12 +2,25 @@ import baseApi from '.';
 import {
 	addPatient,
 	deletePatient,
+	editPatient,
+	getPatient,
 	getPatients,
 } from '../../../firebase/firestore/patients';
 
 const postsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
-		fetchPatients: builder.query({
+		getPatient: builder.query({
+			async queryFn(id) {
+				try {
+					const data = await getPatient({ id });
+					return { data };
+				} catch (error) {
+					return { error };
+				}
+			},
+			providesTags: ['Patient'],
+		}),
+		getPatients: builder.query({
 			async queryFn() {
 				try {
 					const data = await getPatients();
@@ -40,6 +53,20 @@ const postsApi = baseApi.injectEndpoints({
 			},
 			invalidatesTags: ['Patient'],
 		}),
+		editPatient: builder.mutation({
+			async queryFn(payload) {
+				try {
+					const data = await editPatient({
+						id: payload.id,
+						data: payload.data,
+					});
+					return { data };
+				} catch (error) {
+					return { error };
+				}
+			},
+		}),
+		invalidatesTags: ['Patient'],
 	}),
 	overrideExisting: false,
 });
@@ -47,6 +74,8 @@ const postsApi = baseApi.injectEndpoints({
 export const {
 	useCreatePatientMutation,
 	useDeletePatientMutation,
-	useFetchPatientsQuery,
+	useEditPatientMutation,
+	useGetPatientQuery,
+	useGetPatientsQuery,
 } = postsApi;
 export default postsApi;
