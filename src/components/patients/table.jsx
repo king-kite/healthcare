@@ -18,7 +18,7 @@ const columns = [
 		Cell: PatientCell,
 		Header: 'Patient',
 		accessor: 'patient',
-		avatarAccessor: 'avatar',
+		avatarAccessor: 'image',
 		subAccessor: 'email',
 		titleAccessor: 'full_name',
 	},
@@ -29,10 +29,6 @@ const columns = [
 	{
 		Header: 'Gender',
 		accessor: 'gender',
-	},
-	{
-		Header: 'Date of Birth',
-		accessor: 'dob',
 	},
 	{
 		Cell: TableActions,
@@ -47,6 +43,7 @@ function PatientTable({ data: patients = [] }) {
 		() =>
 			patients.map((patient) => ({
 				...patient,
+				gender: patient.gender === 'M' ? 'Male' : 'Female',
 				actions: [
 					{
 						href: routes.PATIENT_PAGE(patient.id),

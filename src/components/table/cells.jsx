@@ -59,7 +59,7 @@ export function TableAvatarTitleSubCell({ column, row }) {
 					<div className="h-10 relative rounded-full w-10">
 						<img
 							alt={row.original[column.titleAccessor][0]}
-							className="rounded-full"
+							className="h-full rounded-full w-full"
 							src={row.original[column.avatarAccessor]}
 						/>
 					</div>

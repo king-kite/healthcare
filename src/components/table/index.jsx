@@ -1,12 +1,12 @@
-import "regenerator-runtime/runtime";
-import React from "react";
+import 'regenerator-runtime/runtime';
+import React from 'react';
 import {
 	useFilters,
 	useGlobalFilter,
 	usePagination,
 	useSortBy,
 	useTable,
-} from "react-table";
+} from 'react-table';
 
 import {
 	GlobalFilter,
@@ -14,11 +14,11 @@ import {
 	SortIcon,
 	SortUpIcon,
 	SortDownIcon,
-} from "./components";
-import Pagination from "./pagination";
+} from './components';
+import Pagination from './pagination';
 
 function classNames(...classes) {
-	return classes.filter(Boolean).join(" ");
+	return classes.filter(Boolean).join(' ');
 }
 
 function Table({ className, columns = [], data }) {
@@ -77,7 +77,7 @@ function Table({ className, columns = [], data }) {
 			<div className="flex flex-col">
 				<div
 					className={classNames(
-						"border border-t-0 border-gray-200 overflow-x-auto pb-2 shadow sm:rounded-lg",
+						'border border-t-0 border-gray-200 overflow-x-auto pb-2 max-h-[31rem] shadow sm:rounded-lg',
 						className
 					)}
 				>
@@ -98,7 +98,7 @@ function Table({ className, columns = [], data }) {
 											scope="col"
 										>
 											<div className="flex items-center justify-between">
-												{column.render("Header")}
+												{column.render('Header')}
 												{/* Add a sort direction indicator */}
 												<span>
 													{column.isSorted ? (
@@ -134,12 +134,12 @@ function Table({ className, columns = [], data }) {
 													{...cell.getCellProps()}
 													className="capitalize font-semibold px-6 py-4 text-gray-800 text-xs whitespace-nowrap md:text-sm"
 												>
-													{cell.column.Cell.name === "defaultRenderer" ? (
+													{cell.column.Cell.name === 'defaultRenderer' ? (
 														<div className="text-sm text-gray-500">
-															{cell.render("Cell")}
+															{cell.render('Cell')}
 														</div>
 													) : (
-														cell.render("Cell")
+														cell.render('Cell')
 													)}
 												</td>
 											);

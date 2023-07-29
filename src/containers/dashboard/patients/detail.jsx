@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { EditOutlined, UserDeleteOutlined } from '@ant-design/icons';
 import { Button, Spin } from 'antd';
 import React from 'react';
@@ -15,44 +16,47 @@ function Detail() {
 	});
 
 	const info = React.useMemo(
-		() => [
-			{
-				title: 'First name',
-				value: data.first_name,
-			},
-			{
-				title: 'Last name',
-				value: data.last_name,
-			},
-			{
-				title: 'Email address',
-				value: data.email,
-			},
-			{
-				title: 'Gender',
-				value: data.gender === 'M' ? 'Male' : 'Female',
-			},
-			{
-				title: 'Phone number',
-				value: data.phone,
-			},
-			{
-				title: 'Address',
-				value: data.address,
-			},
-			{
-				title: 'Date of Birth',
-				value: data.dob,
-			},
-			{
-				title: 'Last Update',
-				value: data.updated_at,
-			},
-			{
-				title: 'Created At',
-				value: data.created_at,
-			},
-		],
+		() =>
+			data
+				? [
+						{
+							title: 'First name',
+							value: data.first_name,
+						},
+						{
+							title: 'Last name',
+							value: data.last_name,
+						},
+						{
+							title: 'Email address',
+							value: data.email,
+						},
+						{
+							title: 'Gender',
+							value: data.gender === 'M' ? 'Male' : 'Female',
+						},
+						{
+							title: 'Phone number',
+							value: data.phone,
+						},
+						{
+							title: 'Address',
+							value: data.address,
+						},
+						{
+							title: 'Date of Birth',
+							value: data.dob,
+						},
+						{
+							title: 'Last Update',
+							value: data.updated_at,
+						},
+						{
+							title: 'Created At',
+							value: data.created_at,
+						},
+				  ]
+				: [],
 		[data]
 	);
 
@@ -64,7 +68,7 @@ function Detail() {
 		);
 
 	// No data found
-	if (!isLoading && !data) return <Navigate to="/404" />;
+	if (!data) return <Navigate to="/404" />;
 
 	return (
 		<>
