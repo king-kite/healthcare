@@ -4,7 +4,7 @@ import React from 'react';
 import { useNotificationContext } from '../../store/contexts';
 import { useDeletePatientMutation } from '../../store/features/api/patients';
 
-function DeletePatient({ children, patientId: id, ...props }) {
+function DeletePatient({ children, patientId: id, onSuccess, ...props }) {
 	const [open, setOpen] = React.useState(false);
 
 	const { api } = useNotificationContext();
@@ -18,16 +18,17 @@ function DeletePatient({ children, patientId: id, ...props }) {
 	React.useEffect(() => {
 		if (error && status === 'rejected')
 			api.error({
-				message: `Sorry, counld not delete patient!`,
+				message: `Sorry, could not delete patient!`,
 				description: error.message,
 			});
 		else if (status === 'fulfilled') {
+			if (onSuccess) onSuccess();
 			setOpen(false);
 			api.success({
 				message: 'Patient deleted successfully.',
 			});
 		}
-	}, [api, status, error]);
+	}, [api, status, error, onSuccess]);
 
 	return (
 		<Popconfirm

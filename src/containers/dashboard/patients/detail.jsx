@@ -2,7 +2,7 @@
 import { EditOutlined, UserDeleteOutlined } from '@ant-design/icons';
 import { Button, Spin } from 'antd';
 import React from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import DeletePatient from '../../../components/patients/delete-patient';
 import routes from '../../../config/routes';
@@ -14,6 +14,8 @@ function Detail() {
 	const { data, isLoading } = useGetPatientQuery(id, {
 		skip: id === undefined,
 	});
+
+	const navigate = useNavigate();
 
 	const info = React.useMemo(
 		() =>
@@ -119,7 +121,9 @@ function Detail() {
 						<div className="my-4 sm:ml-2 sm:my-0">
 							<DeletePatient
 								className="cursor-pointer"
+								patientId={id}
 								shape="default"
+								onSuccess={() => navigate(routes.PATIENTS_PAGE)}
 								icon={
 									<span className="mr-2 text-gray-700 text-sm md:text-base">
 										<UserDeleteOutlined />
