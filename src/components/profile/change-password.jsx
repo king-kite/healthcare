@@ -1,4 +1,3 @@
-import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 import { Alert, Button } from 'antd';
 import React from 'react';
 
@@ -92,15 +91,8 @@ function ChangePassword({ onSuccess }) {
 			>
 				<div className="my-5">
 					<Input.Password
-						iconRender={(visible) =>
-							!visible ? (
-								<EyeTwoTone className="cursor-pointer text-primary-500" />
-							) : (
-								<EyeInvisibleOutlined className="cursor-pointer text-primary-500" />
-							)
-						}
 						label="Enter Password"
-						error={error && errors?.path === 'password1' ? error : undefined}
+						error={error && error?.path === 'password1' ? error : undefined}
 						id="password1"
 						name="password1"
 						disabled={loading}
@@ -109,15 +101,8 @@ function ChangePassword({ onSuccess }) {
 				</div>
 				<div className="my-5">
 					<Input.Password
-						iconRender={(visible) =>
-							!visible ? (
-								<EyeTwoTone className="cursor-pointer text-primary-500" />
-							) : (
-								<EyeInvisibleOutlined className="cursor-pointer text-primary-500" />
-							)
-						}
 						label="Enter Password Again"
-						error={error && errors?.path === 'password2' ? error : undefined}
+						error={error && error?.path === 'password2' ? error : undefined}
 						id="password2"
 						name="password2"
 						disabled={loading}

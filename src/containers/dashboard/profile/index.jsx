@@ -137,7 +137,7 @@ function Profile() {
 				</div>
 			</div>
 
-			<Modal open={open} onCancel={() => setOpen(false)} footer={<></>}>
+			<Modal open={open} onCancel={handlePasswordSuccess} footer={<></>}>
 				{formType === 'profile' ? (
 					<UpdateForm
 						data={{
