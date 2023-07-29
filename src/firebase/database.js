@@ -1,42 +1,50 @@
-import { ref, onValue, set } from 'firebase/database';
+import { ref, onValue, set } from "firebase/database";
 
-import { db } from '.';
-import { handleError } from './utils';
+import { db } from ".";
+import { handleError } from "./utils";
 
-// Get the route data from the realtime database
-export function getRouteData({ route, onError, onSuccess }) {
-	try {
-		// route === 'L1' || 'L2' and so on...
+// Read the parameters from the realtime database
+export async function readParameters({ onError, onSuccess }) {
+  try {
+    // get reference to data
+    const reference = ref(db, "/parameters");
 
-		// get reference to data
-		const reference = ref(db, '/' + route);
-
-		onValue(reference, (snapshot) => {
-			if (snapshot.exists()) {
-				const value = snapshot.val();
-				onSuccess(value);
-			} else onError({ message: `No switch exists on route: ${route}` });
-		});
-	} catch (error) {
-		const err = handleError(error);
-		if (onError) onError(err);
-	}
+    onValue(reference, (snapshot) => {
+      if (snapshot.exists()) {
+        const value = snapshot.val();
+        onSuccess(value);
+      } else onError({ message: "Unable to get route parameters" });
+    });
+  } catch (err) {
+    const error = handleError(err);
+    if (onError) onError(error);
+    return { error };
+  }
 }
 
-// Set the route data on the realtime database
-export async function setRouteData({ route, onSuccess, onError, value }) {
-	try {
-		// route === 'L1' || 'L2' and so on...
+// Reset the parameters on the realtime database
+export async function resetParameters(options = {}) {
+  const { onError, onSuccess } = options;
+  try {
+    // get the reference to the parameters data
+    const reference = ref(db, "/parameters");
 
-		// get reference to data
-		const reference = ref(db, '/' + route);
+    const data = {
+      height: "0",
+      weight: "0",
+      temperature: "0",
+      pulse: "0",
+      loading: "1",
+    };
 
-		// set data on reference
-		await set(reference, value);
+    // set data on reference
+    await set(reference, data);
 
-		if (onSuccess) onSuccess(value);
-	} catch (error) {
-		const err = handleError(error);
-		if (onError) onError(err);
-	}
+    if (onSuccess) onSuccess(data);
+    return { data };
+  } catch (err) {
+    const error = handleError(err);
+    if (onError) onError(error);
+    return { error };
+  }
 }

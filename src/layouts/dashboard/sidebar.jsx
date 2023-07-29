@@ -80,11 +80,11 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 							<img
 								className="h-full rounded-full w-full"
 								src={auth.image}
-								alt={auth?.displayName[0] || auth.email[0]}
+								alt={auth?.displayName?.[0] || auth.email[0]}
 							/>
 						) : (
 							<span className="left-[0.05rem] relative top-[0.075rem] text-lg md:text-xl lg:text-2xl">
-								{auth?.displayName[0] || auth.email[0]}
+								{auth?.displayName?.[0] || auth.email[0]}
 							</span>
 						)}
 					</span>

@@ -1,156 +1,109 @@
 import {
-	ArrowRightOutlined,
-	PlusOutlined,
-	DeleteOutlined,
-} from '@ant-design/icons';
-import { Button, Tooltip } from 'antd';
-import React from 'react';
-import { Link } from 'react-router-dom';
+  ExclamationCircleOutlined,
+  PlusOutlined,
+  UndoOutlined,
+} from "@ant-design/icons";
+import { Button, Result, Skeleton } from "antd";
+import React from "react";
 
-import Container from '../../../components/container';
-import { TableAvatarTitleSubCell as PatientCell } from '../../../components/table/cells';
-import ReactTable from '../../../components/table';
-import TestsForm from '../../../components/tests/form';
-import routes from '../../../config/routes';
+import Container from "../../../components/container";
+import TestsForm from "../../../components/tests/form";
+import Table from "../../../components/tests/table";
+import { resetParameters } from "../../../firebase/database";
+import { useGetTestsQuery } from "../../../store/features/api/tests";
 
 function Tests() {
+  const { data, error, refetch, isFetching, isLoading } = useGetTestsQuery();
+
   const modalRef = React.useRef();
 
-	const columns = React.useMemo(
-		() => [
-			{
-				Cell: PatientCell,
-				Header: 'Patient',
-				accessor: 'patient',
-				avatarAccessor: 'avatar',
-				subAccessor: 'email',
-				titleAccessor: 'full_name',
-			},
-			{
-				Header: 'Height',
-				accessor: 'height',
-			},
-			{
-				Header: 'Weight',
-				accessor: 'weight',
-			},
-      {
-        Header: 'Temperature',
-        accessor: 'temperature'
-      },
-      {
-        Header: 'Pulse/Heart Rate',
-        accessor: 'pulse'
-      },
-			{
-				Header: 'Date',
-				accessor: 'date',
-			},
-			{
-				Header: 'Actions',
-				accessor: 'actions',
-			},
-		],
-		[]
-	);
+  return (
+    <Container
+      alert={
+        error?.message
+          ? {
+              type: "error",
+              title: "Error: Failed to Load.",
+              message: error.message,
+              // close: clearError,
+            }
+          : undefined
+      }
+      title="Tests and Diagnosis"
+    >
+      <div className="sm:flex sm:items-center">
+        <div className="my-2 w-full sm:mr-2 sm:my-0 sm:w-1/2 md:w-1/3 lg:w-1/4">
+          <Button
+            block
+            icon={
+              <span className="mr-2 text-sm md:text-base">
+                <PlusOutlined />
+              </span>
+            }
+            onClick={() => {
+              if (modalRef.current) modalRef.current.openModal();
+              resetParameters();
+            }}
+            size="large"
+          >
+            <span className="text-sm md:text-base">New Test</span>
+          </Button>
+        </div>
+        <div className="my-2 w-full sm:ml-2 sm:my-0 sm:w-1/2 md:ml-4 md:w-1/3 lg:w-1/4">
+          <Button
+            block
+            disabled={isFetching}
+            loading={isFetching}
+            onClick={refetch}
+            icon={
+              <span className="mr-2 text-gray-700 text-sm md:text-base">
+                <UndoOutlined />
+              </span>
+            }
+            size="large"
+          >
+            <span className="text-sm text-gray-700 md:text-base">Refresh</span>
+          </Button>
+        </div>
+      </div>
 
-	const data = React.useMemo(() => {
-		const data = [
-			{
-				first_name: 'John',
-				last_name: 'Doe',
-				email: 'johndoe@gmail.com',
-				temperature: '22oC',
-        height: '6ft',
-        weight: '70kg',
-        pulse: '55bpm/m',
-				date: '2000-01-01',
-			},
-			{
-				first_name: 'Jane',
-				last_name: 'Doe',
-				email: 'janedoe@gmail.com',
-				temperature: '22oC',
-        height: '6ft',
-        weight: '70kg',
-        pulse: '55bpm/m',
-				date: '2000-01-01',
-			},
-			{
-				first_name: 'Richard',
-				last_name: 'Cooper',
-				email: 'richardcooper@gmail.com',
-				temperature: '22oC',
-        height: '6ft',
-        weight: '70kg',
-        pulse: '55bpm/m',
-				date: '2000-01-01',
-			},
-			{
-				first_name: 'Mary',
-				last_name: 'Jane',
-				email: 'maryjane@gmail.com',
-				temperature: '22oC',
-        height: '6ft',
-        weight: '70kg',
-        pulse: '55bpm/m',
-				date: '2000-01-01',
-			},
-		];
-		const keyedData = data.map((item, index) => ({
-			...item,
-			key: index,
-			full_name: item.first_name + ' ' + item.last_name,
-			actions: (
-				<div className="flex items-center">
-					<span className="px-2">
-						<Tooltip title="View">
-							<Link to={routes.TEST_PAGE(index)}>
-								<Button type="primary" shape="circle">
-									<span className="text-gray-100 text-sm md:text-base">
-										<ArrowRightOutlined />
-									</span>
-								</Button>
-							</Link>
-						</Tooltip>
-					</span>
-					<span className="px-2">
-						<Tooltip title="Delete">
-							<Button className="bg-red-500" type="dashed" shape="circle">
-								<span className="text-gray-100 text-sm md:text-base">
-									<DeleteOutlined />
-								</span>
-							</Button>
-						</Tooltip>
-					</span>
-				</div>
-			),
-		}));
-		return keyedData;
-	}, []);
+      <div className="my-2 py-4">
+        {isLoading ? (
+          <Skeleton active />
+        ) : data && data.length > 0 ? (
+          <Table data={data} />
+        ) : (
+          <Result
+            icon={
+              <span className="text-primary-500 text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
+                <ExclamationCircleOutlined />
+              </span>
+            }
+            title="There are no test/dianosis."
+            extra={
+              <Button
+                icon={
+                  <span className="mr-2 text-sm md:text-base">
+                    <PlusOutlined />
+                  </span>
+                }
+                size="large"
+                type="primary"
+                onClick={() => {
+                  if (modalRef.current) modalRef.current.openModal();
+                  resetParameters();
+                }}
+              >
+                <span className="text-sm md:text-base">Conduct one now</span>
+              </Button>
+            }
+          />
+        )}
+      </div>
 
-	return (
-		<Container title="Tests and Diagnosis">
-			<div className="w-full sm:w-1/2 md:w-1/3">
-        <Button
-          block
-          icon={
-            <span className="mr-2 text-sm md:text-base">
-              <PlusOutlined />
-            </span>
-          }
-          onClick={() => {
-            if (modalRef.current) modalRef.current.openModal()
-          }}
-          size="large"
-        >
-          <span className="text-sm md:text-base">New Test</span>
-        </Button>
-			</div>
-			<ReactTable columns={columns} data={data} />
       <TestsForm ref={modalRef} />
-		</Container>
-	);
+    </Container>
+  );
 }
 
 export default Tests;
