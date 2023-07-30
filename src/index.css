@@ -39,24 +39,19 @@ button span {
 }
 
 .container-banner {
-	@apply bg-primary-500 h-[30vh] w-full md:h-[38vh] lg:h-[45vh];
-}
-.container-dashboard {
-	@apply px-4 md:px-6 lg:px-8;
-}
-
-.profile-top-image {
 	background-image: url(/images/auth-bg.jpg);
-	/* background-position-y: -100px; */
 
 	@apply bg-cover bg-no-repeat h-[30vh] w-full md:h-[38vh] lg:h-[45vh];
 }
 
-.profile-top-image .wrapper,
 .container-banner .wrapper {
 	background-color: rgba(0, 0, 0, 0.3);
 
 	@apply h-full w-full;
+}
+
+.container-dashboard {
+	@apply px-4 md:px-6 lg:px-8;
 }
 
 .sidebar-close-icon {
