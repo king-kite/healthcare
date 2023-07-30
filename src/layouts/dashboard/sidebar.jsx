@@ -75,7 +75,7 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 					</span>
 				</div>
 				<div className="flex flex-col items-center w-full">
-					<span className="bg-primary-500 border-4 border-solid border-white h-16 inline-flex items-center justify-center rounded-full text-gray-50 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
+					<span className="bg-primary-500 border-4 border-solid border-white h-16 inline-flex items-center justify-center rounded-full text-gray-50 w-16 md:h-20 md:w-20">
 						{auth?.image ? (
 							<img
 								className="h-full rounded-full w-full"
@@ -88,7 +88,7 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 							</span>
 						)}
 					</span>
-					<p className="capitalize font-semibold my-2 text-gray-800 text-center text-sm lg:text-base">
+					<p className="capitalize font-semibold my-2 text-gray-700 text-center text-sm lg:text-base">
 						{auth.displayName || auth.email}
 					</p>
 				</div>

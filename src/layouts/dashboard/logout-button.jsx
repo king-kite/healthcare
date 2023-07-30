@@ -18,7 +18,7 @@ function LogoutButton({ setVisible }) {
 	return (
 		<Button
 			block
-			className="sidebar-logout"
+			className="sidebar-logout lg-btn"
 			disabled={loading}
 			loading={loading}
 			icon={
