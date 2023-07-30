@@ -241,7 +241,7 @@ export function deletePatient({ id }) {
 					// Get the tests data from the firestore collection
 					// where the test id is the same
 					const testsRef = collection(firestore, testRef);
-					return getDocs(query(testsRef, where('test_id', '==', id)));
+					return getDocs(query(testsRef, where('patient_id', '==', id)));
 				})
 				.then(async (tests) => {
 					// store the promises of the deleteDoc query and await them

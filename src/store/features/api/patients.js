@@ -51,7 +51,7 @@ const patientsApi = baseApi.injectEndpoints({
 					return { error };
 				}
 			},
-			invalidatesTags: ['Patient'],
+			invalidatesTags: ['Patient', 'Test'],
 		}),
 		editPatient: builder.mutation({
 			async queryFn(payload) {
