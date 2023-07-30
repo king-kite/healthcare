@@ -1,15 +1,4 @@
 import { Button, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
-
-function ActionLinkComponent({ children, to }) {
-	if (to) return <Link to={to}>{children}</Link>;
-	return children;
-}
-
-function ActionTooltipComponent({ children, title }) {
-	if (title) return <Tooltip>{children}</Tooltip>;
-	return children;
-}
 
 export function TableActions({ column, row }) {
 	return (
@@ -21,29 +10,26 @@ export function TableActions({ column, row }) {
 						title,
 						icon: Icon,
 						iconColor = 'text-gray-100',
-						href: to,
 						...action
 					},
 					index
 				) => (
 					<span className="px-2" key={index}>
-						<ActionTooltipComponent title={title}>
-							<ActionLinkComponent to={to}>
-								{Container ? (
-									<Container {...action}>
-										<span className={`${iconColor} text-sm md:text-base`}>
-											<Icon />
-										</span>
-									</Container>
-								) : (
-									<Button shape="circle" type="ghost" {...action}>
-										<span className={`${iconColor} text-sm md:text-base`}>
-											<Icon />
-										</span>
-									</Button>
-								)}
-							</ActionLinkComponent>
-						</ActionTooltipComponent>
+						<Tooltip title={title || 'Button'}>
+							{Container ? (
+								<Container {...action}>
+									<span className={`${iconColor} text-sm md:text-base`}>
+										<Icon />
+									</span>
+								</Container>
+							) : (
+								<Button shape="circle" type="ghost" {...action}>
+									<span className={`${iconColor} text-sm md:text-base`}>
+										<Icon />
+									</span>
+								</Button>
+							)}
+						</Tooltip>
 					</span>
 				)
 			)}

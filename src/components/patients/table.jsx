@@ -3,7 +3,9 @@ import {
 	DeleteOutlined,
 	EditOutlined,
 } from '@ant-design/icons';
+import { Button } from 'antd';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import DeletePatient from './delete-patient';
 import Table from '../table';
@@ -46,13 +48,29 @@ function PatientTable({ data: patients = [] }) {
 				gender: patient.gender === 'M' ? 'Male' : 'Female',
 				actions: [
 					{
-						href: routes.PATIENT_PAGE(patient.id),
+						container: ({ children, ...props }) => (
+							<span className="block">
+								<Link to={routes.PATIENT_PAGE(patient.id)}>
+									<Button shape="circle" type="ghost" {...props}>
+										{children}
+									</Button>
+								</Link>
+							</span>
+						),
 						iconColor: 'text-primary-500',
 						title: 'View',
 						icon: ArrowRightOutlined,
 					},
 					{
-						href: routes.PATIENT_EDIT_PAGE(patient.id),
+						container: ({ children, ...props }) => (
+							<span className="block">
+								<Link to={routes.PATIENT_EDIT_PAGE(patient.id)}>
+									<Button shape="circle" type="ghost" {...props}>
+										{children}
+									</Button>
+								</Link>
+							</span>
+						),
 						iconColor: 'text-blue-700',
 						title: 'Edit',
 						icon: EditOutlined,
