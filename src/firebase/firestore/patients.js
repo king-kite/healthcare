@@ -243,13 +243,15 @@ export function deletePatient({ id }) {
 					const testsRef = collection(firestore, testRef);
 					return getDocs(query(testsRef, where('patient_id', '==', id)));
 				})
-				.then(async (tests) => {
+				.then((tests) => {
 					// store the promises of the deleteDoc query and await them
 					const promises = [];
 					tests.docs.forEach((doc) =>
 						promises.push(deleteDoc(firestore, testRef, doc.id))
 					);
-					await Promise.all(promises);
+					return Promise.all(promises);
+				})
+				.then(() => {
 					resolve({
 						message: 'Patient with the specified ID was deleted successfully!',
 					});
