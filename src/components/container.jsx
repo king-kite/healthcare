@@ -13,7 +13,7 @@ function Container({ children, alert, image, title = 'Page' }) {
 						<h2
 							className={`${
 								image ? 'sm:ml-28 lg:ml-24' : ''
-							} text-2xl font-bold leading-7 text-gray-100 sm:text-3xl sm:tracking-tight`}
+							} text-2xl font-bold leading-7 text-gray-100 sm:text-3xl sm:tracking-tight md:tracking-wide`}
 						>
 							{title}
 						</h2>

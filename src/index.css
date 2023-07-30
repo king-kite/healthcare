@@ -45,8 +45,7 @@ button span {
 }
 
 .container-banner .wrapper {
-	background-color: rgba(0, 0, 0, 0.3);
-
+	background-color: rgba(4, 47, 43, 0.6);
 	@apply h-full w-full;
 }
 
