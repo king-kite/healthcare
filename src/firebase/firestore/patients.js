@@ -59,9 +59,9 @@ export function getPatients() {
 				throw new Error('Authentication credentials were not provided!');
 
 			// Get the patients data from the firestore collection
-			// and order by first_name in ascending order
+			// and order by created_at in descending order
 			const patientsRef = collection(firestore, reference);
-			getDocs(query(patientsRef, orderBy('first_name', 'asc')))
+			getDocs(query(patientsRef, orderBy('created_at', 'desc')))
 				.then((patients) => {
 					// Get the data from each doc in the patients array
 					const data = patients.docs.map((doc) => serializePatient(doc));

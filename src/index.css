@@ -34,6 +34,12 @@ button span {
 	padding: 0;
 }
 
+abbr,
+abbr[title] {
+	cursor: pointer;
+	text-decoration: none;
+}
+
 .bg-auth-lg-background {
 	background: hsla(174, 82%, 29%, 0.2);
 }
