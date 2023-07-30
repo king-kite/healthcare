@@ -79,7 +79,7 @@ function Tests() {
                 <ExclamationCircleOutlined />
               </span>
             }
-            title="There are no test/dianosis."
+            title="There are no tests/dianosis."
             extra={
               <Button
                 icon={

@@ -16,7 +16,7 @@ import { handleError } from "../utils";
 import { handleYupError } from "../../validators";
 import testSchema from "../../validators/test";
 
-const ref = "tests";
+const reference = "tests";
 
 function getDateString(date) {
   let month = date.getMonth() + 1;
@@ -59,7 +59,7 @@ export function getTests() {
 
       // Get the tests data from the firestore collection
       // and order by created_at in descending order
-      const testsRef = collection(firestore, ref);
+      const testsRef = collection(firestore, reference);
       getDocs(query(testsRef, orderBy("created_at", "desc")))
         .then(async (tests) => {
           // Get the data from each doc in the tests array
@@ -91,7 +91,7 @@ export function getTest({ id }) {
       if (!id) throw new Error("An ID was not provided!");
 
       // Get the test data from the firestore
-      const testRef = doc(firestore, ref, id);
+      const testRef = doc(firestore, reference, id);
       getDoc(testRef)
         .then(async (document) => {
           // Get the data from the document
@@ -135,7 +135,7 @@ export function addTest({ data }) {
       };
 
       // Save the test document
-      addDoc(collection(firestore, ref), test)
+      addDoc(collection(firestore, reference), test)
         .then((doc) => {
           resolve({
             id: doc.id,
@@ -172,7 +172,7 @@ export function deleteTest({ id }) {
       if (!id) throw new Error("An ID was not provided!");
 
       // Delete the test
-      deleteDoc(doc(firestore, ref, id))
+      deleteDoc(doc(firestore, reference, id))
         .then(() => {
           resolve({
             message: "Test with the specified Id was deleted successfully!",

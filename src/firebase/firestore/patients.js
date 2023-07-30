@@ -17,7 +17,7 @@ import { handleError } from '../utils';
 import { handleYupError } from '../../validators';
 import patientSchema from '../../validators/patient';
 
-const ref = 'patients';
+const reference = 'patients';
 const testRef = 'tests';
 
 function getDateString(date) {
@@ -60,7 +60,7 @@ export function getPatients() {
 
 			// Get the patients data from the firestore collection
 			// and order by first_name in ascending order
-			const patientsRef = collection(firestore, ref);
+			const patientsRef = collection(firestore, reference);
 			getDocs(query(patientsRef, orderBy('first_name', 'asc')))
 				.then((patients) => {
 					// Get the data from each doc in the patients array
@@ -90,7 +90,7 @@ export function getPatient({ id }) {
 			if (!id) throw new Error('An ID was not provided!');
 
 			// Get the patient data from the firestore
-			const patientRef = doc(firestore, ref, id);
+			const patientRef = doc(firestore, reference, id);
 			getDoc(patientRef)
 				.then((document) => {
 					// Get the data from the document
@@ -139,7 +139,7 @@ export function addPatient({ data }) {
 			};
 
 			// Save the patient document
-			addDoc(collection(firestore, ref), patient)
+			addDoc(collection(firestore, reference), patient)
 				.then((doc) => {
 					resolve({
 						id: doc.id,
@@ -197,7 +197,7 @@ export function editPatient({ id, data }) {
 			if (payload.image) patient.image = payload.image;
 
 			// Save the patient
-			updateDoc(doc(firestore, ref, id), patient)
+			updateDoc(doc(firestore, reference, id), patient)
 				.then(() => {
 					resolve({
 						id,
@@ -235,7 +235,7 @@ export function deletePatient({ id }) {
 			if (!id) throw new Error('An ID was not provided!');
 
 			// Delete the patient
-			deleteDoc(doc(firestore, ref, id))
+			deleteDoc(doc(firestore, reference, id))
 				.then(() => {
 					// Remove the related test data associated with the patient
 					// Get the tests data from the firestore collection

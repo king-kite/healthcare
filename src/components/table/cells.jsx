@@ -21,14 +21,14 @@ export function TableActions({ column, row }) {
 						title,
 						icon: Icon,
 						iconColor = 'text-gray-100',
-						href,
+						href: to,
 						...action
 					},
 					index
 				) => (
 					<span className="px-2" key={index}>
 						<ActionTooltipComponent title={title}>
-							<ActionLinkComponent to={href}>
+							<ActionLinkComponent to={to}>
 								{Container ? (
 									<Container {...action}>
 										<span className={`${iconColor} text-sm md:text-base`}>
