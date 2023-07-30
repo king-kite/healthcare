@@ -44,31 +44,6 @@ export function PageButton({ children, className, disabled, ...rest }) {
 	);
 }
 
-export function GroupFilter({
-	headerGroups = [],
-	// headerKey,
-	// headerClassName,
-	filterKey = 'Filter',
-}) {
-	return headerGroups.map((headerGroup) =>
-		headerGroup.headers.map((column) =>
-			column.Filter ? (
-				<div className="w-full" key={column.id}>
-					{/*{headerKey && (
-						<label 
-							className="flex" 
-							htmlFor={column.id}
-						>
-							{column.render(headerKey)}:
-						</label>
-					)}*/}
-					{column.render(filterKey)}
-				</div>
-			) : null
-		)
-	);
-}
-
 export function GlobalFilter({
 	preGlobalFilteredRows,
 	globalFilter,

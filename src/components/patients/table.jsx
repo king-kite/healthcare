@@ -40,7 +40,7 @@ const columns = [
 	},
 ];
 
-function PatientTable({ data: patients = [] }) {
+function PatientTable({ data: patients = [], ...props }) {
 	const data = React.useMemo(
 		() =>
 			patients.map((patient) => ({
@@ -88,7 +88,7 @@ function PatientTable({ data: patients = [] }) {
 		[patients]
 	);
 
-	return <Table columns={columns} data={data} />;
+	return <Table columns={columns} data={data} {...props} />;
 }
 
 export default PatientTable;

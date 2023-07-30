@@ -44,7 +44,7 @@ const columns = [
 	},
 ];
 
-function TestTable({ data: tests = [] }) {
+function TestTable({ data: tests = [], ...props }) {
 	const data = React.useMemo(
 		() =>
 			tests.map((test) => ({
@@ -80,7 +80,7 @@ function TestTable({ data: tests = [] }) {
 		[tests]
 	);
 
-	return <Table columns={columns} data={data} />;
+	return <Table columns={columns} data={data} {...props} />;
 }
 
 export default TestTable;

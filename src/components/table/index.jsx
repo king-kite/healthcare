@@ -8,20 +8,20 @@ import {
 	useTable,
 } from 'react-table';
 
-import {
-	GlobalFilter,
-	GroupFilter,
-	SortIcon,
-	SortUpIcon,
-	SortDownIcon,
-} from './components';
+import { GlobalFilter, SortIcon, SortUpIcon, SortDownIcon } from './components';
 import Pagination from './pagination';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
 }
 
-function Table({ className, columns = [], data }) {
+function Table({
+	className,
+	columns = [],
+	data,
+	paginate = true,
+	search = true,
+}) {
 	// Use the state and functions returned from useTable to build your UI
 	const {
 		getTableProps,
@@ -58,19 +58,15 @@ function Table({ className, columns = [], data }) {
 	return (
 		<React.Fragment>
 			{/* Filters Start */}
-			<div className="gap-6 grid mb-6 py-2 items-center sm:grid-cols-2 md:grid-cols-4">
-				<GlobalFilter
-					preGlobalFilteredRows={preGlobalFilteredRows}
-					globalFilter={state.globalFilter}
-					setGlobalFilter={setGlobalFilter}
-				/>
-
-				<GroupFilter
-					headerGroups={headerGroups}
-					// headerKey="Header"
-					filterKey="Filter"
-				/>
-			</div>
+			{search && (
+				<div className="gap-6 grid mb-6 py-2 items-center sm:grid-cols-2 md:grid-cols-4">
+					<GlobalFilter
+						preGlobalFilteredRows={preGlobalFilteredRows}
+						globalFilter={state.globalFilter}
+						setGlobalFilter={setGlobalFilter}
+					/>
+				</div>
+			)}
 			{/* Filters Stop */}
 
 			{/* Table Start */}
@@ -154,18 +150,20 @@ function Table({ className, columns = [], data }) {
 			{/* Table Stop */}
 
 			{/* Pagination Start */}
-			<Pagination
-				canNextPage={canNextPage}
-				canPreviousPage={canPreviousPage}
-				gotoPage={gotoPage}
-				nextPage={nextPage}
-				pageCount={pageCount}
-				pageIndex={state.pageIndex}
-				pageLength={pageOptions.length}
-				pageSize={state.pageSize}
-				previousPage={previousPage}
-				setPageSize={setPageSize}
-			/>
+			{paginate && (
+				<Pagination
+					canNextPage={canNextPage}
+					canPreviousPage={canPreviousPage}
+					gotoPage={gotoPage}
+					nextPage={nextPage}
+					pageCount={pageCount}
+					pageIndex={state.pageIndex}
+					pageLength={pageOptions.length}
+					pageSize={state.pageSize}
+					previousPage={previousPage}
+					setPageSize={setPageSize}
+				/>
+			)}
 			{/* Pagination Stop */}
 		</React.Fragment>
 	);
