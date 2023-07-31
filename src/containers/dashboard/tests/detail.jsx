@@ -68,7 +68,7 @@ function Detail() {
 				description: "Patient's Body Mass Index",
 				icon: BodyMassIndexIcon,
 				title: 'BMI',
-				value: +data.height / +data.weight,
+				value: (+data.height / +data.weight).toFixed(2),
 			},
 		];
 		return info;

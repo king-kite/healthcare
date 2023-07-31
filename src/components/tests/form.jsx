@@ -70,10 +70,6 @@ function FormComponent(props, ref) {
 		});
 	}, [createTest, patient, parameters]);
 
-	React.useEffect(() => {
-		setError(testError);
-	}, [testError]);
-
 	// get the options from the patients data
 	const patientOptions = React.useMemo(() => {
 		if (!patientsData) return [];
@@ -83,50 +79,34 @@ function FormComponent(props, ref) {
 		}));
 	}, [patientsData]);
 
-	const changeValue = React.useCallback((key, value) => {
-		setParameters((prevState) => ({
-			...prevState,
-			[key]: value,
-		}));
-	}, []);
+	// Handle state change if a parameter or loading is updated
+	const handleParameterChange = React.useCallback((data) => {
+		setParameters((prevParameters) => {
+			const newData = {};
 
-	const handleParameterChange = React.useCallback(
-		(data) => {
 			// check height
-			if (data.height !== parameters.height) changeValue('height', data.height);
+			if (data.height !== prevParameters.height) newData.height = data.height;
 
 			// check weight
-			if (data.weight !== parameters.weight) changeValue('weight', data.weight);
+			if (data.weight !== prevParameters.weight) newData.weight = data.weight;
 
 			// check temperature
-			if (data.temperature !== parameters.temperature)
-				changeValue('temperature', data.temperature);
+			if (data.temperature !== prevParameters.temperature)
+				newData.temperature = data.temperature;
 
 			// check pulse
-			if (data.pulse !== parameters.pulse) changeValue('pulse', data.pulse);
+			if (data.pulse !== prevParameters.pulse) newData.pulse = data.pulse;
 
 			// check loading
-			if (data.loading !== parameters.loading)
-				changeValue('loading', data.loading);
-		},
-		[parameters, changeValue]
-	);
+			if (data.loading !== prevParameters.loading)
+				newData.loading = data.loading;
 
-	// Read the parameters
-	React.useEffect(() => {
-		readParameters({
-			onError(error) {
-				setError(error);
-			},
-			onSuccess(data) {
-				handleParameterChange(data);
-			},
+			return {
+				...prevParameters,
+				...newData,
+			};
 		});
-	}, [handleParameterChange]);
-
-	React.useEffect(() => {
-		setError(patientsError);
-	}, [patientsError]);
+	}, []);
 
 	// handle begin test
 	const handleBeginTest = React.useCallback(() => {
@@ -142,12 +122,35 @@ function FormComponent(props, ref) {
 		}
 	}, [patientsData, value]);
 
+	// Reset the modal
 	const resetModal = React.useCallback(() => {
 		setOpen(false);
 		setValue(null);
 		setPatient(null);
 		reset();
 	}, [reset]);
+
+	// Listen for errors in when creating tests
+	React.useEffect(() => {
+		setError(testError);
+	}, [testError]);
+
+	// Listen for errors when getting patients
+	React.useEffect(() => {
+		setError(patientsError);
+	}, [patientsError]);
+
+	// Read the parameters
+	React.useEffect(() => {
+		readParameters({
+			onError(error) {
+				setError(error);
+			},
+			onSuccess(data) {
+				handleParameterChange(data);
+			},
+		});
+	}, [handleParameterChange]);
 
 	// Successful creation of test
 	React.useEffect(() => {
@@ -157,14 +160,11 @@ function FormComponent(props, ref) {
 				message: 'Test Saved.',
 				description: "Patient's health parameters saved successfully.",
 			});
-
 			// Navigate to the test detail page
 			if (createData) navigate(routes.TEST_PAGE(createData.id));
-
 			// Reset the modal
 			resetModal();
 		}
-
 		return () => {
 			resetModal();
 		};
