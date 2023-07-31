@@ -25,7 +25,7 @@ function PatientTable({ data, loading }) {
 				</p>
 			) : (
 				<>
-					<Table data={patients} paginate={false} search={false} />
+					<Table data={patients} paginate={false} genderFilter={false} search={false} />
 					<div className="my-3 py-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
 						<Link className="block w-full" to={routes.PATIENTS_PAGE}>
 							<Button

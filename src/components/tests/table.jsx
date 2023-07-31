@@ -9,6 +9,7 @@ import {
 	TableAvatarTitleSubCell as PatientCell,
 	TableActions,
 } from '../table/cells';
+import { GlobalFilter } from '../table/components';
 import routes from '../../config/routes';
 
 const columns = [
@@ -41,11 +42,12 @@ const columns = [
 		Header: 'Actions',
 		actionsAccessor: 'actions',
 		accessor: 'action',
-		disableGlobalFilter: true,
 	},
 ];
 
-function TestTable({ data: tests = [], ...props }) {
+function TestTable({ data: tests = [], search = true, ...props }) {
+	const [filter, setFilter] = React.useState('');
+
 	const data = React.useMemo(
 		() =>
 			tests.map((test) => ({
@@ -81,7 +83,34 @@ function TestTable({ data: tests = [], ...props }) {
 		[tests]
 	);
 
-	return <Table columns={columns} data={data} {...props} />;
+	const filteredData = React.useMemo(() => {
+		if (!filter) return data;
+		const tests = data.filter((test) => {
+			const search = filter.trim().toLowerCase();
+			if (test.patient?.first_name.toLowerCase().includes(search)) return true;
+			if (test.patient?.last_name.toLowerCase().includes(search)) return true;
+			if (test.patient?.email.toLowerCase().includes(search)) return true;
+			return false;
+		});
+		return tests;
+	}, [data, filter]);
+
+	return (
+		<>
+			{/* Filters Start */}
+			{search && (
+				<div className="gap-6 grid mb-6 py-2 items-center sm:grid-cols-2 md:grid-cols-4">
+					<GlobalFilter
+						count={filteredData.length}
+						filter={filter}
+						setFilter={setFilter}
+					/>
+				</div>
+			)}
+			{/* Filters Stop */}
+			<Table columns={columns} data={filteredData} {...props} />
+		</>
+	);
 }
 
 export default TestTable;

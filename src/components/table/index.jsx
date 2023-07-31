@@ -1,26 +1,15 @@
 import 'regenerator-runtime/runtime';
 import React from 'react';
-import {
-	useGlobalFilter,
-	usePagination,
-	useSortBy,
-	useTable,
-} from 'react-table';
+import { usePagination, useSortBy, useTable } from 'react-table';
 
-import { GlobalFilter, SortIcon, SortUpIcon, SortDownIcon } from './components';
+import { SortIcon, SortUpIcon, SortDownIcon } from './components';
 import Pagination from './pagination';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
 }
 
-function Table({
-	className,
-	columns = [],
-	data,
-	paginate = true,
-	search = true,
-}) {
+function Table({ className, columns = [], data, paginate = true }) {
 	// Use the state and functions returned from useTable to build your UI
 	const {
 		getTableProps,
@@ -30,8 +19,6 @@ function Table({
 		// rows, // No longer using rows as a result of pagination
 
 		state,
-		preGlobalFilteredRows,
-		setGlobalFilter,
 
 		// pagination
 		page, // Instead of using 'rows', we'll use page,
@@ -46,27 +33,10 @@ function Table({
 		nextPage,
 		previousPage,
 		setPageSize,
-	} = useTable(
-		{ columns, data },
-		useGlobalFilter,
-		useSortBy,
-		usePagination
-	);
+	} = useTable({ columns, data }, useSortBy, usePagination);
 
 	return (
 		<React.Fragment>
-			{/* Filters Start */}
-			{search && (
-				<div className="gap-6 grid mb-6 py-2 items-center sm:grid-cols-2 md:grid-cols-4">
-					<GlobalFilter
-						preGlobalFilteredRows={preGlobalFilteredRows}
-						globalFilter={state.globalFilter}
-						setGlobalFilter={setGlobalFilter}
-					/>
-				</div>
-			)}
-			{/* Filters Stop */}
-
 			{/* Table Start */}
 			<div className="flex flex-col">
 				<div

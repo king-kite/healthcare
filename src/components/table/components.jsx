@@ -44,17 +44,12 @@ export function PageButton({ children, className, disabled, ...rest }) {
 	);
 }
 
-export function GlobalFilter({
-	preGlobalFilteredRows,
-	globalFilter,
-	setGlobalFilter,
-}) {
-	const count = preGlobalFilteredRows.length;
-	const [value, setValue] = React.useState(globalFilter);
+export function GlobalFilter({ count, filter, setFilter }) {
+	const [value, setValue] = React.useState(filter || '');
 
 	// useAsyncDebounce to add a delay to prevent too many re-renders
 	const onChange = useAsyncDebounce((value) => {
-		setGlobalFilter(value || undefined);
+		setFilter(value || undefined);
 	}, 200);
 
 	return (
@@ -66,10 +61,10 @@ export function GlobalFilter({
 				Search for Patients
 			</label>
 			<Input
-				value={value || ''}
+				value={value}
 				onChange={(e) => {
-					setValue(e.target.value);
 					onChange(e.target.value);
+					setValue(e.target.value);
 				}}
 				placeholder={`${count} records...`}
 				allowClear
