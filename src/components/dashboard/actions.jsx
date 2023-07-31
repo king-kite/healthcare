@@ -80,13 +80,13 @@ function Actions() {
 		() => [
 			{
 				bg: 'bg-primary-500',
-				icon: GroupOutlined,
+				icon: SolutionOutlined,
 				link: routes.PATIENTS_PAGE,
 				title: 'Patients',
 			},
 			{
 				bg: 'bg-red-600',
-				icon: SolutionOutlined,
+				icon: GroupOutlined,
 				link: routes.TESTS_PAGE,
 				title: 'Tests',
 			},

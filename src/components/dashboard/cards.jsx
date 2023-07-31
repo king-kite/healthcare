@@ -4,13 +4,13 @@ import { Spin } from 'antd';
 const cards = [
 	{
 		color: 'text-primary-500',
-		icon: GroupOutlined,
+		icon: SolutionOutlined,
 		title: 'No. of Patients',
 		key: 'patients',
 	},
 	{
 		color: 'text-red-600',
-		icon: SolutionOutlined,
+		icon: GroupOutlined,
 		title: 'Total Tests/Diagnosis',
 		key: 'tests',
 	},

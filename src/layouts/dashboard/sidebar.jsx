@@ -26,12 +26,12 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 				href: routes.DASHBOARD_PAGE,
 			},
 			{
-				icon: GroupOutlined,
+				icon: SolutionOutlined,
 				title: 'Patients',
 				href: routes.PATIENTS_PAGE,
 			},
 			{
-				icon: SolutionOutlined,
+				icon: GroupOutlined,
 				title: 'Tests',
 				href: routes.TESTS_PAGE,
 			},

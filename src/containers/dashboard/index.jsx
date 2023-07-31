@@ -52,6 +52,7 @@ function Dashboard() {
 			<div className="my-2 w-full sm:ml-auto sm:w-1/2 md:w-1/3 lg:w-1/4">
 				<Button
 					block
+					disabled={patientsFetching || testsFetching}
 					loading={patientsFetching || testsFetching}
 					icon={
 						<span className="mr-2 text-sm text-gray-700 md:text-base">
