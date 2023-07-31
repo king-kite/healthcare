@@ -41,6 +41,7 @@ const columns = [
 		Header: 'Actions',
 		actionsAccessor: 'actions',
 		accessor: 'action',
+		disableGlobalFilter: true,
 	},
 ];
 
