@@ -1,7 +1,6 @@
 import 'regenerator-runtime/runtime';
 import React from 'react';
 import {
-	useFilters,
 	useGlobalFilter,
 	usePagination,
 	useSortBy,
@@ -49,7 +48,6 @@ function Table({
 		setPageSize,
 	} = useTable(
 		{ columns, data },
-		useFilters,
 		useGlobalFilter,
 		useSortBy,
 		usePagination
