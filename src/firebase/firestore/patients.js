@@ -234,7 +234,6 @@ export function deletePatient({ id }) {
 			// Check id is valid
 			if (!id) throw new Error('An ID was not provided!');
 
-			// Delete the patient
 			deleteDoc(doc(firestore, reference, id))
 				.then(() => {
 					// Remove the related test data associated with the patient
@@ -245,9 +244,8 @@ export function deletePatient({ id }) {
 				})
 				.then((tests) => {
 					// store the promises of the deleteDoc query and await them
-					const promises = [];
-					tests.docs.forEach((doc) =>
-						promises.push(deleteDoc(firestore, testRef, doc.id))
+					const promises = tests.docs.map((document) =>
+						deleteDoc(doc(firestore, testRef, document.id))
 					);
 					return Promise.all(promises);
 				})
