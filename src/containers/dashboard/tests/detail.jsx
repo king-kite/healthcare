@@ -19,6 +19,7 @@ import DeleteTest from '../../../components/tests/delete-test';
 import { getColors } from '../../../components/tests/parameters';
 import routes from '../../../config/routes';
 import { useGetTestQuery } from '../../../store/features/api/tests';
+import { getHeight, getTemperature } from '../../../utils';
 
 function Detail() {
 	const { id } = useParams();
@@ -37,7 +38,7 @@ function Detail() {
 				description: "Patient's Height Data",
 				icon: ColumnHeightOutlined,
 				title: 'Height',
-				value: data.height,
+				value: getHeight(data.height).value,
 			},
 			{
 				colors: getColors('green'),
@@ -54,7 +55,7 @@ function Detail() {
 					fill: '#f5930a',
 				},
 				title: 'Temperature',
-				value: data.temperature,
+				value: getTemperature(data.temperature).value,
 			},
 			{
 				colors: getColors('red'),
@@ -68,7 +69,7 @@ function Detail() {
 				description: "Patient's Body Mass Index",
 				icon: BodyMassIndexIcon,
 				title: 'BMI',
-				value: (+data.height / +data.weight).toFixed(2),
+				value: (+data.weight / +data.height).toFixed(2),
 			},
 		];
 		return info;

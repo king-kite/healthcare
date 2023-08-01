@@ -11,6 +11,7 @@ import {
 } from '../table/cells';
 import { GlobalFilter } from '../table/components';
 import routes from '../../config/routes';
+import { getHeight, getTemperature } from '../../utils';
 
 const columns = [
 	{
@@ -52,6 +53,8 @@ function TestTable({ data: tests = [], search = true, ...props }) {
 		() =>
 			tests.map((test) => ({
 				...test,
+				height: getHeight(test.height).value,
+				temperature: getTemperature(test.temperature).value,
 				patient_image: test.patient ? test.patient.image : undefined,
 				patient_email: test.patient ? test.patient.email : '--------',
 				patient_full_name: test.patient
