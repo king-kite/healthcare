@@ -20,10 +20,14 @@ import patientSchema from '../../validators/patient';
 const reference = 'patients';
 const testRef = 'tests';
 
-function getDateString(date) {
-	let month = date.getMonth() + 1;
+function getDateString(value) {
+	let date = value.getDate();
+	let month = value.getMonth() + 1;
+	let year = value.getFullYear();
+	date = date > 9 ? date : date.toString().padStart(2, '0');
 	month = month > 9 ? month : month.toString().padStart(2, '0');
-	return `${date.getFullYear()}-${month}-${date.getDate()}`;
+	year = year > 999 ? year : year.toString().padStart(4, '0');
+	return `${year}-${month}-${date}`;
 }
 
 // Get the serialized patient data from the document
