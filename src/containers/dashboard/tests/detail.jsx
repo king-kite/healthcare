@@ -19,7 +19,14 @@ import DeleteTest from '../../../components/tests/delete-test';
 import { getColors } from '../../../components/tests/parameters';
 import routes from '../../../config/routes';
 import { useGetTestQuery } from '../../../store/features/api/tests';
-import { getHeight, getTemperature } from '../../../utils';
+import {
+	getAge,
+	getBMI,
+	getHeight,
+	getPulse,
+	getTemperature,
+	getWeight,
+} from '../../../utils';
 
 function Detail() {
 	const { id } = useParams();
@@ -38,14 +45,14 @@ function Detail() {
 				description: "Patient's Height Data",
 				icon: ColumnHeightOutlined,
 				title: 'Height',
-				value: getHeight(data.height).value,
+				value: getHeight(data.height).component,
 			},
 			{
 				colors: getColors('green'),
 				description: "Patient's Weight Data",
 				icon: WeightIcon,
 				title: 'Weight',
-				value: data.weight,
+				value: getWeight(data.weight).component,
 			},
 			{
 				colors: getColors('yellow'),
@@ -55,21 +62,21 @@ function Detail() {
 					fill: '#f5930a',
 				},
 				title: 'Temperature',
-				value: getTemperature(data.temperature).value,
+				value: getTemperature(data.temperature).component,
 			},
 			{
 				colors: getColors('red'),
 				description: "Patient's Pulse Rate Data",
 				icon: HeartRateIcon,
 				title: 'Pulse',
-				value: data.pulse,
+				value: getPulse(data.pulse).component,
 			},
 			{
 				colors: getColors('purple'),
 				description: "Patient's Body Mass Index",
 				icon: BodyMassIndexIcon,
 				title: 'BMI',
-				value: (+data.weight / +data.height).toFixed(2),
+				value: getBMI(data.height, data.weight).component,
 			},
 		];
 		return info;
@@ -90,6 +97,12 @@ function Detail() {
 						{
 							title: "Patient's Email Address",
 							value: data.patient?.email || '----------------',
+						},
+						{
+							title: "Patient's Age",
+							value: data.patient
+								? getAge(data.patient.dob).component
+								: '--------',
 						},
 						{
 							title: 'Gender',

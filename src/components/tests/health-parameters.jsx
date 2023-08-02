@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 
-import { getHeight, getTemperature } from '../../utils';
+import { getHeight, getPulse, getTemperature, getWeight } from '../../utils';
 
 function HealthParameters({ parameters, loading }) {
 	return (
@@ -12,9 +12,13 @@ function HealthParameters({ parameters, loading }) {
 				) => {
 					const newValue =
 						id === 'temperature'
-							? getTemperature(value).value
+							? getTemperature(value).component
 							: id === 'height'
-							? getHeight(value).value
+							? getHeight(value).component
+							: id === 'pulse'
+							? getPulse(value).component
+							: id === 'weight'
+							? getWeight(value).component
 							: value;
 
 					return (

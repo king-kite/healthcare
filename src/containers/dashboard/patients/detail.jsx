@@ -8,6 +8,7 @@ import Container from '../../../components/container';
 import DeletePatient from '../../../components/patients/delete-patient';
 import routes from '../../../config/routes';
 import { useGetPatientQuery } from '../../../store/features/api/patients';
+import { getAge } from '../../../utils/converters';
 
 function Detail() {
 	const { id } = useParams();
@@ -33,6 +34,10 @@ function Detail() {
 						{
 							title: 'Email address',
 							value: data.email,
+						},
+						{
+							title: 'Age',
+							value: data.dob ? getAge(data.dob).component : '------',
 						},
 						{
 							title: 'Gender',

@@ -1,8 +1,10 @@
 const SETTINGS_KEY = 'settings';
 
 const defaultSettings = {
-	unit_height: 'm',
+	unit_height: 'm', // 'm | ft | cm | ftin, in'
 	unit_temperature: 'C', // 'C | 'F' | 'K'
+	unit_weight: 'kg', // 'kg | g | lbs',
+	unit_bmr: 'kcal', // 'kcal | J'
 };
 
 export function getSettings() {
