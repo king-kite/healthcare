@@ -14,6 +14,7 @@ import {
 
 import { auth, firestore } from '..';
 import { handleError } from '../utils';
+import { getSettings } from '../../config/settings';
 import { handleYupError } from '../../validators';
 import patientSchema from '../../validators/patient';
 
@@ -240,18 +241,25 @@ export function deletePatient({ id }) {
 
 			deleteDoc(doc(firestore, reference, id))
 				.then(() => {
-					// Remove the related test data associated with the patient
-					// Get the tests data from the firestore collection
-					// where the test id is the same
-					const testsRef = collection(firestore, testRef);
-					return getDocs(query(testsRef, where('patient_id', '==', id)));
+					const settings = getSettings();
+					if (settings.delete_tests_on_patient_delete === 1) {
+						// Remove the related test data associated with the patient
+						// Get the tests data from the firestore collection
+						// where the test id is the same
+						const testsRef = collection(firestore, testRef);
+						return getDocs(query(testsRef, where('patient_id', '==', id)));
+					}
+					return new Promise((resolve) => resolve(null));
 				})
 				.then((tests) => {
-					// store the promises of the deleteDoc query and await them
-					const promises = tests.docs.map((document) =>
-						deleteDoc(doc(firestore, testRef, document.id))
-					);
-					return Promise.all(promises);
+					if (tests) {
+						// store the promises of the deleteDoc query and await them
+						const promises = tests.docs.map((document) =>
+							deleteDoc(doc(firestore, testRef, document.id))
+						);
+						return Promise.all(promises);
+					}
+					return new Promise((resolve) => resolve(null));
 				})
 				.then(() => {
 					resolve({
