@@ -6,6 +6,7 @@ import HealthParameters from './health-parameters';
 import { parameters as baseParameters } from './parameters';
 import SelectInput from './select-input';
 import SelectedPatient from './selected-patient';
+import { Select } from '../controls';
 import routes from '../../config/routes';
 import { resetParameters, readParameters } from '../../firebase/database';
 import { useGetPatientsQuery } from '../../store/features/api/patients';
@@ -31,6 +32,9 @@ function FormComponent(props, ref) {
 
 	// store the data of the selected patient
 	const [patient, setPatient] = React.useState(null);
+
+	// store the activity level of the patient
+	const [activity, setActivity] = React.useState('1');
 
 	const { api } = useNotificationContext();
 
@@ -66,9 +70,10 @@ function FormComponent(props, ref) {
 	const handleCreateTest = React.useCallback(() => {
 		createTest({
 			patient_id: patient.id,
+			activity: +activity,
 			...parameters,
 		});
-	}, [createTest, patient, parameters]);
+	}, [activity, createTest, patient, parameters]);
 
 	// get the options from the patients data
 	const patientOptions = React.useMemo(() => {
@@ -165,65 +170,7 @@ function FormComponent(props, ref) {
 			// Reset the modal
 			resetModal();
 		}
-		return () => {
-			resetModal();
-		};
 	}, [api, createData, navigate, status, resetModal]);
-
-	const footerButtons = React.useMemo(() => {
-		const buttons = [
-			<Button key="cancel" type="ghost" onClick={resetModal}>
-				Cancel
-			</Button>,
-		];
-		if (patient)
-			buttons.push(
-				<Button
-					key="retake"
-					type="default"
-					disabled={patientsLoading || parameters.loading === '1'}
-					size="large"
-					onClick={() => resetParameters()}
-				>
-					Retake Test
-				</Button>,
-				<Button
-					key="continue"
-					size="large"
-					type="primary"
-					disabled={
-						patientsLoading || parameters.loading === '1' || testLoading
-					}
-					loading={testLoading}
-					onClick={handleCreateTest}
-				>
-					Continue
-				</Button>
-			);
-		else
-			buttons.push(
-				<Button
-					key="begin"
-					disabled={!value}
-					type="primary"
-					size="large"
-					loading={patientsLoading}
-					onClick={handleBeginTest}
-				>
-					Begin
-				</Button>
-			);
-		return buttons;
-	}, [
-		testLoading,
-		handleCreateTest,
-		value,
-		patient,
-		parameters.loading,
-		handleBeginTest,
-		patientsLoading,
-		resetModal,
-	]);
 
 	React.useImperativeHandle(
 		ref,
@@ -241,7 +188,8 @@ function FormComponent(props, ref) {
 			onCancel={resetModal}
 			title="Conduct Test/Diagnosis."
 			open={open}
-			footer={footerButtons}
+			maskClosable={false}
+			footer={null}
 		>
 			<p className="my-3 py-1 text-gray-700 text-sm md:text-base">
 				{patient
@@ -259,24 +207,21 @@ function FormComponent(props, ref) {
 					/>
 				</div>
 			)}
-			<div className="mt-4 mb-12">
-				<div className="my-2">
-					<div className="w-full sm:col-span-3">
-						{patient ? (
-							<>
-								<h4 className="font-semibold mb-2 text-gray-700 text-sm md:text-base">
-									Patient Selected
-								</h4>
-								<SelectedPatient
-									{...patient}
-									onClose={() => setPatient(null)}
-								/>
-								<HealthParameters
-									parameters={jointParameters}
-									loading={parameters.loading === '1'}
-								/>
-							</>
-						) : (
+			<div className="mt-6 mb-3 w-full">
+				<div className="w-full sm:col-span-3">
+					{patient ? (
+						<>
+							<h4 className="font-semibold mb-2 text-gray-700 text-sm md:text-base">
+								Patient Selected
+							</h4>
+							<SelectedPatient {...patient} onClose={() => setPatient(null)} />
+							<HealthParameters
+								parameters={jointParameters}
+								loading={parameters.loading === '1'}
+							/>
+						</>
+					) : (
+						<>
 							<SelectInput
 								loading={patientsLoading}
 								onClear={() => setValue(null)}
@@ -284,8 +229,80 @@ function FormComponent(props, ref) {
 								value={value}
 								options={patientOptions}
 							/>
-						)}
-					</div>
+							<div className="mt-5 w-full">
+								<Select
+									label="Activity Level"
+									onSelect={(value) => setActivity(value)}
+									loading={patientsLoading}
+									value={activity}
+									options={[
+										{
+											label: 'Sedentary (little or no exercise)',
+											value: '1',
+										},
+										{
+											label: 'Lightly active (exercise/sports 1-3 days a week)',
+											value: '2',
+										},
+										{
+											label:
+												'Modertely active (moderate exercise/sports 3 - 5 days a week)',
+											value: '3',
+										},
+										{
+											label:
+												'Very active (hard exercise/sports 6-7 days a week)',
+											value: '4',
+										},
+										{
+											label:
+												'Extra active (very hard exercise/sports and a physically active job)',
+											value: '5',
+										},
+									]}
+								/>
+							</div>
+						</>
+					)}
+				</div>
+				<div className="flex flex-wrap gap-4 items-center justify-end mt-5 w-full">
+					<Button disabled={testLoading} type="ghost" onClick={resetModal}>
+						Cancel
+					</Button>
+
+					{patient ? (
+						<>
+							<Button
+								type="default"
+								disabled={patientsLoading || parameters.loading === '1'}
+								size="large"
+								onClick={resetParameters}
+							>
+								Retake Test
+							</Button>
+							<Button
+								size="large"
+								type="primary"
+								disabled={
+									patientsLoading || parameters.loading === '1' || testLoading
+								}
+								loading={testLoading}
+								onClick={handleCreateTest}
+							>
+								Continue
+							</Button>
+						</>
+					) : (
+						<Button
+							disabled={!value}
+							type="primary"
+							size="large"
+							loading={patientsLoading}
+							onClick={handleBeginTest}
+						>
+							Begin
+						</Button>
+					)}
 				</div>
 			</div>
 		</Modal>
