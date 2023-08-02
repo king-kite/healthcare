@@ -44,7 +44,7 @@ export function PageButton({ children, className, disabled, ...rest }) {
 	);
 }
 
-export function GlobalFilter({ count, filter, setFilter }) {
+export function GlobalFilter({ label, count, filter, setFilter }) {
 	const [value, setValue] = React.useState(filter || '');
 
 	// useAsyncDebounce to add a delay to prevent too many re-renders
@@ -54,12 +54,14 @@ export function GlobalFilter({ count, filter, setFilter }) {
 
 	return (
 		<div className="w-full md:col-span-2">
-			<label
-				className="block font-medium my-1 text-sm text-gray-700 md:text-base"
-				htmlFor="search"
-			>
-				Search for Patients
-			</label>
+			{label && (
+				<label
+					className="block font-medium my-1 text-sm text-gray-700 md:text-base"
+					htmlFor="search"
+				>
+					{label}
+				</label>
+			)}
 			<Input
 				value={value}
 				onChange={(e) => {

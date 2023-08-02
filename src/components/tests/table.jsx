@@ -106,6 +106,7 @@ function TestTable({ data: tests = [], search = true, ...props }) {
 			{search && (
 				<div className="gap-6 grid mb-6 py-2 items-center sm:grid-cols-2 md:grid-cols-4">
 					<GlobalFilter
+						label="Search for Tests"
 						count={filteredData.length}
 						filter={filter}
 						setFilter={setFilter}

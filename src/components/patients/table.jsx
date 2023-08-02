@@ -133,6 +133,7 @@ function PatientTable({
 				<div className="gap-6 grid mb-6 py-2 items-center sm:grid-cols-2 md:grid-cols-4">
 					{search && (
 						<GlobalFilter
+							label="Search for Patients"
 							count={filteredData.length}
 							filter={filter}
 							setFilter={setFilter}
