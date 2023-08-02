@@ -1,8 +1,9 @@
 import { getSettings } from '../config/settings';
 
 function approximate(value, limit = 2) {
-	if (+value % 2 === 0) return +value;
-	return +(+value.toFixed(limit));
+	let data = +value; // convert to number
+	if (data % 2 === 0) return data;
+	return +data.toFixed(limit);
 }
 
 // A function to convert cm to feet..inches
@@ -80,6 +81,8 @@ export function getHeight(height, unit) {
 			);
 			break;
 		case 'ftin':
+			// original should be in feet
+			original = +height / 30.48;
 			value = ftin.result;
 			component = (
 				<>
@@ -258,10 +261,21 @@ export function getBMI(h, w) {
 		</>
 	);
 
-	if (isNaN(height.original) || isNaN(weight.original)) {
-		value = 0;
-		component = <>0 {unit}</>;
-	}
+	if (
+		isNaN(height.original) ||
+		isNaN(weight.original) ||
+		height.original <= 0 ||
+		weight.original <= 0
+	)
+		return {
+			original: 0,
+			value: 0,
+			component: (
+				<>
+					0<small>{unit}</small>
+				</>
+			),
+		};
 
 	original = weight.original / height.original ** 2;
 	value = approximate(original);
@@ -288,8 +302,8 @@ export function getPulse(pulse) {
 		value = 0;
 	}
 
-	original = pulse;
-	value = approximate(pulse);
+	original = +pulse;
+	value = approximate(original);
 	let component = (
 		<>
 			{value}
