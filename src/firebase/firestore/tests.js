@@ -45,6 +45,7 @@ async function serializeTest(doc) {
 		patient,
 		height: info.height,
 		temperature: info.temperature,
+		activity: info.activity || 1,
 		weight: info.weight,
 		pulse: info.pulse,
 		created_at: info.created_at
@@ -130,6 +131,7 @@ export function addTest({ data }) {
 			// Structure the data to be saved
 			const test = {
 				patient_id: payload.patient_id,
+				activity: payload.activity,
 				height: payload.height,
 				weight: payload.weight,
 				temperature: payload.temperature,
