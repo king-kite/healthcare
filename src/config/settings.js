@@ -4,6 +4,9 @@ const defaultSettings = {
 	// delete patient's tests when the patient is deleted
 	delete_tests_on_patient_delete: 1,
 
+	show_bmi: 1,
+	show_bmr: 1,
+
 	unit_height: 'm', // 'm | ft | cm | ftin, in'
 	unit_temperature: 'C', // 'C | 'F' | 'K'
 	unit_weight: 'kg', // 'kg | g | lbs',

@@ -21,6 +21,7 @@ import Login from './pages/account/login';
 // Dashboard
 import Dashboard from './pages/dashboard';
 import Profile from './pages/dashboard/profile';
+import Settings from './pages/dashboard/settings';
 
 // Patients
 import Patients from './pages/dashboard/patients';
@@ -93,6 +94,10 @@ const routes = [
 					{
 						path: pageRoutes.PROFILE_PAGE,
 						element: <Profile />,
+					},
+					{
+						path: pageRoutes.SETTINGS_PAGE,
+						element: <Settings />,
 					},
 
 					// Patients

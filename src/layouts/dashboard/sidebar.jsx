@@ -2,6 +2,7 @@ import {
 	CloseOutlined,
 	GroupOutlined,
 	PieChartOutlined,
+	SettingOutlined,
 	SolutionOutlined,
 	UserOutlined,
 } from '@ant-design/icons';
@@ -40,6 +41,11 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 				title: 'Profile',
 				href: routes.PROFILE_PAGE,
 			},
+			{
+				icon: SettingOutlined,
+				title: 'Settings',
+				href: routes.SETTINGS_PAGE,
+			},
 		],
 		[]
 	);
@@ -55,22 +61,13 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 		>
 			<div
 				ref={ref}
-				className={`${
-					visible ? 'translate-x-0' : 'translate-x-full'
-				} ${sidebarStyle}`}
+				className={`${visible ? 'translate-x-0' : 'translate-x-full'} ${sidebarStyle}`}
 			>
 				<div className="flex items-center justify-between px-4 py-5 lg:flex lg:justify-center">
 					<span className="h-[30px] inline-block w-[150px]">
-						<img
-							className="h-full w-full"
-							src="/images/vitalcare-logo.png"
-							alt="Vitalcare"
-						/>
+						<img className="h-full w-full" src="/images/vitalcare-logo.png" alt="Vitalcare" />
 					</span>
-					<span
-						className="sidebar-close-icon lg:hidden"
-						onClick={() => setVisible(false)}
-					>
+					<span className="sidebar-close-icon lg:hidden" onClick={() => setVisible(false)}>
 						<CloseOutlined />
 					</span>
 				</div>
@@ -95,11 +92,7 @@ const Sidebar = ({ setVisible, visible }, ref) => {
 				<div className="mt-1 mb-3">
 					<div>
 						{links.map((props, index) => (
-							<SidebarLink
-								key={index}
-								{...props}
-								onClick={() => setVisible(false)}
-							/>
+							<SidebarLink key={index} {...props} onClick={() => setVisible(false)} />
 						))}
 					</div>
 
