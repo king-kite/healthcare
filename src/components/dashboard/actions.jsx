@@ -1,8 +1,4 @@
-import {
-	GroupOutlined,
-	SolutionOutlined,
-	UserOutlined,
-} from '@ant-design/icons';
+import { GroupOutlined, SettingOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import React from 'react';
 
@@ -11,9 +7,7 @@ import routes from '../../config/routes';
 export function BoxTitle({ title }) {
 	return (
 		<>
-			<h3 className="capitalize my-3 py-2 text-gray-700 text-lg md:text-xl lg:text-2xl">
-				{title}
-			</h3>
+			<h3 className="capitalize my-3 py-2 text-gray-700 text-lg md:text-xl lg:text-2xl">{title}</h3>
 			<div className="bg-gray-200 h-[1px] my-5 w-full">
 				<div className="bg-primary-500 h-[1px] w-1/5" />
 			</div>
@@ -40,7 +34,7 @@ function BoxGridItem({
 					<span
 						className={`${bg} h-[60px] inline-flex items-center justify-center rounded-full w-[60px]`}
 					>
-						<Icon className="h-[20px] text-gray-50 w-[20px]" />
+						<Icon className="h-[20px] left-[1.5px] relative text-gray-50 w-[20px]" />
 					</span>
 				</div>
 				<p
@@ -85,7 +79,7 @@ function Actions() {
 				title: 'Patients',
 			},
 			{
-				bg: 'bg-red-600',
+				bg: 'bg-orange-700',
 				icon: GroupOutlined,
 				link: routes.TESTS_PAGE,
 				title: 'Tests',
@@ -95,6 +89,12 @@ function Actions() {
 				icon: UserOutlined,
 				link: routes.PROFILE_PAGE,
 				title: 'Profile',
+			},
+			{
+				bg: 'bg-red-600',
+				icon: SettingOutlined,
+				link: routes.SETTINGS_PAGE,
+				title: 'Settings',
 			},
 		],
 		[]
