@@ -14,7 +14,7 @@ import LogoutButton from './logout-button';
 import routes from '../../config/routes';
 
 const sidebarStyle =
-	'bg-white duration-1000 h-full ml-auto overflow-y-auto relative shadow-lg transform w-4/5 sm:w-1/2 md:w-1/3 lg:bg-gray-100 lg:px-0 lg:py-4 lg:translate-x-0 lg:w-full';
+	'bg-white duration-1000 h-full overflow-y-auto relative shadow-lg transform w-4/5 sm:w-1/2 md:w-1/3 lg:bg-gray-100 lg:px-0 lg:py-4 lg:translate-x-0 lg:w-full';
 
 const Sidebar = ({ setVisible, visible }, ref) => {
 	const auth = useSelector((state) => state.auth.data);
