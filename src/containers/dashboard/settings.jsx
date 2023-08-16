@@ -131,7 +131,7 @@ function Settings() {
 					<h3 className="bg-gray-200 px-3 py-1 font-semibold uppercase rounded-t-lg text-gray-700 text-sm md:text-base">
 						Other Medical Parameters
 					</h3>
-					<p className="bg-gray-100 px-3 py-1 text-gray-600 text-sm md:text-base">
+					<p className="bg-gray-100 px-3 py-1 text-gray-600 text-sm">
 						Show other patient parameters generated from the primary ones.
 					</p>
 					<div className="p-3">

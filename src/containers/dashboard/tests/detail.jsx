@@ -1,9 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import {
-	ArrowRightOutlined,
-	ColumnHeightOutlined,
-	DeleteOutlined,
-} from '@ant-design/icons';
+import { ArrowRightOutlined, ColumnHeightOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Button, Spin } from 'antd';
 import React from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
@@ -18,15 +14,9 @@ import {
 import DeleteTest from '../../../components/tests/delete-test';
 import { getColors } from '../../../components/tests/parameters';
 import routes from '../../../config/routes';
+import { getSettings } from '../../../config/settings';
 import { useGetTestQuery } from '../../../store/features/api/tests';
-import {
-	getAge,
-	getBMI,
-	getHeight,
-	getPulse,
-	getTemperature,
-	getWeight,
-} from '../../../utils';
+import { getAge, getBMI, getHeight, getPulse, getTemperature, getWeight } from '../../../utils';
 
 function Detail() {
 	const { id } = useParams();
@@ -39,6 +29,7 @@ function Detail() {
 
 	const parameters = React.useMemo(() => {
 		if (!data) return [];
+		const settings = getSettings();
 		const info = [
 			{
 				colors: getColors('blue'),
@@ -71,14 +62,15 @@ function Detail() {
 				title: 'Pulse',
 				value: getPulse(data.pulse).component,
 			},
-			{
+		];
+		if (settings.show_bmi === 1)
+			info.push({
 				colors: getColors('purple'),
 				description: "Patient's Body Mass Index",
 				icon: BodyMassIndexIcon,
 				title: 'BMI',
 				value: getBMI(data.height, data.weight).component,
-			},
-		];
+			});
 		return info;
 	}, [data]);
 
@@ -100,17 +92,11 @@ function Detail() {
 						},
 						{
 							title: "Patient's Age",
-							value: data.patient
-								? getAge(data.patient.dob).component
-								: '--------',
+							value: data.patient ? getAge(data.patient.dob).component : '--------',
 						},
 						{
 							title: 'Gender',
-							value: data.patient
-								? data.patient.gender === 'M'
-									? 'Male'
-									: 'Female'
-								: '-------',
+							value: data.patient ? (data.patient.gender === 'M' ? 'Male' : 'Female') : '-------',
 						},
 						{
 							title: 'Phone number',
@@ -145,9 +131,7 @@ function Detail() {
 			}}
 			title="Test Information"
 		>
-			<h1 className="font-bold my-2 text-gray-700 text-lg">
-				{data.patient?.full_name}
-			</h1>
+			<h1 className="font-bold my-2 text-gray-700 text-lg">{data.patient?.full_name}</h1>
 			<div className="sm:flex sm:items-center">
 				<div className="my-4 sm:my-0">
 					<DeleteTest
@@ -179,34 +163,25 @@ function Detail() {
 					</p>
 				</div>
 				<div className="gap-5 grid grid-cols-1 my-6 border-t border-gray-100 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-					{parameters.map(
-						(
-							{ colors, description, icon: Icon, iconProps, title, value },
-							index
-						) => (
-							<div
-								className={`bg-white border ${colors.border} border-dashed p-4 rounded-xl shadow-xl`}
-								key={index}
-							>
-								<div className="flex items-center">
-									{/* Icon */}
-									<span
-										className={`${colors.text} ${colors.border} border-2 border-solid flex items-center justify-center h-12 rounded-2xl text-2xl w-12`}
-									>
-										<Icon {...iconProps} />
-									</span>
-									<span className={`${colors.text} font-bold ml-4 text-2xl`}>
-										{value}
-									</span>
-									{/* Value */}
-								</div>
-								<h3 className="font-bold mt-2 mb-1 text-gray-700 text-lg">
-									{title}
-								</h3>
-								<p className="text-gray-700 text-sm">{description}</p>
+					{parameters.map(({ colors, description, icon: Icon, iconProps, title, value }, index) => (
+						<div
+							className={`bg-white border ${colors.border} border-dashed p-4 rounded-xl shadow-xl`}
+							key={index}
+						>
+							<div className="flex items-center">
+								{/* Icon */}
+								<span
+									className={`${colors.text} ${colors.border} border-2 border-solid flex items-center justify-center h-12 rounded-2xl text-2xl w-12`}
+								>
+									<Icon {...iconProps} />
+								</span>
+								<span className={`${colors.text} font-bold ml-4 text-2xl`}>{value}</span>
+								{/* Value */}
 							</div>
-						)
-					)}
+							<h3 className="font-bold mt-2 mb-1 text-gray-700 text-lg">{title}</h3>
+							<p className="text-gray-700 text-sm">{description}</p>
+						</div>
+					))}
 				</div>
 			</div>
 
@@ -247,9 +222,7 @@ function Detail() {
 								size="large"
 								type="default"
 							>
-								<span className="text-gray-700 text-sm md:text-base">
-									See More
-								</span>
+								<span className="text-gray-700 text-sm md:text-base">See More</span>
 							</Button>
 						</Link>
 					</div>
