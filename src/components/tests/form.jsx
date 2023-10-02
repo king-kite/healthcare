@@ -8,7 +8,9 @@ import SelectInput from './select-input';
 import SelectedPatient from './selected-patient';
 import { Select } from '../controls';
 import routes from '../../config/routes';
-import { resetParameters, readParameters } from '../../firebase/database';
+import { 
+	// resetParameters, 
+	readParameters } from '../../firebase/database';
 import { useGetPatientsQuery } from '../../store/features/api/patients';
 import { useCreateTestMutation } from '../../store/features/api/tests';
 import { useNotificationContext } from '../../store/contexts';
@@ -272,14 +274,14 @@ function FormComponent(props, ref) {
 
 					{patient ? (
 						<>
-							<Button
+							{/* <Button
 								type="default"
 								disabled={patientsLoading || parameters.loading === '1'}
 								size="large"
 								onClick={resetParameters}
 							>
 								Retake Test
-							</Button>
+							</Button> */}
 							<Button
 								size="large"
 								type="primary"

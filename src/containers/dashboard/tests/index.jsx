@@ -9,7 +9,7 @@ import React from "react";
 import Container from "../../../components/container";
 import TestsForm from "../../../components/tests/form";
 import Table from "../../../components/tests/table";
-import { resetParameters } from "../../../firebase/database";
+// import { resetParameters } from "../../../firebase/database";
 import { useGetTestsQuery } from "../../../store/features/api/tests";
 
 function Tests() {
@@ -42,7 +42,7 @@ function Tests() {
             }
             onClick={() => {
               if (modalRef.current) modalRef.current.openModal();
-              resetParameters();
+              // resetParameters();
             }}
             size="large"
           >
@@ -91,7 +91,7 @@ function Tests() {
                 type="primary"
                 onClick={() => {
                   if (modalRef.current) modalRef.current.openModal();
-                  resetParameters();
+                  // resetParameters();
                 }}
               >
                 <span className="text-sm md:text-base">Conduct one now</span>
