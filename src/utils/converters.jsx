@@ -251,15 +251,15 @@ export function getBMI(h, w) {
 	let value;
 	let component;
 
-	let unit = (
-		<>
-			{/* {settings.unit_weight}/{settings.unit_height} */}
-			kg/m
-			<sup>
-				<small>2</small>
-			</sup>
-		</>
-	);
+	// let unit = (
+	// 	<>
+	// 		{/* {settings.unit_weight}/{settings.unit_height} */}
+	// 		kg/m
+	// 		<sup>
+	// 			<small>2</small>
+	// 		</sup>
+	// 	</>
+	// );
 
 	if (
 		isNaN(height.original) ||
@@ -270,11 +270,7 @@ export function getBMI(h, w) {
 		return {
 			original: 0,
 			value: 0,
-			component: (
-				<>
-					0<small>{unit}</small>
-				</>
-			),
+			component: <>0{/* 0<small>{unit}</small> */}</>,
 		};
 
 	original = weight.original / height.original ** 2;
@@ -282,7 +278,7 @@ export function getBMI(h, w) {
 	component = (
 		<>
 			{value}
-			<small>{unit}</small>
+			{/* <small>{unit}</small> */}
 		</>
 	);
 
@@ -364,10 +360,7 @@ export function getBMR(h, w, d, g, unit) {
 	if (!constant) constant = constants['male']; // default to male
 
 	let original =
-		constant.k +
-		constant.weight * weight +
-		constant.height * height -
-		constant.age * age;
+		constant.k + constant.weight * weight + constant.height * height - constant.age * age;
 	let value = approximate(original);
 	let component;
 
