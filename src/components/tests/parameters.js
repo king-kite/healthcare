@@ -29,6 +29,11 @@ export function getColors(color) {
 				border: 'border-purple-700',
 				text: 'text-purple-700',
 			};
+		case 'dark-red':
+			return {
+				border: 'border-red-900',
+				text: 'text-red-900',
+			};
 		default:
 			return {
 				border: 'border-gray-700',

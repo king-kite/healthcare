@@ -1,5 +1,10 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import { ArrowRightOutlined, ColumnHeightOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+	ArrowRightOutlined,
+	ColumnHeightOutlined,
+	DeleteOutlined,
+	FireOutlined,
+} from '@ant-design/icons';
 import { Button, Spin } from 'antd';
 import React from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
@@ -16,7 +21,15 @@ import { getColors } from '../../../components/tests/parameters';
 import routes from '../../../config/routes';
 import { getSettings } from '../../../config/settings';
 import { useGetTestQuery } from '../../../store/features/api/tests';
-import { getAge, getBMI, getHeight, getPulse, getTemperature, getWeight } from '../../../utils';
+import {
+	getAge,
+	getBMR,
+	getBMI,
+	getHeight,
+	getPulse,
+	getTemperature,
+	getWeight,
+} from '../../../utils';
 
 function Detail() {
 	const { id } = useParams();
@@ -70,6 +83,14 @@ function Detail() {
 				icon: BodyMassIndexIcon,
 				title: 'BMI',
 				value: getBMI(data.height, data.weight).component,
+			});
+		if (settings.show_bmr === 1 && data.patient)
+			info.push({
+				colors: getColors('dark-red'),
+				description: "Patient's Basal Metabolic Rate",
+				icon: FireOutlined,
+				title: 'BMR',
+				value: getBMR(data.height, data.weight, data.patient.dob, data.patient.gender).component,
 			});
 		return info;
 	}, [data]);
