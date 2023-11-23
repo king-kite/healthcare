@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "default": "vitalcare-a14b6"
+  },
+  "targets": {
+    "vitalcare-a14b6": {
+      "hosting": {
+        "init": [
+          "vitalcare-a14b6"
+        ],
+        "prod": [
+          "vitalcare"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
